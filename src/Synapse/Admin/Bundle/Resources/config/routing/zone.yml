@@ -1,0 +1,9 @@
+# component deletion
+synapse_admin_zone_add_component:
+    path: /{id}/component/{componentTypeId}
+    defaults:
+        _controller: "SynapseAdminBundle:ZoneAdmin:addComponent"
+    methods:
+        - GET
+    requirements:
+        id: \d+

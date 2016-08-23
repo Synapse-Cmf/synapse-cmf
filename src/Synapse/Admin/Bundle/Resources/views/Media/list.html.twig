@@ -1,0 +1,54 @@
+{% extends 'SynapseAdminBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel tab-content">
+      <header class="panel-heading composed bg-main tab-content">
+        <a href class="combo">
+          <i class="fa fa-picture-o"></i>
+        </a>
+        <h3>Media gallery</h3>
+        <a href="#list" class="combo active" role="tab" data-toggle="tab">
+          <i class="fa fa-th-list"></i>
+        </a>
+        <a href="#upload" class="combo" role="tab" data-toggle="tab">
+          <i class="fa fa-cloud-upload"></i>
+        </a>
+        <a href="#sync" class="combo">
+          <i class="fa fa-refresh"></i>
+        </a>
+      </header>
+      <div id="list" class="panel-body active tab-pane" role="tabpanel">
+        <div class="mediatheque">
+          {% for media in medias if media.type == 'image' %}
+          <div class="figure" style="background-image: url({{ asset(media.webPath) }})">
+            <div class="actions">
+              <a class="btn btn-primary btn-sm" href="{{ path('synapse_admin_image_edition', { id: media.id }) }}">
+                <i class="fa fa-edit"></i>
+              </a>
+              <!--<a href="#" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></a>-->
+            </div>
+            <div class="caption">
+              <div>{{ media.name }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div id="upload" class="tab-pane panel-body" role="tabpanel">
+        <h4>Upload</h4>
+        <form action="{{ url('synapse_admin_media_xhr_upload') }}" method="POST"
+          class="dropzone form-group" id="kms_photo_upload">
+        </form>
+        <div class="btn-group">
+          <a class="btn btn-primary" href="{{ path('synapse_admin_media_list') }}">
+            <i class="fa fa-check"></i>
+            Done
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

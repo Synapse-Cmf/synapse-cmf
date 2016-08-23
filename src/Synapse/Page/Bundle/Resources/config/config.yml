@@ -1,0 +1,23 @@
+# Doctrine
+doctrine:
+    orm:
+        entity_managers:
+            synapse:
+                mappings:
+                    SynapseCmfBundle:
+                        type: yml
+                        dir: Resources/config/mapping/orm
+                        prefix: Synapse\Cmf\Bundle\Entity\Orm
+                        alias: Synapse
+                    SynapsePageBundle:
+                        type: yml
+                        dir: Resources/config/mapping/orm
+                        prefix: Synapse\Page\Bundle\Entity
+                        alias: SynapsePage
+
+# Doctrine behaviors
+stof_doctrine_extensions:
+    orm:
+        synapse:
+            timestampable: true
+            tree: true

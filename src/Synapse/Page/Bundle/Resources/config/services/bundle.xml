@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- Page admin controller -->
+        <service id="synapse.page.admin_controller" class="Synapse\Page\Bundle\Controller\PageAdminController">
+            <tag name="request.param_converter" converter="page" priority="10" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <!-- Page creation type -->
+        <service id="synapse.page.creation_form" class="Synapse\Page\Bundle\Form\Page\CreationType">
+            <tag name="form.type" />
+            <argument type="service" id="synapse.page.domain" />
+            <argument type="service" id="synapse.page.loader" />
+        </service>
+
+        <!-- Page edition type -->
+        <service id="synapse.page.edition_form" class="Synapse\Page\Bundle\Form\Page\EditionType">
+            <tag name="form.type" />
+            <argument type="service" id="synapse.page.domain" />
+        </service>
+
+
+    </services>
+
+</container>

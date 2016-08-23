@@ -1,0 +1,112 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="synapse.subrequest.zone_parameter">_synapse_zone</parameter>
+        <parameter key="synapse.subrequest.component_parameter">_synapse_component</parameter>
+    </parameters>
+
+    <services>
+
+        <!-- Synapse engine -->
+        <service id="synapse" class="Synapse\Cmf\Framework\Engine\Engine" lazy="true">
+            <argument type="service">
+                <service class="Synapse\Cmf\Framework\Engine\Resolver\ThemeResolver">
+                    <argument type="service" id="synapse.theme.loader" />
+                </service>
+            </argument>
+            <argument type="service">
+                <service class="Synapse\Cmf\Framework\Engine\Decorator\Content\HtmlDecorator" lazy="true">
+                    <argument type="service" id="synapse.context.stack" />
+                    <argument type="service">
+                        <service class="Synapse\Cmf\Framework\Engine\Context\Content\RenderingContextBuilder">
+                            <argument type="service">
+                                <service class="Synapse\Cmf\Framework\Engine\Resolver\TemplateResolver">
+                                    <argument type="service" id="synapse.template.loader" />
+                                </service>
+                            </argument>
+                            <argument type="service" id="synapse.content.resolver" />
+                            <argument type="service" id="synapse.variation.resolver" />
+                        </service>
+                    </argument>
+                    <argument type="service" id="templating" />
+                </service>
+            </argument>
+            <argument type="service" id="synapse.component.decorator" />
+        </service>
+
+        <!-- Component Html decorator -->
+        <service id="synapse.component.decorator" public="false" lazy="true"
+            class="Synapse\Cmf\Framework\Engine\Decorator\Component\HtmlDecorator"
+        >
+            <argument type="service" id="synapse.variation.resolver" />
+            <argument type="service" id="synapse.component.context_builder" />
+            <argument type="service" id="synapse.context.stack" />
+            <argument type="service" id="templating" />
+        </service>
+
+        <!-- Zone renderer -->
+        <service id="synapse.zone.renderer" public="false" lazy="true"
+            class="Synapse\Cmf\Framework\Engine\Renderer\Zone\ZoneRenderer"
+        >
+            <argument type="service" id="synapse.context.stack" />
+            <argument type="service">
+                <service class="Synapse\Cmf\Framework\Engine\Decorator\Component\FragmentDecorator">
+                    <argument type="service" id="synapse.variation.resolver" />
+                    <argument type="service" id="synapse.component.context_builder" />
+                    <argument type="service" id="synapse.context.stack" />
+                    <argument type="service" id="fragment.handler" />
+                </service>
+            </argument>
+            <argument type="collection">
+                <argument key="inline" type="service">
+                    <service class="Synapse\Cmf\Framework\Engine\Renderer\Zone\Aggregator\InlineAggregator" />
+                </argument>
+                <argument key="template" type="service">
+                    <service class="Synapse\Cmf\Framework\Engine\Renderer\Zone\Aggregator\TemplatingAggregator">
+                        <argument type="service" id="templating" />
+                    </service>
+                </argument>
+            </argument>
+        </service>
+
+        <!-- Context stack -->
+        <service id="synapse.context.stack" public="false"
+            class="Synapse\Cmf\Framework\Engine\Context\RenderingContextStack"
+        />
+
+        <!-- Context normalizer -->
+        <service id="synapse.context.normalizer" public="false" lazy="true"
+            class="Synapse\Cmf\Framework\Engine\Context\Component\RenderingContextNormalizer"
+        >
+            <argument type="service" id="synapse.content.resolver" />
+            <argument type="service" id="synapse.theme.loader" />
+            <argument type="service" id="synapse.template.loader" />
+            <argument type="service" id="synapse.zone.loader" />
+        </service>
+
+        <!-- Component Context builder -->
+        <service id="synapse.component.context_builder" public="false"
+            class="Synapse\Cmf\Framework\Engine\Context\Component\RenderingContextBuilder"
+        >
+            <argument type="service" id="synapse.variation.resolver" />
+            <argument type="service" id="synapse.content.resolver" />
+            <argument type="service" id="synapse.context.normalizer" />
+        </service>
+
+        <!-- Variation resolver -->
+        <service id="synapse.variation.resolver" public="false"
+            class="Synapse\Cmf\Framework\Engine\Resolver\VariationResolver"
+        >
+            <argument type="service" id="property_accessor" />
+            <argument type="service">
+                <service class="Symfony\Component\ExpressionLanguage\ExpressionLanguage" />
+            </argument>
+        </service>
+
+    </services>
+
+</container>

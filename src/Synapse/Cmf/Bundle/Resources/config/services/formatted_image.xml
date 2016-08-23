@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- FormattedImage loader -->
+        <service id="synapse.formatted_image.orm_loader" parent="majora.loader.abstract" public="true" lazy="true"
+            class="Synapse\Cmf\Bundle\Loader\Orm\FormattedImageOrmLoader"
+        >
+            <tag name="majora.loader"
+                entity="Synapse\Cmf\Bundle\Entity\Orm\FormattedImage"
+                collection="Synapse\Cmf\Framework\Media\FormattedImage\Entity\FormattedImageCollection"
+                repository="synapse.formatted_image.orm_repository"
+                lazy="true"
+            />
+            <argument type="service" id="synapse.image_format.loader" />
+            <argument>%synapse.media_store.web_path%</argument>
+        </service>
+        <service id="synapse.formatted_image.loader" alias="synapse.formatted_image.orm_loader" />
+
+        <!-- FormattedImage Domain -->
+        <service id="synapse.formatted_image.domain"
+            class="Synapse\Cmf\Framework\Media\FormattedImage\Domain\Action\ActionDispatcherDomain"
+        >
+            <argument type="service">
+                <service class="Majora\Framework\Domain\Action\ActionFactory">
+                    <argument type="collection">
+                        <argument key="create" type="service" id="synapse.formatted_image.create_action" />
+                    </argument>
+                </service>
+            </argument>
+        </service>
+
+        <!-- Actions -->
+        <service id="synapse.formatted_image.abstract_action" abstract="true" public="false"
+            class="Synapse\Cmf\Framework\Media\FormattedImage\Action\AbstractAction"
+        >
+            <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
+            <call method="setValidator"><argument type="service" id="validator" /></call>
+        </service>
+        <service id="synapse.formatted_image.create_action" parent="synapse.formatted_image.abstract_action"
+            class="Synapse\Cmf\Framework\Media\FormattedImage\Action\Dal\CreateAction"
+        >
+            <argument>Synapse\Cmf\Bundle\Entity\Orm\FormattedImage</argument>
+            <argument type="service" id="synapse.formatted_image.loader" />
+            <argument type="service" id="majora.inflector" />
+            <argument type="service" id="filesystem" /><!-- format folder creation -->
+            <argument type="service"><!-- image reworking -->
+                <service class="Imagine\Imagick\Imagine" />
+            </argument>
+            <argument type="service" id="synapse.file.domain" /><!-- formatted file creation -->
+        </service>
+
+        <!-- FormattedImage Orm Repository -->
+        <service id="synapse.formatted_image.orm_repository" parent="majora.doctrine_repository.abstract" public="true"
+            class="Synapse\Cmf\Framework\Media\FormattedImage\Repository\Doctrine\DoctrineRepository"
+        >
+            <factory service="doctrine" method="getRepository" />
+            <tag name="kernel.event_subscriber" />
+            <argument>Synapse:FormattedImage</argument>
+            <argument>synapse</argument>
+        </service>
+
+    </services>
+
+</container>

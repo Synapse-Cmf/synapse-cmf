@@ -1,0 +1,44 @@
+Synapse\Cmf\Bundle\Entity\Orm\Zone:
+    type: entity
+    repositoryClass: Synapse\Cmf\Framework\Theme\Zone\Repository\Doctrine\DoctrineRepository
+    table: synapse_zone
+    actAs:
+        Timestampable: ~
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    indexes:
+        zone_type_index:
+            columns: [ zone_type_id ]
+    fields:
+        zoneTypeId:
+            type: string
+            column: zone_type_id
+        createdAt:
+            type: datetime
+            column: created_at
+            gedmo:
+                timestampable:
+                    on: create
+        updatedAt:
+            type: datetime
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    manyToOne:
+        template:
+            targetEntity: Template
+            inversedBy: zones
+            nullable: true
+            joinColumn:
+                name: template_id
+                referencedColumnName: id
+                onDelete: cascade
+            cascade: ['persist']
+    oneToMany:
+        components:
+            targetEntity: Component
+            mappedBy: zone
+            cascade: ['persist', 'remove']

@@ -1,0 +1,40 @@
+{
+  "name": "synapse",
+  "version": "1.0.0",
+  "description": "Synapse project assets",
+  "main": "index.html",
+  "scripts": {
+    "postinstall": "bower install",
+    "build": "parallelshell 'npm run build:js' 'npm run build:scss' 'npm run build:ckeditor'",
+    "build:js": "gulp js",
+    "build:scss": "gulp scss",
+    "build:ckeditor": "gulp ckeditor_skin",
+    "watch": "parallelshell 'npm run watch:js' 'npm run watch:scss'",
+    "watch:js": "gulp js:watch",
+    "watch:scss": "gulp scss:watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nyxis",
+  "license": "MIT",
+  "devDependencies": {
+    "bower": "^1.6.5",
+    "browser-sync": "^2.12.8",
+    "cssnano": "^3.6.2",
+    "gulp": "~3.9",
+    "gulp-concat": "*",
+    "gulp-css-url-adjuster": "*",
+    "gulp-rename": "*",
+    "gulp-sass": "*",
+    "gulp-uglify": "*",
+    "merge-stream": "*",
+    "node-sass": "^3.*",
+    "nodemon": "^1.9.2",
+    "parallelshell": "^2.0.0",
+    "postcss-cli": "^2.5.2",
+    "uglify-js": "^2.6.2"
+  },
+  "dependencies": {
+    "jquery": "2.2.4",
+    "lodash": "^4.13.1"
+  }
+}

@@ -1,0 +1,76 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- Image loader -->
+        <service id="synapse.image.orm_loader" parent="majora.loader.abstract" public="true" lazy="true"
+            class="Synapse\Cmf\Bundle\Loader\Orm\ImageOrmLoader"
+        >
+            <tag name="majora.loader"
+                entity="Synapse\Cmf\Bundle\Entity\Orm\Image"
+                collection="Synapse\Cmf\Framework\Media\Image\Entity\ImageCollection"
+                repository="synapse.image.orm_repository"
+                lazy="true"
+            />
+            <argument>%synapse.media_store.web_path%</argument>
+        </service>
+        <service id="synapse.image.loader" alias="synapse.image.orm_loader" />
+
+        <!-- Image domain -->
+        <service id="synapse.image.domain" class="Synapse\Cmf\Framework\Media\Image\Domain\Action\ActionDispatcherDomain">
+            <argument type="service">
+                <service class="Majora\Framework\Domain\Action\ActionFactory">
+                    <argument type="collection">
+                        <argument key="upload" type="service" id="synapse.image.upload_action" />
+                        <argument key="create" type="service" id="synapse.image.create_action" />
+                        <argument key="edit" type="service" id="synapse.image.update_action" />
+                        <argument key="format" type="service" id="synapse.image.format_action" />
+                        <!-- <argument key="delete" type="service" id="enoptea.customer.delete_action" /> -->
+                    </argument>
+                </service>
+            </argument>
+        </service>
+
+        <!-- Actions -->
+        <service id="synapse.image.abstract_action" abstract="true" public="false"
+            class="Synapse\Cmf\Framework\Media\File\Action\AbstractAction"
+        >
+            <argument type="service" id="synapse.file.domain" />
+            <argument>Synapse\Cmf\Bundle\Entity\Orm\Image</argument>
+            <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
+            <call method="setValidator"><argument type="service" id="validator" /></call>
+        </service>
+        <service id="synapse.image.create_action" parent="synapse.image.abstract_action"
+            class="Synapse\Cmf\Framework\Media\Image\Action\Dal\CreateAction"
+        />
+        <service id="synapse.image.upload_action" parent="synapse.image.create_action"
+            class="Synapse\Cmf\Framework\Media\Image\Action\Dal\UploadAction"
+        />
+        <service id="synapse.image.update_action" parent="synapse.image.abstract_action"
+            class="Synapse\Cmf\Framework\Media\Image\Action\Dal\UpdateAction"
+        />
+        <service id="synapse.image.format_action"
+            class="Synapse\Cmf\Framework\Media\Image\Action\Dal\FormatAction"
+        >
+            <argument type="service" id="synapse.formatted_image.domain" />
+            <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
+            <call method="setValidator"><argument type="service" id="validator" /></call>
+        </service>
+
+        <!-- Image Orm Repository -->
+        <service id="synapse.image.orm_repository" parent="majora.doctrine_repository.abstract" public="true"
+            class="Synapse\Cmf\Framework\Media\Image\Repository\Doctrine\DoctrineRepository"
+        >
+            <factory service="doctrine" method="getRepository" />
+            <tag name="kernel.event_subscriber" />
+            <argument>Synapse:Image</argument>
+            <argument>synapse</argument>
+        </service>
+
+    </services>
+
+</container>

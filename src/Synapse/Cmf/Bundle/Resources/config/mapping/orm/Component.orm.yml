@@ -1,0 +1,45 @@
+Synapse\Cmf\Bundle\Entity\Orm\Component:
+    type: entity
+    repositoryClass: Synapse\Cmf\Framework\Theme\Component\Repository\Doctrine\DoctrineRepository
+    table: synapse_component
+    actAs:
+        Timestampable: ~
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    indexes:
+        component_type_index:
+            columns: [ component_type_id ]
+    fields:
+        componentTypeId:
+            type: string
+            column: component_type_id
+        data:
+            type: json_array
+        ranking:
+            type: integer
+            options:
+                default: 99
+        createdAt:
+            type: datetime
+            column: created_at
+            gedmo:
+                timestampable:
+                    on: create
+        updatedAt:
+            type: datetime
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    manyToOne:
+        zone:
+            targetEntity: Zone
+            nullable: true
+            inversedBy: components
+            joinColumn:
+                name: zone_id
+                referencedColumnName: id
+                onDelete: cascade
+            cascade: ['persist']

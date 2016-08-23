@@ -1,0 +1,6 @@
+Synapse\Cmf\Framework\Theme\Component\Entity\Component:
+    group_sequence:
+        - Component
+        - creation
+        - edition
+    properties: ~

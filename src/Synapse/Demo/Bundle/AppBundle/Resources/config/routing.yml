@@ -1,0 +1,8 @@
+# Page content type
+synapse_content_type_page:
+    path: "/{path}.{_format}"
+    defaults:
+        _controller: "SynapseDemoAppBundle:PageContent:render"
+        _format: html
+    requirements:
+        path: "[^.]*"

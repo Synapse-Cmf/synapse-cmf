@@ -1,0 +1,85 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- Theme extension -->
+        <service id="synapse.theme.extension" class="Synapse\Cmf\Bundle\Form\Extension\ThemeExtension">
+            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FormType" />
+            <argument type="service" id="synapse.theme.loader" />
+            <argument type="service" id="synapse.content.resolver" />
+        </service>
+
+        <!-- Theme general type -->
+        <service id="synapse.theme.type" class="Synapse\Cmf\Bundle\Form\Type\Framework\ThemeType">
+            <tag name="form.type" />
+            <argument type="service" id="synapse.variation.resolver" />
+        </service>
+
+        <!-- Template general type -->
+        <service id="synapse.template.type" class="Synapse\Cmf\Bundle\Form\Type\Framework\TemplateType">
+            <tag name="form.type" />
+            <argument type="service" id="synapse.template.loader" />
+        </service>
+
+        <!-- Template form types -->
+        <service id="synapse.template.global_creation_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Template\GlobalCreationType">
+            <tag name="form.type" />
+            <argument type="service" id="synapse.template.domain" />
+            <argument type="service" id="synapse.content_type.loader" />
+            <argument type="service" id="synapse.template_type.loader" />
+        </service>
+
+        <service id="synapse.template.local_creation_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Template\LocalCreationType">
+            <tag name="form.type" />
+            <argument type="service" id="synapse.template.domain" />
+        </service>
+
+        <service id="synapse.template.edition_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Template\EditionType">
+            <tag name="form.type" />
+            <argument type="service" id="synapse.template.domain" />
+        </service>
+
+        <!-- Zone edition type -->
+        <service id="synapse.zone.edition_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\ZoneType">
+            <tag name="form.type" />
+            <argument type="service" id="synapse.zone.domain" />
+            <argument type="service" id="synapse.variation.resolver" />
+        </service>
+
+        <!-- Component form types -->
+        <service id="synapse.component.edition_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Component\EditionType">
+            <tag name="form.type" />
+            <argument type="service" id="synapse.component.domain" />
+        </service>
+        <service id="synapse.component.creation_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Component\CreationType">
+            <tag name="form.type" />
+            <argument type="service" id="synapse.component.domain" />
+            <argument type="service" id="synapse.component_type.loader" />
+        </service>
+
+        <!-- Image form type -->
+        <service id="synapse.image.form_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Media\ImageType">
+            <tag name="form.type" />
+            <argument type="service" id="synapse.image.domain" />
+        </service>
+
+        <!-- Image Choice form type -->
+        <service id="synapse.image_choice.form_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Media\ImageChoiceType">
+            <tag name="form.type" />
+            <argument type="service" id="synapse.image.loader" />
+            <argument type="service" id="synapse.image_format.loader" />
+        </service>
+
+        <!-- Image format form type -->
+        <service id="synapse.image.format.form_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Media\FormatType">
+            <tag name="form.type" />
+            <argument type="service" id="synapse.image.domain" />
+        </service>
+
+    </services>
+
+</container>

@@ -1,0 +1,98 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- Template Orm Loader -->
+        <service id="synapse.template.orm_loader" parent="majora.loader.abstract" public="true" lazy="true"
+            class="Synapse\Cmf\Bundle\Loader\Orm\TemplateOrmLoader"
+        >
+            <tag name="majora.loader"
+                entity="Synapse\Cmf\Bundle\Entity\Orm\Template"
+                collection="Synapse\Cmf\Framework\Theme\Template\Entity\TemplateCollection"
+                repository="synapse.template.orm_repository"
+                lazy="true"
+            />
+            <argument type="service" id="synapse.template_type.loader" />
+            <argument type="service" id="synapse.content_type.loader" />
+        </service>
+        <service id="synapse.template.loader" alias="synapse.template.orm_loader" />
+
+        <!-- Template Orm Repository -->
+        <service id="synapse.template.orm_repository" parent="majora.doctrine_repository.abstract" public="true"
+            class="Synapse\Cmf\Framework\Theme\Template\Repository\Doctrine\DoctrineRepository"
+        >
+            <factory service="doctrine" method="getRepository" />
+            <tag name="kernel.event_subscriber" />
+            <argument>Synapse:Template</argument>
+            <argument>synapse</argument>
+        </service>
+
+        <!-- Template Domain -->
+        <service id="synapse.template.domain" public="true"
+            class="Synapse\Cmf\Framework\Theme\Template\Domain\Action\ActionDispatcherDomain"
+        >
+            <argument type="service" id="synapse.template.action_factory" />
+            <argument type="service" id="synapse.content.resolver" />
+            <argument type="service" id="synapse.content_type.loader" />
+            <argument type="service" id="synapse.template_type.loader" />
+        </service>
+
+        <!-- Template Dal action factory -->
+        <service id="synapse.template.dal_action_factory" public="false"
+            class="Majora\Framework\Domain\Action\ActionFactory"
+        >
+            <tag name="majora.domain.action_factory" namespace="synapse.template.dal" />
+            <tag name="majora.alias" alias="synapse.template.action_factory" />
+        </service>
+
+        <!-- Template abstract dal action -->
+        <service id="synapse.template.abstract_dal_action" parent="majora.domain.abstract_action" abstract="true"
+            class="Synapse\Cmf\Framework\Theme\Template\Action\Dal\AbstractDalAction"
+        />
+
+        <!-- Template Dal creation action -->
+        <service id="synapse.template.dal_creation_action" public="false" abstract="true"
+            parent="synapse.template.abstract_dal_action"
+            class="Synapse\Cmf\Framework\Theme\Template\Action\Dal\CreateAction"
+        >
+            <argument type="service" id="synapse.zone.domain" />
+            <argument>Synapse\Cmf\Bundle\Entity\Orm\Template</argument>
+        </service>
+
+        <service id="synapse.template.dal_global_creation_action" public="false"
+            parent="synapse.template.dal_creation_action"
+            class="Synapse\Cmf\Framework\Theme\Template\Action\Dal\CreateGlobalAction"
+        >
+            <tag name="majora.domain.action" namespace="synapse.template.dal" alias="create_global" />
+        </service>
+
+        <service id="synapse.template.dal_local_creation_action" public="false"
+            parent="synapse.template.dal_creation_action"
+            class="Synapse\Cmf\Framework\Theme\Template\Action\Dal\CreateLocalAction"
+        >
+            <tag name="majora.domain.action" namespace="synapse.template.dal" alias="create_local" />
+        </service>
+
+        <!-- Template Dal edition action -->
+        <service id="synapse.template.dal_edition_action"  public="false"
+            parent="synapse.template.abstract_dal_action"
+            class="Synapse\Cmf\Framework\Theme\Template\Action\Dal\UpdateAction"
+        >
+            <tag name="majora.domain.action" namespace="synapse.template.dal" alias="update" />
+        </service>
+
+        <!-- Template Dal deletion action -->
+        <service id="synapse.template.dal_deletion_action" public="false"
+            parent="synapse.template.abstract_dal_action"
+            class="Synapse\Cmf\Framework\Theme\Template\Action\Dal\DeleteAction"
+        >
+            <tag name="majora.domain.action" namespace="synapse.template.dal" alias="delete" />
+        </service>
+
+    </services>
+
+</container>

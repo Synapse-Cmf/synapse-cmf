@@ -1,0 +1,13 @@
+{% extends 'SynapseDemoThemeBundle::layout.html.twig' %}
+
+{% block meta %}
+  {% for meta_name, meta_content in page.meta %}
+      <meta name="{{ meta_name }}" content="{{ meta_content }}">
+  {% endfor %}
+  <title>{{ page.meta['title'] is not empty ? page.meta['title'] : page.title }}</title>
+{% endblock %}
+
+{% block content %}
+  {{ parent() }}
+  {{ dump() }}
+{% endblock %}

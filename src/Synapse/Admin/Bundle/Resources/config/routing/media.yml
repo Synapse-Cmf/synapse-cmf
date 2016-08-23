@@ -1,0 +1,13 @@
+# media list
+synapse_admin_media_list:
+    path: /
+    defaults:
+        _controller: "synapse.media.admin_controller:listAction"
+
+# ajax media upload
+synapse_admin_media_xhr_upload:
+    path: /xhr/upload
+    defaults:
+        _controller: 'synapse.media.admin_controller:xhrFileUploadAction'
+    requirements:
+        _method: POST

@@ -1,0 +1,20 @@
+# image edition
+synapse_admin_image_edition:
+    path: /{id}/edit
+    defaults:
+        _controller: "synapse.image.admin_controller:editAction"
+    methods:
+        - GET
+        - POST
+    requirements:
+        id: \d+
+
+# ajax image formatting
+synapse_admin_image_xhr_format:
+    path: /{id}/xhr/format/{formatName}
+    defaults:
+        _controller: 'synapse.image.admin_controller:xhrFormatAction'
+    requirements:
+        _method: POST
+        id: \d+
+        formatName: \w+

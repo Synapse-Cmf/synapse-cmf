@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- TemplateType InMemory Loader -->
+        <service id="synapse.template_type.in_memory_loader" parent="majora.loader.abstract" public="false" lazy="true"
+            class="Synapse\Cmf\Framework\Theme\TemplateType\Loader\InMemory\InMemoryLoader"
+        >
+            <!-- <tag name="majora.loader.in_memory" file="@SynapseCmfBundle/Resources/data/template_type.yml" /> -->
+            <!-- <tag name="majora.loader.in_memory" parameter="synapse.template_type.data" /> -->
+            <argument>Synapse\Cmf\Framework\Theme\TemplateType\Entity\TemplateTypeCollection</argument>
+            <argument type="service" id="majora.normalizer" />
+            <argument type="service" id="synapse.zone_type.loader" />
+        </service>
+        <service id="synapse.template_type.loader" alias="synapse.template_type.in_memory_loader" />
+
+    </services>
+
+</container>

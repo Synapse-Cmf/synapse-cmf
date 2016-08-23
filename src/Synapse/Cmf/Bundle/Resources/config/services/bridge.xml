@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- Theme matcher -->
+        <service id="synapse.theme.matcher" class="Synapse\Cmf\Bundle\Distribution\Theme\Listener\ThemeActivationListener">
+            <tag name="kernel.event_subscriber" />
+            <argument type="service" id="router" />
+            <argument type="service" id="synapse" />
+            <argument type="service">
+                <service class="Symfony\Component\ExpressionLanguage\ExpressionLanguage" />
+            </argument>
+        </service>
+
+        <!-- Twig extension -->
+        <service id="synapse.twig.extension" class="Synapse\Cmf\Framework\Engine\Bridge\Twig\Extension" public="false">
+            <tag name="twig.extension" />
+            <argument type="service" id="synapse.zone.renderer" />
+        </service>
+
+        <!-- Component request listener -->
+        <service id="synapse.listener.component_request"
+            class="Synapse\Cmf\Bundle\Distribution\Component\Listener\ComponentRequestListener"
+        >
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+            <argument type="service" id="synapse.context.stack" />
+            <argument type="service" id="synapse.component.decorator" />
+            <argument type="service" id="synapse.context.normalizer" />
+        </service>
+
+    </services>
+
+</container>

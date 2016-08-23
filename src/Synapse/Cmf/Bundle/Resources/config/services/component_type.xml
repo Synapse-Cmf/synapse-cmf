@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- ComponentType InMemory Loader -->
+        <service id="synapse.component_type.in_memory_loader" parent="majora.loader.abstract" public="false"
+            class="Synapse\Cmf\Framework\Theme\ComponentType\Loader\InMemory\InMemoryLoader"
+        >
+            <argument>Synapse\Cmf\Framework\Theme\ComponentType\Entity\ComponentTypeCollection</argument>
+            <argument type="service" id="majora.normalizer" />
+        </service>
+        <service id="synapse.component_type.loader" alias="synapse.component_type.in_memory_loader" />
+
+    </services>
+
+</container>

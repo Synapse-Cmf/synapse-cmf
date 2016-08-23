@@ -1,0 +1,9 @@
+Synapse\Cmf\Framework\Theme\Zone\Entity\Zone:
+    group_sequence:
+        - Zone
+        - creation
+        - edition
+    properties: ~
+        # example:
+        #     - NotBlank:
+        #         groups: [creation]

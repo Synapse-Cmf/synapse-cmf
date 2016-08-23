@@ -1,0 +1,43 @@
+{
+  "name": "synapse-admin-theme",
+  "version": "1.0.0",
+  "description": "Admin theme for Synapse project",
+  "main": "index.html",
+  "scripts": {
+    "build": "parallelshell 'npm run build:js' 'npm run build:scss'",
+    "build:js": "gulp js",
+    "build:scss": "gulp scss",
+    "watch": "parallelshell 'npm run watch:js' 'npm run watch:scss'",
+    "watch:js": "gulp js:watch",
+    "watch:scss": "gulp scss:watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nyxis",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "cropper": "^2.3.2",
+    "dropzone": "~4.3",
+    "jquery": "2.2.4",
+    "majora-admin-theme": "LinkValue/MajoraAdminTheme#develop",
+    "select2": "^4.0.3",
+    "select2-bootstrap-theme": "0.1.0-beta.8"
+  },
+  "devDependencies": {
+    "bower": "^1.6.5",
+    "browser-sync": "^2.12.8",
+    "cssnano": "^3.6.2",
+    "gulp": "~3.9",
+    "gulp-concat": "*",
+    "gulp-css-url-adjuster": "*",
+    "gulp-rename": "*",
+    "gulp-sass": "*",
+    "gulp-uglify": "*",
+    "merge-stream": "*",
+    "node-sass": "^3.*",
+    "nodemon": "^1.9.2",
+    "parallelshell": "^2.0.0",
+    "postcss-cli": "^2.5.2",
+    "uglify-js": "^2.6.2"
+  }
+}

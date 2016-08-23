@@ -1,0 +1,70 @@
+{
+    "name": "majora/synapse-dev",
+    "description": "The development version of Synapse CMF by LinkValue",
+    "autoload": {
+        "psr-4": { "": "src" },
+        "classmap": [
+            "apps/demo/AppKernel.php", "apps/demo/AppCache.php"
+        ]
+    },
+    "require": {
+        "php": ">=5.5.9",
+        "symfony/symfony": "~3.1",
+        "symfony/swiftmailer-bundle": "^2.3",
+        "symfony/monolog-bundle": "^2.8",
+        "doctrine/orm": "~2.5",
+        "doctrine/doctrine-bundle": "~1.6",
+        "doctrine/doctrine-cache-bundle": "~1.2",
+        "doctrine/doctrine-migrations-bundle": "~1.1",
+        "stof/doctrine-extensions-bundle": "~1.2",
+        "sensio/distribution-bundle": "^5.0",
+        "sensio/framework-extra-bundle": "^3.0.2",
+        "majora/framework-extra-bundle": "~1.3",
+        "incenteev/composer-parameter-handler": "^2.0",
+        "imagine/imagine": "~0.6"
+    },
+    "require-dev": {
+        "sensio/generator-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^3.0",
+        "phpunit/phpunit": "^5.1",
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "majora/generator-bundle": "dev-master"
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "SymfonyStandard\\Composer::hookRootPackageInstall"
+        ],
+        "setup-bootstrap": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap"
+        ],
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles"
+        ]
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "symfony-app-dir": "apps",
+        "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
+        "symfony-web-dir": "web",
+        "symfony-tests-dir": "tests",
+        "symfony-assets-install": "relative",
+        "incenteev-parameters": {
+            "file": "apps/demo/config/parameters.yml"
+        },
+        "branch-alias": {
+            "dev-master": "3.0-dev"
+        }
+    }
+}

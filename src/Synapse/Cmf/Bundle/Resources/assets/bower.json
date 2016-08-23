@@ -1,0 +1,10 @@
+{
+  "name": "synapse-admin-theme",
+  "version": "1.0.0",
+  "description": "Admin theme for Synapse project",
+  "author": "Nyxis",
+  "license": "MIT",
+  "dependencies": {
+    "ckeditor": "#basic/4.5.9"
+  }
+}

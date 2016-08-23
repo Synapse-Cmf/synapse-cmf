@@ -1,0 +1,62 @@
+synapse:
+    bootstrap:
+        structure:
+            page:  &page
+                top:
+                    free: ~
+                jumbotron:
+                    text: ~
+                    free: ~
+                    static: ~
+                content:
+                    text: ~
+                    free: ~
+                    static: ~
+                footer:
+                    free: ~
+            demo:
+                jumbotron:
+                    text: ~
+                    free: ~
+                content:
+                    text: ~
+                    free: ~
+
+        templates:
+            demo:
+                path: "SynapseDemoThemeBundle:Template:page.html.twig"
+            page:
+                path: "SynapseDemoThemeBundle:Template:page.html.twig"
+
+        zones:
+            top:
+                main: false
+                virtual: true
+                aggregation: inline
+            jumbotron: ~
+            content: ~
+            footer: ~
+
+        components:
+            text:
+                config:
+                    html: ~
+                variations:
+                    jumbotron:
+                        _if: "zone == 'jumbotron'"
+                        _then:
+                            config:
+                                html: true
+            static:
+                config:
+                    templates:
+                        default: SynapseCmfBundle:Component:static.html.twig
+                        logo: SynapseDemoThemeBundle:Component:static-logo.html.twig
+            free:
+                path: SynapseDemoThemeBundle:Component:free.html.twig
+                config: ~
+                variations:
+                    jumbotron:
+                        _if: "zone == 'jumbotron'"
+                        _then:
+                            path: "SynapseDemoThemeBundle:Component:free-jumbotron.html.twig"

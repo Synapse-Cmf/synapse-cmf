@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- image Format InMemory Loader -->
+        <service id="synapse.image_format.in_memory_loader" parent="majora.loader.abstract" public="false" lazy="true"
+            class="Synapse\Cmf\Framework\Media\Format\Loader\InMemory\InMemoryLoader"
+        >
+            <argument>Synapse\Cmf\Framework\Media\Format\Entity\FormatCollection</argument>
+            <argument type="service" id="majora.normalizer" />
+        </service>
+        <service id="synapse.image_format.loader" alias="synapse.image_format.in_memory_loader" />
+
+    </services>
+
+</container>

@@ -1,0 +1,44 @@
+Synapse\Cmf\Bundle\Entity\Orm\FormattedImage:
+    type: entity
+    repositoryClass: Synapse\Cmf\Framework\Media\FormattedImage\Repository\Doctrine\DoctrineRepository
+    table: synapse_image_formatted
+    actAs:
+        Timestampable: ~
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        formatId:
+            type: string
+            column: format
+        origin:
+            type: json_array
+        createdAt:
+            type: datetime
+            column: created_at
+            gedmo:
+                timestampable:
+                    on: create
+        updatedAt:
+            type: datetime
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+    manyToOne:
+        file:
+            targetEntity: File
+            joinColumn:
+                name: file_id
+                referencedColumnName: id
+                onDelete: cascade
+            cascade: ['persist']
+        image:
+            targetEntity: Image
+            inversedBy: formattedImages
+            joinColumn:
+                name: image_id
+                referencedColumnName: id
+                onDelete: cascade
+            cascade: ['persist']

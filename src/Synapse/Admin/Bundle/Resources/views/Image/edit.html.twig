@@ -1,0 +1,148 @@
+{% extends 'SynapseAdminBundle::layout.html.twig' %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="breadcrumb">
+        <li>
+          <a href="{{ path('synapse_admin_media_list') }}">
+            <i class="fa fa-picture-o"></i>
+            Images
+          </a>
+        </li>
+        <li class="active">{{ image.name | humanize }}</li>
+        <li class="active">edit</li>
+      </ul>
+    </div>
+  </div>
+
+  {{ form_start(form) }}
+  <div class="row-fluid">
+    <div class="col-fix">
+      <div class="button-bar" data-spy="affix" data-offset-top="55">
+        <a href="#form-general" class="btn btn-big btn-danger">
+          <i class="fa fa-2x fa-picture-o"></i>
+          General
+        </a>
+        <a href="#form-formats" class="btn btn-big btn-danger">
+          <i class="fa fa-2x fa-crop"></i>
+          Formats
+        </a>
+      </div>
+    </div>
+    <div class="col-fill synapse-image-format">
+      <div class="panel">
+        <header class="panel-heading composed bg-main">
+          <a href class="combo">
+            <i class="fa fa-picture-o"></i>
+          </a>
+          <h3>General</h3>
+        </header>
+        <div class="panel-body">
+          {{ form_widget(form) }}
+        </div>
+      </div>
+      <div class="panel">
+        <header class="panel-heading composed bg-main">
+          <a href class="combo">
+            <i class="fa fa-crop"></i>
+          </a>
+          <h3>Formats</h3>
+        </header>
+        <div class="panel-signets reverse">
+          <ul class="signets-list">
+            <li class="signet active">
+              <a href="#format-origin" role="tab" data-toggle="tab">
+                <i class="icon fa fa-cloud-upload"></i>
+                Origin
+              </a>
+            </li>
+          {% for format in theme.imageFormats %}
+            <li class="signet">
+              <a href="#format-{{ format.name }}" role="tab" data-toggle="tab">
+                <i class="icon fa fa-arrows-alt"></i>
+                {{ format.name | humanize }}
+              </a>
+            </li>
+          {% endfor %}
+          </ul>
+          <div class="panel-body tab-content">
+            <div id="format-origin" class="tab-pane active">
+              <p class="lead">Original image</p>
+              <div class="image-container">
+                <img src="{{ asset(image.webPath) }}" />
+              </div>
+            </div>
+            {% for format in theme.imageFormats %}
+            <div id="format-{{ format.name }}" class="format-container tab-pane tab-content">
+              {% set formattedImage = image.formattedImage(format) %}
+              <div id="format-{{ format.name }}-current"
+                class="display-area tab-pane {{ formattedImage is not empty ? 'active' : '' }}"
+                data-assets-prefix="{{ asset('/') }}"
+              >
+                <p class="lead">"{{ format.name|humanize }}" formatted image</p>
+                <div class="image-container formatted-image">
+                {% if formattedImage is not empty %}
+                  <img src="{{ asset(formattedImage.webPath) }}" />
+                {% endif %}
+                </div>
+                <div class="format-action-bar clearfix">
+                  <div class="pull-left btn-group" role="group">
+                    <a href="#format-{{ format.name }}-crop"  role="tab" data-toggle="tab" class="btn btn-primary">
+                      <i class="fa fa-crop"></i>
+                      Re-crop
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div id="format-{{ format.name }}-crop"
+                class="cropping-area tab-pane {{ formattedImage is empty ? 'active' : '' }}"
+                data-ratio="{{ format.width / format.height }}"
+                data-format-endpoint="{{ path('synapse_admin_image_xhr_format', { id: image.id, formatName: format.name }) }}"
+              >
+                <p class="lead">Crop image in "{{ format.name|humanize }}" format</p>
+                <div class="image-container">
+                  <img id="crop-{{ format.name }}" src="{{ asset(image.webPath) }}" />
+                </div>
+                <div class="format-action-bar clearfix">
+                  <div class="pull-left">
+                    <a href="#" class="validate-crop btn btn-primary">
+                      <i class="fa fa-check"></i>
+                      Validate
+                    </a>
+                    <a href="#" class="spinner-crop hidden btn btn-warning">
+                      <i class="fa fa-spinner fa-spin fa-fw"></i>
+                      Processing...
+                    </a>
+                  </div>
+                  <div class="pull-right">
+                    <a href="#format-{{ format.name }}-current" role="tab" data-toggle="tab" class="cancel-crop btn btn-warning">
+                      <i class="fa fa-times"></i>
+                      Cancel
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-fix">
+      <div class="button-bar" data-spy="affix" data-offset-top="55">
+        <a class="btn btn-big btn-warning" href="{{ path('synapse_admin_media_list') }}">
+          <i class="fa fa-times"></i>
+          <span>Cancel</span>
+        </a>
+        <button class="btn btn-big btn-primary" type="submit">
+          <i class="fa fa-2x fa-check"></i>
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+  {{ form_end(form) }}
+{% endblock %}

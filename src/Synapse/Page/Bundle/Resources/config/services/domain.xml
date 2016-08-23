@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- Page Loader -->
+        <service id="synapse.page.loader" class="Synapse\Page\Bundle\Loader\Doctrine\DoctrineLoader">
+            <tag name="majora.loader"
+                entity="Synapse\Page\Bundle\Entity\Page"
+                collection="Synapse\Page\Bundle\Entity\PageCollection"
+                repository="synapse.page.repository"
+            />
+        </service>
+
+        <!-- Page Domain -->
+        <service id="synapse.page.domain" class="Synapse\Page\Bundle\Domain\Action\ActionDispatcherDomain">
+            <argument type="service">
+                <service class="Majora\Framework\Domain\Action\ActionFactory">
+                    <argument type="collection">
+                        <argument key="create" type="service" id="synapse.page.creation_action" />
+                        <argument key="update" type="service" id="synapse.page.edition_action" />
+
+                        <!-- Page deletion action -->
+                        <argument key="delete" type="service">
+                            <service class="Synapse\Page\Bundle\Action\DeleteAction">
+                                <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
+                            </service>
+                        </argument>
+                    </argument>
+                </service>
+            </argument>
+        </service>
+
+        <!-- Page creation action -->
+        <service id="synapse.page.creation_action" public="false"
+            class="Synapse\Page\Bundle\Action\CreateAction"
+        >
+            <argument type="service">
+                <service class="Synapse\Page\Bundle\Generator\SluggedPathGenerator">
+                    <argument type="service" id="majora.inflector" />
+                </service>
+            </argument>
+            <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
+            <call method="setValidator"><argument type="service" id="validator" /></call>
+        </service>
+
+        <!-- Page edition action -->
+        <service id="synapse.page.edition_action" public="false"
+            class="Synapse\Page\Bundle\Action\UpdateAction"
+        >
+            <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
+            <call method="setValidator"><argument type="service" id="validator" /></call>
+        </service>
+
+        <!-- Page Repository -->
+        <service id="synapse.page.doctrine_repository" public="true"
+            class="Synapse\Page\Bundle\Repository\Doctrine\DoctrineTreeRepository"
+        >
+            <factory service="doctrine" method="getRepository" />
+            <tag name="kernel.event_subscriber" />
+            <argument>SynapsePage:Page</argument>
+            <argument>synapse</argument>
+        </service>
+        <service id="synapse.page.repository" alias="synapse.page.doctrine_repository" />
+
+    </services>
+
+</container>

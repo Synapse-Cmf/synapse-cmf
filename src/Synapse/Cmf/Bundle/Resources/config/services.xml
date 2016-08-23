@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <imports>
+        <!-- media -->
+        <import resource="services/file.xml" />
+        <import resource="services/image_format.xml" />
+        <import resource="services/formatted_image.xml" />
+        <import resource="services/image.xml" />
+        <import resource="services/media.xml" />
+
+        <!-- theme -->
+        <import resource="services/component_type.xml" />
+        <import resource="services/component.xml" />
+        <import resource="services/zone_type.xml" />
+        <import resource="services/zone.xml" />
+        <import resource="services/template_type.xml" />
+        <import resource="services/template.xml" />
+        <import resource="services/content_type.xml" />
+        <import resource="services/content.xml" />
+        <import resource="services/theme.xml" />
+
+        <!-- engine -->
+        <import resource="services/engine.xml" />
+
+        <!-- bridge -->
+        <import resource="services/bridge.xml" />
+        <import resource="services/forms.xml" />
+    </imports>
+
+<!--
+    <services>
+
+    </services>
+ -->
+</container>

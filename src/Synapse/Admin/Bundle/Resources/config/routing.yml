@@ -1,0 +1,23 @@
+# Skeletons
+synapse_admin_skeleton:
+    resource: "routing/skeleton.yml"
+    prefix: /skeletons
+
+# Zones
+synapse_admin_zone:
+    resource: "routing/zone.yml"
+    prefix: /zones
+
+# Components
+synapse_admin_component:
+    resource: "routing/component.yml"
+    prefix: /components
+
+# Medias
+synapse_admin_media:
+    resource: "routing/media.yml"
+    prefix: /medias
+
+synapse_admin_image:
+    resource: "routing/image.yml"
+    prefix: /medias/images

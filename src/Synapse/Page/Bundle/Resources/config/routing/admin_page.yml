@@ -1,0 +1,36 @@
+# page list
+synapse_admin_page_list:
+    path: /
+    defaults:
+        _controller: "synapse.page.admin_controller:listAction"
+
+# page creation
+synapse_admin_page_creation:
+    path: /create
+    defaults:
+        _controller: "synapse.page.admin_controller:createAction"
+    methods:
+        - GET
+        - POST
+
+# page edition
+synapse_admin_page_edition:
+    path: /{id}/edit
+    defaults:
+        _controller: "synapse.page.admin_controller:editAction"
+    methods:
+        - GET
+        - POST
+    requirements:
+        id: \d+
+
+# page preview
+synapse_admin_page_preview:
+    path: /{id}/preview
+    defaults:
+        _controller: "SynapsePageBundle:PageContent:preview"
+    methods:
+        - GET
+    requirements:
+        id: \d+
+

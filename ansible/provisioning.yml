@@ -1,0 +1,15 @@
+---
+
+- hosts: local
+  sudo: yes
+  roles:
+    - etc-hosts
+    - ssh-forward
+    - common-packages
+    - nginx
+    - mysql
+    - php
+    - oh-my-zsh
+  vars_files:
+    - vars.yml
+    - vars.local.yml

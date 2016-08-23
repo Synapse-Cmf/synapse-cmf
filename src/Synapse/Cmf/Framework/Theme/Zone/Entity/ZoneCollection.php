@@ -1,0 +1,36 @@
+<?php
+
+namespace Synapse\Cmf\Framework\Theme\Zone\Entity;
+
+use Majora\Framework\Model\EntityCollection;
+
+/**
+ * Zone entity collection class.
+ */
+class ZoneCollection extends EntityCollection
+{
+    /**
+     * @see EntityCollection::getEntityClass()
+     */
+    public function getEntityClass()
+    {
+        return Zone::class;
+    }
+
+    /**
+     * Sort zones by zone type order, ascending order.
+     *
+     * @return ZoneCollection
+     */
+    public function sortByZoneType()
+    {
+        return $this->sort(function (Zone $zone1, Zone $zone2) {
+            $zone1Order = $zone1->getZoneType()->getOrder();
+            $zone2Order = $zone2->getZoneType()->getOrder();
+
+            // implement alpha sort on name if equal ?
+
+            return $zone1Order >= $zone2Order ? 1 : -1;
+        });
+    }
+}

@@ -1,0 +1,8 @@
+# Synapse Admin
+synapse_admin:
+    resource: "@SynapseAdminBundle/Resources/config/routing.yml"
+
+# Page Admin
+synapse_admin_page:
+    resource: "admin_page.yml"
+    prefix: /pages

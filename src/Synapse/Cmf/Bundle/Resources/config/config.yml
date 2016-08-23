@@ -1,0 +1,52 @@
+#
+# This config file purpose is to define default config values for all required bundles
+# like MajoraFrameworkExtraBundle or Doctrine
+#
+
+# Default Synapse Cmf configuration
+synapse_cmf:
+    components:
+        free:
+            form: Synapse\Cmf\Bundle\Form\Type\Component\FreeType
+            controller: SynapseCmfBundle:FreeComponent:render
+            template_path: SynapseCmfBundle:Component:free.html.twig
+        static:
+            form: Synapse\Cmf\Bundle\Form\Type\Component\StaticType
+            controller: SynapseCmfBundle:StaticComponent:render
+            template_path: SynapseCmfBundle:Component:static.html.twig
+        text:
+            form: Synapse\Cmf\Bundle\Form\Type\Component\TextType
+            controller: SynapseCmfBundle:TextComponent:render
+            template_path: SynapseCmfBundle:Component:text.html.twig
+        menu:
+            form: Synapse\Cmf\Bundle\Form\Type\Component\MenuType
+            controller: SynapseCmfBundle:MenuComponent:render
+            template_path: SynapseCmfBundle:Component:menu.html.twig
+        gallery:
+            form: Synapse\Cmf\Bundle\Form\Type\Component\GalleryType
+            controller: SynapseCmfBundle:GalleryComponent:render
+            template_path: SynapseCmfBundle:Component:gallery.html.twig
+
+# MajoraFrameworkExtraBundle Configuration
+majora_framework_extra:
+    doctrine_events_proxy:
+        enabled: true
+
+# Doctrine
+doctrine:
+    orm:
+        entity_managers:
+            synapse:
+                connection: synapse
+                mappings:
+                    SynapseCmfBundle:
+                        type: yml
+                        dir: Resources/config/mapping/orm
+                        prefix: Synapse\Cmf\Bundle\Entity\Orm
+                        alias: Synapse
+
+# Doctrine behaviors
+stof_doctrine_extensions:
+    orm:
+        synapse:
+            timestampable: true

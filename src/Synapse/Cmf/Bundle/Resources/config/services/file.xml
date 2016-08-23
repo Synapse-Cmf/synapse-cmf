@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- File loader -->
+        <service id="synapse.file.orm_loader" parent="majora.loader.abstract" public="true" lazy="true"
+            class="Synapse\Cmf\Bundle\Loader\Orm\FileOrmLoader"
+        >
+            <tag name="majora.loader"
+                entity="Synapse\Cmf\Bundle\Entity\Orm\File"
+                collection="Synapse\Cmf\Framework\Media\File\Entity\FileCollection"
+                repository="synapse.file.orm_repository"
+                lazy="true"
+            />
+            <argument type="service" id="filesystem" />
+            <argument>%synapse.media_store.physical_path%</argument>
+        </service>
+        <service id="synapse.file.loader" alias="synapse.file.orm_loader" />
+
+        <!-- File Domain -->
+        <service id="synapse.file.domain" class="Synapse\Cmf\Framework\Media\File\Domain\Action\ActionDispatcherDomain">
+            <argument type="service">
+                <service class="Majora\Framework\Domain\Action\ActionFactory">
+                    <argument type="collection">
+                        <argument key="upload" type="service" id="synapse.file.upload_action" />
+                        <argument key="create" type="service" id="synapse.file.create_action" />
+                    </argument>
+                </service>
+            </argument>
+        </service>
+
+        <!-- Actions -->
+        <service id="synapse.file.abstract_action" abstract="true" public="false"
+            class="Synapse\Cmf\Framework\Media\File\Action\AbstractAction"
+        >
+            <argument type="service" id="synapse.file.loader" />
+            <argument type="service" id="filesystem" />
+            <argument type="service" id="majora.inflector" />
+            <argument>%synapse.media_store.physical_path%</argument>
+            <argument>Synapse\Cmf\Bundle\Entity\Orm\File</argument>
+            <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
+            <call method="setValidator"><argument type="service" id="validator" /></call>
+        </service>
+        <service id="synapse.file.create_action" parent="synapse.file.abstract_action"
+            class="Synapse\Cmf\Framework\Media\File\Action\Dal\CreateAction"
+        />
+        <service id="synapse.file.upload_action" parent="synapse.file.create_action"
+            class="Synapse\Cmf\Framework\Media\File\Action\Dal\UploadAction"
+        />
+
+        <!-- File Orm Repository -->
+        <service id="synapse.file.orm_repository" parent="majora.doctrine_repository.abstract" public="true"
+            class="Synapse\Cmf\Framework\Media\File\Repository\Doctrine\DoctrineRepository"
+        >
+            <factory service="doctrine" method="getRepository" />
+            <tag name="kernel.event_subscriber" />
+            <argument>Synapse:File</argument>
+            <argument>synapse</argument>
+        </service>
+
+    </services>
+
+</container>

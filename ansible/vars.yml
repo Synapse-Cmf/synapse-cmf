@@ -1,0 +1,44 @@
+workspace: /var/www/Synapse
+
+timezone: Europe/Paris
+
+sites:
+  - { name: 'synapse',
+      docroot: '/var/www/Synapse/web',
+      server_name: 'synapse.dev',
+      template: 'vhost.symfony.j2',
+      app_name: 'demo'
+    }
+  - { name: 'admin-synapse',
+      docroot: '/var/www/Synapse/web',
+      server_name: 'admin-synapse.dev',
+      template: 'vhost.symfony.j2',
+      app_name: 'demo'
+    }
+
+fpm_pools:
+    - { name: 'www', user: 'vagrant', group: 'vagrant' }
+
+php_extensions:
+  - php5.6-common
+  - php5.6-curl
+  - php5.6-imagick
+  - php5.6-imap
+  - php5.6-intl
+  - php5.6-json
+  - php5.6-mbstring
+  - php5.6-mcrypt
+  - php5.6-mysql
+  - php5.6-phpdbg
+  - php5.6-readline
+  - php5.6-xdebug
+  - php5.6-xml
+  - php5.6-zip
+
+mysql:
+  databases:
+    - { name: 'synapse' }
+  users:
+    - { name: 'synapse', host: '%' }
+
+etc_hosts_lines: []

@@ -1,0 +1,161 @@
+@import "../../node_modules/majora-admin-theme/src/scss/main.scss";
+
+$syn-button-size: 80px;
+$syn-header-height: 60px;
+$syn-generic-margin: 15px;
+
+a.logo {
+  margin-top: 3px;
+  margin-left: -13px;
+  img {
+    height: 2.5em;
+  }
+}
+.form-control {
+    border: 1px solid #cccccc;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  vertical-align: middle;
+}
+
+.dropzone {
+    border: 2px dotted #7087A3;
+}
+.dropzone .dz-default.dz-message{
+    font-size: 14px;
+    font-style: italic;
+    color: #7087A3;
+}
+
+$color-primary-lighter: hsl(323, 63%, 84%);
+$color-primary-light: hsl(176, 58%, 55%);
+$color-primary: hsl(323, 63%, 44%);
+$color-primary-dark: hsl(176, 98%, 25%);
+$color-primary-darker: hsl(323, 63%, 24%);
+
+// vert hsl(63, 94%, 100%)
+// vert hsl(63, 94%, 81%)
+// vert hsl(63, 94%, 61%)
+
+// bleu hsl(323, 63%, 84%)
+// bleu hsl(323, 63%, 44%)
+// bleu foncé hsl(323, 63%, 24%)
+
+.button-bar {
+  text-align: center;
+
+  &.affix {
+    top: $syn-header-height + $syn-generic-margin;
+    position: fixed !important;
+  }
+}
+.button-bar .btn-big {
+  margin-bottom: 10px;
+}
+.col-fix .button-bar {
+  width: $syn-button-size;
+}
+.col-fix .button-bar .btn-big {
+  // display: block;
+}
+.btn-big {
+  text-align: center;
+  width: $syn-button-size;
+  height: $syn-button-size;
+}
+.btn-big i {
+  display: block;
+  font-size: 2em;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.row-fluid {
+  display: flex;
+  flex-direction: row;
+}
+.col-fix,
+.col-fill {
+  position: relative;
+  min-height: 1px;
+}
+
+.col-fix {
+  flex: 0 0 auto;
+  width: $syn-button-size;
+}
+
+.col-fill {
+  flex: 1 1 auto;
+  padding-right: $syn-generic-margin;
+  padding-left: $syn-generic-margin;
+}
+
+.image-container {
+  width: 100%;
+  & > img {
+    max-width: 100%;
+    border: solid 1px $gray-neutral-50;
+  }
+  &.cropping-area > img {
+    width: 100%;
+    border-width: 0px;
+  }
+}
+.format-action-bar {
+  margin: 15px 0;
+}
+
+.synapse-theme-form {
+  .separator {
+    margin-top: 25px;
+    text-align: center;
+    color: $color-bg-main;
+  }
+
+  .zone-form-container {
+    h4 {
+      margin-top: 0;
+    }
+  }
+
+  .component-form-wrapper {
+    background: #F1F1F8;
+
+    border-radius: 5px;
+
+    &:nth-child(n+2) {
+      margin-top: 30px;
+    }
+  }
+
+  .component-form-header {
+    display: flex;
+    padding: 10px;
+    flex-direction: row;
+    align-items: center;
+
+    .center {
+      margin: auto;
+    }
+
+    label,
+    .label {
+      margin-bottom: 0;
+    }
+
+    .action {
+      order: 5;
+    }
+  }
+  .component-form-content {
+    padding: 0 10px 1px;
+  }
+
+  .component-form-toggle .icon {
+    transition: transform 200ms;
+  }
+
+  .component-form-toggle.collapsed .icon {
+    transform: rotate(180deg);
+  }
+}

@@ -1,0 +1,80 @@
+Synapse\Page\Bundle\Entity\Page:
+    type: entity
+    repositoryClass: Synapse\Page\Bundle\Repository\Doctrine\DoctrineTreeRepository
+    table: synapse_page
+    actAs:
+        Timestampable: ~
+    gedmo:
+        tree:
+           type: nested
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    indexes:
+        path_index:
+            columns: [ path ]
+    fields:
+        name:
+            type: string
+        slug:
+            type: string
+        path:
+            type: string
+            unique: true
+        online:
+            type: boolean
+        title:
+            type: string
+        meta:
+            type: json_array
+        openGraph:
+            type: json_array
+            column: open_graph
+        lft:
+            type: integer
+            gedmo:
+                - treeLeft
+        rgt:
+            type: integer
+            gedmo:
+                - treeRight
+        lvl:
+            type: integer
+            gedmo:
+                - treeLevel
+        createdAt:
+            type: datetime
+            column: created_at
+            gedmo:
+                timestampable:
+                    on: create
+        updatedAt:
+            type: datetime
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+            cascade: ['persist', 'remove']
+    manyToOne:
+        root:
+            targetEntity: Page
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+            gedmo:
+                - treeRoot
+        parent:
+            targetEntity: Page
+            inversedBy: children
+            joinColumn:
+                referencedColumnName: id
+                onDelete: CASCADE
+            gedmo:
+                - treeParent
+    oneToMany:
+        children:
+            targetEntity: Page
+            mappedBy: parent
+            orderBy:
+                lft: ASC

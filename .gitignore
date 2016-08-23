@@ -27,6 +27,10 @@
 !bin/symfony_requirements
 /vendor/
 
+# Ansible local roles
+/ansible/roles
+/ansible/vars.local.yml
+
 # Assets and user uploads
 /web/bundles/
 /web/uploads/

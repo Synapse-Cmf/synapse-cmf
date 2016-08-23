@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- Config holder -->
+        <service id="synapse.admin" class="Synapse\Admin\Bundle\SynapseAdmin" public="false">
+            <argument><!-- base layout --></argument>
+        </service>
+
+        <!-- Media admin controller -->
+        <service id="synapse.media.admin_controller" class="Synapse\Admin\Bundle\Controller\MediaAdminController">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <!-- Image admin controller -->
+        <service id="synapse.image.admin_controller" class="Synapse\Admin\Bundle\Controller\ImageAdminController">
+            <tag name="request.param_converter" converter="image" priority="10" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <!-- Twig extension -->
+        <service id="synapse.admin.twig_extension" class="Synapse\Admin\Bundle\Twig\Extension\AdminExtension">
+            <tag name="twig.extension" />
+            <argument type="service" id="synapse.admin" />
+        </service>
+
+    </services>
+
+</container>

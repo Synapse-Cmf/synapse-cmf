@@ -1,0 +1,9 @@
+Synapse\Cmf\Framework\Theme\Template\Entity\Template:
+    group_sequence:
+        - Template
+        - creation
+        - edition
+    properties: ~
+        # example:
+        #     - NotBlank:
+        #         groups: [creation]

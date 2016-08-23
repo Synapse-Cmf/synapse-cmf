@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <!-- Zone Orm Loader -->
+        <service id="synapse.zone.orm_loader" parent="majora.loader.abstract" public="true" lazy="true"
+            class="Synapse\Cmf\Bundle\Loader\Orm\ZoneOrmLoader"
+        >
+            <tag name="majora.loader"
+                entity="Synapse\Cmf\Bundle\Entity\Orm\Zone"
+                collection="Synapse\Template\Component\Entity\ZoneCollection"
+                repository="synapse.zone.orm_repository"
+                lazy="true"
+            />
+            <argument type="service" id="synapse.zone_type.loader" />
+        </service>
+        <service id="synapse.zone.loader" alias="synapse.zone.orm_loader" />
+
+        <!-- Zone Orm Repository -->
+        <service id="synapse.zone.orm_repository" parent="majora.doctrine_repository.abstract" public="true"
+            class="Synapse\Cmf\Framework\Theme\Zone\Repository\Doctrine\DoctrineRepository"
+        >
+            <factory service="doctrine" method="getRepository" />
+            <tag name="kernel.event_subscriber" />
+            <argument>Synapse:Zone</argument>
+            <argument>synapse</argument>
+        </service>
+
+        <!-- Zone Domain -->
+        <service id="synapse.zone.domain" public="true"
+            class="Synapse\Cmf\Framework\Theme\Zone\Domain\Action\ActionDispatcherDomain"
+        >
+            <argument type="service" id="synapse.zone.action_factory" />
+        </service>
+
+        <!-- Zone Dal action factory -->
+        <service id="synapse.zone.dal_action_factory" public="false"
+            class="Majora\Framework\Domain\Action\ActionFactory"
+        >
+            <tag name="majora.domain.action_factory" namespace="synapse.zone.dal" />
+            <tag name="majora.alias" alias="synapse.zone.action_factory" />
+        </service>
+
+        <!-- Zone abstract dal action -->
+        <service id="synapse.zone.abstract_dal_action" parent="majora.domain.abstract_action" abstract="true"
+            class="Synapse\Cmf\Framework\Theme\Zone\Action\Dal\AbstractDalAction"
+        />
+
+        <!-- Zone Dal creation action -->
+        <service id="synapse.zone.dal_creation_action" public="false"
+            parent="synapse.zone.abstract_dal_action"
+            class="Synapse\Cmf\Framework\Theme\Zone\Action\Dal\CreateAction"
+        >
+            <tag name="majora.domain.action" namespace="synapse.zone.dal" alias="create" />
+            <argument>Synapse\Cmf\Bundle\Entity\Orm\Zone</argument>
+        </service>
+
+        <!-- Zone Dal edition action -->
+        <service id="synapse.zone.dal_edition_action"  public="false"
+            parent="synapse.zone.abstract_dal_action"
+            class="Synapse\Cmf\Framework\Theme\Zone\Action\Dal\UpdateAction"
+        >
+            <tag name="majora.domain.action" namespace="synapse.zone.dal" alias="update" />
+        </service>
+
+        <!-- Zone Dal add component action -->
+        <service id="synapse.zone.dal_add_component_action"  public="false"
+            parent="synapse.zone.dal_edition_action"
+            class="Synapse\Cmf\Framework\Theme\Zone\Action\Dal\AddComponentDalAction"
+        >
+            <tag name="majora.domain.action" namespace="synapse.zone.dal" alias="add_component" />
+            <argument type="service" id="synapse.component.domain" />
+        </service>
+
+        <!-- Zone Dal deletion action -->
+        <service id="synapse.zone.dal_deletion_action" public="false"
+            parent="synapse.zone.abstract_dal_action"
+            class="Synapse\Cmf\Framework\Theme\Zone\Action\Dal\DeleteAction"
+        >
+            <tag name="majora.domain.action" namespace="synapse.zone.dal" alias="delete" />
+        </service>
+
+    </services>
+
+</container>

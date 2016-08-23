@@ -1,0 +1,41 @@
+# Synapse Page Admin
+synapse_page_admin:
+    resource: "@SynapsePageBundle/Resources/config/routing/admin.yml"
+    host: %admin_host%
+    prefix: /{_locale}/page
+    defaults:
+        _locale: %locale%
+    requirements:
+        _locale: %locales_regex%
+    options:
+        synapse_theme:
+            expression:
+                bootstrap: "host == 'demo.admin-synapse.dev'"
+
+default_admin:
+    path: /
+    host: %admin_host%
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /%locale%/page
+        permanent: true
+
+# Front
+synapse_page_content:
+    resource: "@SynapsePageBundle/Resources/config/routing/content_type.yml"
+    host: %front_host%
+    prefix: /{_locale}
+    defaults:
+        _locale: %locale%
+    requirements:
+        _locale: %locales_regex%
+    options:
+        synapse_theme: bootstrap
+
+default_front:
+    path: /
+    host: %front_host%
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /%locale%
+        permanent: true

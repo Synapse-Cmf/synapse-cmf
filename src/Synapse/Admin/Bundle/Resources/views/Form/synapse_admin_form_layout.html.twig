@@ -1,0 +1,154 @@
+{% extends 'bootstrap_3_layout.html.twig' %}
+
+{# Custom widget for theme form #}
+{% block theme_widget %}
+<div class="synapse-theme-form panel">
+  <header class="panel-heading composed bg-main">
+    <a href class="combo">
+      <i class="fa fa-scribd"></i>
+    </a>
+    <h3>Template</h3>
+  </header>
+  <div class="panel-body">
+    <div class="row tab-content">
+      <div class="form-group col-md-5">
+        <label class="control-label required">Template to edit</label>
+        {{ form_widget(form.template_types, { 'attr': { 'class': 'template-select' } }) }}
+      </div>
+    {% for templateName, templateForm in form.templates if templateForm.template.vars.mode == 'edit' %}
+      <div class="separator tab-pane template-pane template-{{ templateName }} {{ loop.first ? 'active' : '' }} col-md-2" role="tabpanel">
+        <i class="fa fa-2x fa-arrow-right"></i>
+      </div>
+      <div class="tab-pane template-pane template-{{ templateName }} {{ loop.first ? 'active' : '' }} form-group col-md-5" role="tabpanel">
+        <label class="control-label required">Zone to edit</label>
+        {{ form_widget(templateForm.zone_types, { 'attr': { 'class': 'zone-select' } }) }}
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+  <div class="panel-body tab-content">
+  {% for templateName, templateForm in form.templates %}
+    <div class="template-{{ templateName }} tab-pane template-pane {{ loop.first ? 'active' : '' }}" role="tabpanel">
+    {% if templateForm.template.vars.mode == 'create' %}
+      {{ form_widget(templateForm.template) }}
+    {% else %}
+      <div class="zone-form-container tab-content">
+      {% for zoneName, zoneForm in templateForm.template %}
+        <div class="zone-{{ zoneName }} tab-pane zone-pane {{ loop.first ? 'active' : '' }}" role="tabpanel">
+          <div class="clearfix">
+            <div class="dropdown pull-right">
+              <button id="add-components" class="btn btn-xs btn-primary" type="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Add Components
+              <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="add-components">
+              {% for componentTypeId, componentTypeName in zoneForm.vars.component_types %}
+                <li>
+                  <a href="{{ path('synapse_admin_zone_add_component', { id: zoneForm.vars.zone_id, componentTypeId: componentTypeId }) }}">
+                    {{ componentTypeName | humanize }}
+                  </a>
+                </li>
+              {% endfor %}
+              </ul>
+            </div>
+            <h4>{{ zoneName|humanize }}</h4>
+          </div>
+
+          <div class="component-form-container">
+          {% for componentForm in zoneForm.components %}
+            <div class="component-form-wrapper">
+              <header class="component-form-header">
+                <button
+                  class="component-form-toggle btn btn-link collapsed"
+                  aria-controls="collapseExample"
+                  aria-expanded="false"
+                  data-target="#{{ componentForm.vars.id }}"
+                  data-toggle="collapse"
+                  type="button">
+                    <i class="icon fa fa-chevron-up"></i>
+                </button>
+                {{ form_label(componentForm, null, { label_attr: { class: 'badge' }}) }}
+                <span class="center"></span>
+                <label class="action input-switch">
+                  <input name="enabled" type="checkbox">
+                  <span class="input-switch--label">Active</span>
+                  <span class="input-switch--toggle"></span>
+                </label>
+                <button class="action btn btn-link" type="button"><i class="fa fa-arrows"></i></button>
+                <a class="action btn btn-link"
+                  href="{{ url('synapse_admin_component_delete', { id: componentForm.vars.component_id }) }}" >
+                  <i class="fa fa-trash"></i>
+                </a>
+              </header>
+              {{ form_widget(componentForm, {
+                attr: {
+                  class: 'component-form-content collapse',
+                  'aria-expanded':  'false'
+                }
+              }) }}
+            </div>
+          {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+    {% endif %}
+    </div>
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{# Custom widget for template edition form #}
+{% block template_edition_widget %}
+  <div class="panel-signets reverse">
+    <ul class="signets-list">
+    {% for zoneName, zoneForm in form %}
+      <li class="signet {{ loop.first ? 'active' : '' }}">
+        <a href="#{{ zoneForm.vars.id }}" role="tab" data-toggle="tab">
+          <i class="icon fa fa-object-group"></i>
+          {{ zoneName|humanize }}
+        </a>
+      </li>
+    {% endfor %}
+    </ul>
+    <div class="panel-body tab-content">
+      {% for zoneName, zoneForm in form %}
+      <div id="{{ zoneForm.vars.id }}" class="zone-form-wrapper tab-pane {{ loop.first ? 'active' : '' }}">
+        <h4>{{ zoneName|humanize }}</h4>
+        <div class="component-form-container">
+        {% for componentForm in zoneForm.components %}
+          <div class="component-form-wrapper">
+            {{ form_label(componentForm) }}
+            <div class="pull-right">
+              <a class="badge label-danger"
+                href="{{ url('synapse_admin_component_delete', { id: componentForm.vars.component_id }) }}"
+              >
+                <i class="fa fa-trash"></i>
+              </a>
+            </div>
+            {{ form_widget(componentForm) }}
+          </div>
+        {% endfor %}
+        </div>
+        <div class="add-component-container">
+          {{ form_row(zoneForm.add_component) }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block template_creation_widget %}
+  <p class="info">
+    <span class="badge label-info"><i class="fa fa-info"></i></span>
+    The "{{ form.vars.template_type|humanize|lower }}" local template is not yet initialized for this {{ form.vars.content_type|humanize|lower }}.
+  </p>
+  {{ form_widget(form.trigger_initialization) }}
+  <div class="hidden">
+    {{ form_rest(form) }}
+  </div>
+{% endblock %}
+
