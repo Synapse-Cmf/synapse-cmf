@@ -1,6 +1,19 @@
 {
-    "name": "majora/synapse-dev",
-    "description": "The development version of Synapse CMF by LinkValue",
+    "name": "synapse-cmf/synapse",
+    "description": "The development version of Synapse CMF",
+    "authors": [
+        {
+            "name": "Quentin Cerny",
+            "email": "quentin.cerny@link-value.fr",
+            "homepage": "https://github.com/Nyxis",
+            "role": "Architect & Developper"
+        },
+        {
+            "name": "Link Value",
+            "email": "contact@link-value.fr",
+            "homepage": "http://www.link-value.fr"
+        }
+    ],
     "autoload": {
         "psr-4": { "": "src" },
         "classmap": [

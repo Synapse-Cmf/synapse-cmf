@@ -27,6 +27,9 @@
 !bin/symfony_requirements
 /vendor/
 
+# Vagrant
+/.vagrant
+
 # Ansible local roles
 /ansible/roles
 /ansible/vars.local.yml
