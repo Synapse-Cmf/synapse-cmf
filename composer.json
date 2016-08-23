@@ -1,6 +1,9 @@
 {
     "name": "synapse-cmf/synapse",
+    "type": "framework",
     "description": "The development version of Synapse CMF",
+    "keywords": ["content management", "framework", "symfony"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Quentin Cerny",
