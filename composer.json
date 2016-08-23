@@ -1,7 +1,7 @@
 {
     "name": "synapse-cmf/synapse-cmf",
     "type": "framework",
-    "description": "Full version of Synapse CMF",
+    "description": "Full version of Synapse CMF, main developpement repository",
     "keywords": ["content management", "framework", "symfony"],
     "license": "MIT",
     "authors": [
@@ -80,7 +80,7 @@
             "file": "apps/demo/config/parameters.yml"
         },
         "branch-alias": {
-            "dev-master": "3.0-dev"
+            "dev-master": "1.0-dev"
         }
     }
 }
