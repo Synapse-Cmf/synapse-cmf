@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:Synapse-Cmf/Demo.git
+	branch = master
+	commit = 1af62abfd21bd07cb842915bd3657bc1a91aa747
+	parent = 4a879f107288cc0b1189849cb1b9ecdcf6bf5a7f
+	cmdver = 0.3.0
