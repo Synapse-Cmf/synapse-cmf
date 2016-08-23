@@ -1,1 +1,0 @@
-{"nfs":{"vagrant-root":{"id":"vagrant-root","type":"nfs","mount_options":["nolock,vers=3,udp,noatime,actimeo=1"],"guestpath":"/var/www/Synapse","hostpath":"/Users/nyx/Projects/LinkValue/Synapse/Synapse","disabled":false,"map_uid":501,"map_gid":20,"nfs_udp":true,"nfs_version":3,"uuid":"3465829256"}}}

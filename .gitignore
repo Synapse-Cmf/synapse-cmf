@@ -28,7 +28,7 @@
 /vendor/
 
 # Vagrant
-/.vagrant
+.vagrant
 
 # Ansible local roles
 /ansible/roles
