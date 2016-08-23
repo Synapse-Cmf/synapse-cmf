@@ -4,7 +4,7 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = git@github.com:Synapse-Cmf/Cmf.git
+	remote = git@github.com:synapse-cmf/SynapseCmfBundle.git
 	branch = master
 	commit = 5aea2fa07ef660d93e4808b3cd6910c21e650f38
 	parent = d4aed7f420f6c5f1fd3d7a97cdd3b16ad24ef1f1

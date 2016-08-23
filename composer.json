@@ -1,7 +1,7 @@
 {
-    "name": "synapse-cmf/synapse",
+    "name": "synapse-cmf/synapse-cmf",
     "type": "framework",
-    "description": "The development version of Synapse CMF",
+    "description": "Full version of Synapse CMF",
     "keywords": ["content management", "framework", "symfony"],
     "license": "MIT",
     "authors": [
