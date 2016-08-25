@@ -2,7 +2,7 @@
     "name": "synapse-cmf/synapse-cmf",
     "type": "framework",
     "description": "Full version of Synapse CMF, main developpement repository",
-    "keywords": ["content management", "framework", "symfony"],
+    "keywords": ["content management", "framework", "symfony", "cmf"],
     "license": "MIT",
     "authors": [
         {

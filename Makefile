@@ -7,7 +7,7 @@ APPS = $(shell ls bin | grep console | sed s/console_//g)
 init: ansible/vars.local.yml ansible/roles
 	(vagrant ssh -c "cd /var/www" && (vagrant provision || true)) || vagrant up --provision;
 	vagrant reload || true
-	vagrant ssh -c " cd /var/www/Synapse" || true
+	vagrant ssh -c " cd /var/www/synapse-cmf" || true
 
 ansible/vars.local.yml:
 	cp ansible/vars.local.yml.dist ansible/vars.local.yml

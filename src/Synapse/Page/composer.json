@@ -1,0 +1,26 @@
+{
+    "name": "synapse-cmf/synapse-page-bundle",
+    "type": "framework",
+    "description": "Synapse Cmf distribution providing a full page rendering, including an admin.",
+    "keywords": ["content management", "framework", "symfony", "bundle", "cmf", "synapse"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Quentin Cerny",
+            "email": "quentin.cerny@link-value.fr",
+            "homepage": "https://github.com/Nyxis",
+            "role": "Architect & Developper"
+        },
+        {
+            "name": "Link Value",
+            "email": "contact@link-value.fr",
+            "homepage": "http://www.link-value.fr"
+        }
+    ],
+    "require": {
+        "synapse-cmf/synapse-admin-bundle": "1.0"
+    },
+    "autoload": {
+        "psr-4": { "Synapse\\Cmf": "" }
+    }
+}

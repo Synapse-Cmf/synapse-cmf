@@ -1,0 +1,26 @@
+{
+    "name": "synapse-cmf/synapse-admin-bundle",
+    "type": "framework",
+    "description": "Synapse Cmf distribution providing a simple admin interface using Bootstrap.",
+    "keywords": ["content management", "framework", "symfony", "bundle", "cmf", "synapse"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Quentin Cerny",
+            "email": "quentin.cerny@link-value.fr",
+            "homepage": "https://github.com/Nyxis",
+            "role": "Architect & Developper"
+        },
+        {
+            "name": "Link Value",
+            "email": "contact@link-value.fr",
+            "homepage": "http://www.link-value.fr"
+        }
+    ],
+    "require": {
+        "synapse-cmf/synapse-cmf-bundle": "1.0"
+    },
+    "autoload": {
+        "psr-4": { "Synapse\\Cmf": "" }
+    }
+}
