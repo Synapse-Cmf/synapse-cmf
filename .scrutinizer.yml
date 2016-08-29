@@ -1,0 +1,31 @@
+checks:
+    php: true
+
+filter:
+    paths:
+        - 'src/*'
+    excluded_paths:
+        - '*Tests/*'
+
+coding_style:
+    php:
+        spaces:
+            before_parentheses:
+                function_declaration: false
+                closure_definition: true
+            around_operators:
+                concatenation: false
+        braces:
+            classes_functions:
+                class: new-line
+                function: new-line
+        upper_lower_casing:
+            keywords:
+                general: lower
+            constants:
+                true_false_null: lower
+
+tools:
+    external_code_coverage:
+        timeout: 180
+        runs: 2
