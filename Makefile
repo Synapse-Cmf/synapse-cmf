@@ -132,3 +132,17 @@ tests: bin/phpunit
 tests-covered: bin/phpunit
 	php -dzend_extension=xdebug.so bin/phpunit -c . --testsuite synapse_cmf --coverage-html web/coverage
 	@echo "\nCoverage report : \n\033[1;32m http://tests.synapse.dev/coverage/index.html\033[0m\n"
+
+#
+# CI
+#
+ci-install-composer: bin/composer
+	./bin/composer install --prefer-dist
+bin/ocular:
+	wget https://scrutinizer-ci.com/ocular.phar -O bin/ocular
+	chmod +x bin/ocular || /bin/true
+
+travis: ci-install-composer bin/ocular
+	#./vendor/phpunit/phpunit/phpunit src -c phpunit.xml.dist --coverage-clover=coverage.clover
+	php bin/ocular code-coverage:upload --format=php-clover coverage.clover
+

@@ -1,6 +1,8 @@
 Synapse-Cmf
 ===========
 
+[![Build Status](https://travis-ci.org/Synapse-Cmf/synapse-cmf.svg?branch=master)](https://travis-ci.org/Synapse-Cmf/synapse-cmf) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Synapse-Cmf/synapse-cmf/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Synapse-Cmf/synapse-cmf/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/Synapse-Cmf/synapse-cmf/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Synapse-Cmf/synapse-cmf/?branch=master) [![Total Downloads](https://poser.pugx.org/synapse-cmf/synapse-cmf/downloads)](https://packagist.org/packages/synapse-cmf/synapse-cmf) [![Latest Stable Version](https://poser.pugx.org/synapse-cmf/synapse-cmf/v/stable)](https://packagist.org/packages/synapse-cmf/synapse-cmf) [![License](https://poser.pugx.org/synapse-cmf/synapse-cmf/license)](https://packagist.org/packages/synapse-cmf/synapse-cmf)
+
 This repository is Synapse-Cmf project developpement one.
 All developpement process and pull requests have to be done here.
 
