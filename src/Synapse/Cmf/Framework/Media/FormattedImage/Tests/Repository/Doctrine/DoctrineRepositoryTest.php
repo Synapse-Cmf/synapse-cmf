@@ -22,6 +22,7 @@ class DoctrineRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $em = $this->prophesize(EntityManagerInterface::class);
         $em->persist($formattedImage)->shouldBeCalled();
+        $em->refresh($formattedImage)->shouldBeCalled();
         $em->flush()->shouldBeCalled();
 
         $repository = new DoctrineRepository(
