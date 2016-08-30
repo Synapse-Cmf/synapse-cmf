@@ -1,6 +1,6 @@
 <?php
 
-namespace Synapse\Page\Bundle\Repository;
+namespace Synapse\Page\Bundle\Repository\Page;
 
 use Majora\Framework\Repository\RepositoryInterface as MajoraRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

@@ -7,10 +7,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Synapse\Page\Bundle\Action\CreateAction;
-use Synapse\Page\Bundle\Domain\Action\ActionDispatcherDomain as PageDomain;
+use Synapse\Page\Bundle\Action\Page\CreateAction;
+use Synapse\Page\Bundle\Domain\Page\Action\ActionDispatcherDomain as PageDomain;
 use Synapse\Page\Bundle\Entity\Page;
-use Synapse\Page\Bundle\Loader\LoaderInterface as PageLoader;
+use Synapse\Page\Bundle\Loader\Page\LoaderInterface as PageLoader;
 
 /**
  * Page creation action related form type.

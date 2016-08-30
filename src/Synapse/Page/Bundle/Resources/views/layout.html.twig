@@ -9,3 +9,9 @@
   </li>
   {{ parent() }}
 {% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/synapsepage/js/page-menu.js') }}"></script>
+  <script src="{{ asset('bundles/synapsepage/js/page-admin-theme.js') }}"></script>
+{% endblock %}

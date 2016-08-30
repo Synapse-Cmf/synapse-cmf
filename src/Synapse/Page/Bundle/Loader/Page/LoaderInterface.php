@@ -1,6 +1,6 @@
 <?php
 
-namespace Synapse\Page\Bundle\Loader;
+namespace Synapse\Page\Bundle\Loader\Page;
 
 use Majora\Framework\Loader\LoaderInterface as MajoraLoaderInterface;
 use Synapse\Cmf\Framework\Theme\Content\Provider\ContentProviderInterface as SynapseLoaderInterface;

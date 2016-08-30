@@ -1,0 +1,22 @@
+{% extends 'SynapseAdminBundle:Form:synapse_admin_form_layout.html.twig' %}
+
+{% block page_menu_row %}
+  <div class="synapse-page-menu">
+    {{ form_row(form.data) }}
+    <a href="" class="btn btn-default add-page-menu"><i class="fa fa-plus"></i></a>
+  </div>
+{% endblock %}
+
+{% block page_menu_item_row %}
+  <div class="row page-menu-item" id="{{ form.vars.id }}">
+    <div class="col-md-3">{{ form_widget(form.label) }}</div>
+    <div class="col-md-8">{{ form_widget(form.page) }}</div>
+    {{ form_widget(form.position) }}
+    <div class="col-md-1">
+      <a href="" role="delete" class="btn btn-default">
+        <i class="fa fa-times"></i>
+      </a>
+    </div>
+  </div>
+{% endblock %}
+

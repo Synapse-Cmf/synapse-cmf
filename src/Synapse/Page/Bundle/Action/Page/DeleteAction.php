@@ -1,10 +1,10 @@
 <?php
 
-namespace Synapse\Page\Bundle\Action;
+namespace Synapse\Page\Bundle\Action\Page;
 
 use Majora\Framework\Domain\Action\DynamicActionTrait;
-use Synapse\Page\Bundle\Event\Event as PageEvent;
-use Synapse\Page\Bundle\Event\Events as PageEvents;
+use Synapse\Page\Bundle\Event\Page\Event as PageEvent;
+use Synapse\Page\Bundle\Event\Page\Events as PageEvents;
 
 /**
  * Page deletion action representation.

@@ -52,7 +52,7 @@ class PageAdminController extends Controller implements ParamConverterInterface
      */
     public function listAction(Request $request)
     {
-        return $this->render('SynapsePageBundle:Admin:list.html.twig', array(
+        return $this->render('SynapsePageBundle:Admin/Page:list.html.twig', array(
             'pages' => $this->container->get('synapse.page.loader')->retrieveAll(),
             'page_rendering_route' => $this->container->getParameter('synapse.page.rendering_route'),
         ));
@@ -91,7 +91,7 @@ class PageAdminController extends Controller implements ParamConverterInterface
             }
         }
 
-        return $this->render('SynapsePageBundle:Admin:create.html.twig', array(
+        return $this->render('SynapsePageBundle:Admin/Page:create.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -132,7 +132,7 @@ class PageAdminController extends Controller implements ParamConverterInterface
             }
         }
 
-        return $this->render('SynapsePageBundle:Admin:edit.html.twig', array(
+        return $this->render('SynapsePageBundle:Admin/Page:edit.html.twig', array(
             'form' => $form->createView(),
             'page' => $page,
         ));

@@ -28,3 +28,8 @@ synapse_cmf:
         Synapse\Page\Bundle\Entity\Page:
             alias: page
             provider: synapse.page.loader
+    components:
+        page_menu:
+            form: 'Synapse\Page\Bundle\Form\PageMenu\PageMenuType'
+            controller: SynapsePageBundle:PageMenuContent:render
+            template_path: "SynapsePageBundle:Admin/PageMenu:page_menu.html.twig"

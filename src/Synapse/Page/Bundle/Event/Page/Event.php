@@ -1,9 +1,9 @@
 <?php
 
-namespace Synapse\Page\Bundle\Event;
+namespace Synapse\Page\Bundle\Event\Page;
 
 use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
-use Synapse\Page\Bundle\Action\AbstractAction;
+use Synapse\Page\Bundle\Action\Page\AbstractAction;
 use Synapse\Page\Bundle\Entity\Page;
 
 /**

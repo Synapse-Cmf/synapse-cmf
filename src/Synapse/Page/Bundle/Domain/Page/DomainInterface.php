@@ -1,6 +1,6 @@
 <?php
 
-namespace Synapse\Page\Bundle\Domain;
+namespace Synapse\Page\Bundle\Domain\Page;
 
 use Synapse\Page\Bundle\Entity\Page;
 

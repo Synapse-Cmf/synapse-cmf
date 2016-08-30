@@ -1,9 +1,9 @@
 <?php
 
-namespace Synapse\Page\Bundle\Domain\Action;
+namespace Synapse\Page\Bundle\Domain\Page\Action;
 
 use Majora\Framework\Domain\ActionDispatcherDomain as MajoraActionDispatcherDomain;
-use Synapse\Page\Bundle\Domain\DomainInterface;
+use Synapse\Page\Bundle\Domain\Page\DomainInterface;
 use Synapse\Page\Bundle\Entity\Page;
 
 /**

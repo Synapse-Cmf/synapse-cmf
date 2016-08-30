@@ -1,6 +1,6 @@
 <?php
 
-namespace Synapse\Page\Bundle\Event;
+namespace Synapse\Page\Bundle\Event\Page;
 
 /**
  * Page events reference class.

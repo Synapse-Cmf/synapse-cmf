@@ -6,10 +6,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Synapse\Page\Bundle\Action\UpdateAction;
-use Synapse\Page\Bundle\Entity\Page;
+use Synapse\Page\Bundle\Action\Page\UpdateAction;
 
 /**
  * Page edition action related form type.

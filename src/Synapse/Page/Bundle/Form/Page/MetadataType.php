@@ -5,7 +5,6 @@ namespace Synapse\Page\Bundle\Form\Page;
 use Symfony\Component\Form\AbstractType as SymfonyAbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
