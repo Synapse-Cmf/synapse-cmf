@@ -2,7 +2,7 @@
 synapse_page_admin:
     resource: "@SynapsePageBundle/Resources/config/routing/admin.yml"
     host: %admin_host%
-    prefix: /{_locale}/page
+    prefix: /{_locale}
     defaults:
         _locale: %locale%
     requirements:
