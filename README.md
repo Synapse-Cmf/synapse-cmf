@@ -15,7 +15,7 @@ All built-in bundles are mirrored into external read-only repositories, for sing
 
 ## Documentation
 
-A full featured website is comming, but documentation draft is available [there](/docs).
+A full featured website is comming, but documentation draft is available [here](/docs).
 
 ## License
 
