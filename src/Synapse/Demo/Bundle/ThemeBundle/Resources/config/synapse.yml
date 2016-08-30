@@ -40,7 +40,7 @@ synapse:
         components:
             text:
                 config:
-                    html: ~
+                    html: true
                 variations:
                     jumbotron:
                         _if: "zone == 'jumbotron'"
