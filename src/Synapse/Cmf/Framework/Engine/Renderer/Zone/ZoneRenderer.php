@@ -51,10 +51,11 @@ class ZoneRenderer
      * Render given zone name on current Synapse context.
      *
      * @param string $zoneName
+     * @param array  $parameters optionnal extra parameters to give to every zone components
      *
      * @return string
      */
-    public function render($zoneName)
+    public function render($zoneName, array $parameters = array())
     {
         $context = $this->contextStack->getCurrent();
         $template = $context->getTemplate();
@@ -91,7 +92,7 @@ class ZoneRenderer
         }
 
         return $this->aggregators[$aggregationType]->aggregate(
-            $templates->reduce(function ($carry, TemplateInterface $template) use ($zoneType) {
+            $templates->reduce(function ($carry, TemplateInterface $template) use ($zoneType, $parameters) {
 
                 // already hydrated ?
                 if (!empty($carry)) {
@@ -108,10 +109,10 @@ class ZoneRenderer
                 }
 
                 return $zone->getComponents()
-                    ->map(function (ComponentInterface $component) use ($zone) {
+                    ->map(function (ComponentInterface $component) use ($zone, $parameters) {
                         return $this->componentDecorator
                             ->prepareFromCurrentContext($zone, $component)
-                            ->render()
+                            ->render($parameters)
                         ;
                     })
                     ->toArray()

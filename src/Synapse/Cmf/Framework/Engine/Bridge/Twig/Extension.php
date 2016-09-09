@@ -47,11 +47,12 @@ class Extension extends \Twig_Extension
      * Render zone under given name.
      *
      * @param string $name
+     * @param array  $parameters
      *
      * @return string
      */
-    public function renderZone($name)
+    public function renderZone($name, array $parameters = array())
     {
-        return $this->zoneRenderer->render($name);
+        return $this->zoneRenderer->render($name, $parameters);
     }
 }

@@ -57,9 +57,6 @@ class ComponentRequestListener
             return;
         }
 
-        // test
-        $this->contextStack->pop();
-
         // Component context isn't initialized (ESI cases)
         if ($this->contextStack->getLevel() != RenderingContextStack::COMPONENT) {
             try {

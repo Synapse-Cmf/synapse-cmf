@@ -2,9 +2,15 @@
 
 {% block menu_elements %}
   <li class="menu-item">
-    <a class="menu-link" href="{{ path('synapse_admin_page_list') }}">
-      <i class="icon fa fa-files-o"></i>
-      <span class="menu-label">Pages</span>
+    <a class="menu-link" href="{{ path('synapse_admin_skeleton_list') }}">
+      <i class="icon fa fa-object-group"></i>
+      <span class="menu-label">Skeletons</span>
+    </a>
+  </li>
+  <li class="menu-item">
+    <a class="menu-link" href="{{ path('synapse_admin_media_list') }}">
+      <i class="icon fa fa-picture-o"></i>
+      <span class="menu-label">Medias</span>
     </a>
   </li>
   {{ parent() }}

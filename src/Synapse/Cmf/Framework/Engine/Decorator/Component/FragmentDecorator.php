@@ -79,7 +79,10 @@ class FragmentDecorator extends ComponentDecorator
         $fragment = $this->fragmentHandler->render(new ControllerReference(
             $context->getController(),
             array(),
-            $context->normalize()
+            array_replace_recursive(
+                $templateParameters,
+                $context->normalize()
+            )
         ));
 
         $this->contextStack->pop();
