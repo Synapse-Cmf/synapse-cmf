@@ -9,8 +9,6 @@ $(() => {
       $this.find('.' + namespace + '-pane').removeClass('active')
         .filter('.' + namespace + '-' + id).addClass('active')
       ;
-
-      console.log(namespace, id);
     };
 
     $this.find('.template-select')

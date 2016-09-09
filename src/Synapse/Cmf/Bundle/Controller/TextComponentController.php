@@ -30,20 +30,25 @@ class TextComponentController extends Controller
 
         // guess medias
         $mediaCollection = array();
-        if ($component->getData('video_link')) {
-            $mediaCollection[] = array(
+
+        if ($component->getData('video_link')) {            // video
+            $mediaCollection[sprintf('%s-video', $component->getId())] = array(
                 'type' => 'video',
                 'src' => $component->getData('video_link'),
             );
         }
-        if ($component->getData('image')
-            && $image = $this->get('synapse.image.loader')->retrieve($component->getData('image'))
-        ) {
-            $mediaCollection[] = array(
-                'type' => 'image',
-                'label' => $image->getTitle(),
-                'object' => $image,
-            );
+
+        if ($component->getData('images', array())) {       // images
+            foreach ((array) $component->getData('images', array()) as $index => $imageId) {
+                if (!$image = $this->get('synapse.image.loader')->retrieve($imageId)) {
+                    continue;
+                }
+                $mediaCollection[sprintf('%s-%s-%s', $component->getId(), $imageId, $index)] = array(
+                    'type' => 'image',
+                    'label' => $image->getTitle(),
+                    'object' => $image,
+                );
+            }
         }
 
         // links

@@ -25,14 +25,14 @@ class TextType extends AbstractType
             'html' => array('enabled' => false),
             'headline' => array('enabled' => false),
             'read_more' => array('enabled' => false),
-            'image' => null,
+            'images' => array(),
             'video' => array('enabled' => false),
             'ckeditor_config' => array(),
         ));
         $resolver->setAllowedTypes('html', 'array');
         $resolver->setAllowedTypes('headline', 'array');
         $resolver->setAllowedTypes('read_more', array('array', 'null'));
-        $resolver->setAllowedTypes('image', array('array', 'null'));
+        $resolver->setAllowedTypes('images', array('array', 'null'));
         $resolver->setAllowedTypes('video', array('array', 'null'));
         $resolver->setAllowedTypes('ckeditor_config', 'array');
     }
@@ -63,12 +63,12 @@ class TextType extends AbstractType
         ));
 
         // image select (on demand)
-        if (!empty($options['image'])) {
-            $builder->add('image', ImageChoiceType::class, array(
-                'image_formats' => $options['image'],
+        if (!empty($options['images'])) {
+            $builder->add('images', ImageChoiceType::class, array(
+                'image_formats' => $options['images']['format'],
                 'required' => false,
                 'expanded' => false,
-                'multiple' => false,
+                'multiple' => !empty($options['images']['multiple']),
             ));
         }
 
