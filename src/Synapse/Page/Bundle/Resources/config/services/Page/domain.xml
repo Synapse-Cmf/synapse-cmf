@@ -7,7 +7,7 @@
     <services>
 
         <!-- Page Loader -->
-        <service id="synapse.page.loader" class="Synapse\Page\Bundle\Loader\Doctrine\DoctrineLoader">
+        <service id="synapse.page.loader" class="Synapse\Page\Bundle\Loader\Page\Doctrine\DoctrineLoader">
             <tag name="majora.loader"
                 entity="Synapse\Page\Bundle\Entity\Page"
                 collection="Synapse\Page\Bundle\Entity\PageCollection"
@@ -16,7 +16,7 @@
         </service>
 
         <!-- Page Domain -->
-        <service id="synapse.page.domain" class="Synapse\Page\Bundle\Domain\Action\ActionDispatcherDomain">
+        <service id="synapse.page.domain" class="Synapse\Page\Bundle\Domain\Page\Action\ActionDispatcherDomain">
             <argument type="service">
                 <service class="Majora\Framework\Domain\Action\ActionFactory">
                     <argument type="collection">
@@ -25,7 +25,7 @@
 
                         <!-- Page deletion action -->
                         <argument key="delete" type="service">
-                            <service class="Synapse\Page\Bundle\Action\DeleteAction">
+                            <service class="Synapse\Page\Bundle\Action\Page\DeleteAction">
                                 <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
                             </service>
                         </argument>
@@ -36,7 +36,7 @@
 
         <!-- Page creation action -->
         <service id="synapse.page.creation_action" public="false"
-            class="Synapse\Page\Bundle\Action\CreateAction"
+            class="Synapse\Page\Bundle\Action\Page\CreateAction"
         >
             <argument type="service">
                 <service class="Synapse\Page\Bundle\Generator\SluggedPathGenerator">
@@ -49,7 +49,7 @@
 
         <!-- Page edition action -->
         <service id="synapse.page.edition_action" public="false"
-            class="Synapse\Page\Bundle\Action\UpdateAction"
+            class="Synapse\Page\Bundle\Action\Page\UpdateAction"
         >
             <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
             <call method="setValidator"><argument type="service" id="validator" /></call>
@@ -57,7 +57,7 @@
 
         <!-- Page Repository -->
         <service id="synapse.page.doctrine_repository" public="true"
-            class="Synapse\Page\Bundle\Repository\Doctrine\DoctrineTreeRepository"
+            class="Synapse\Page\Bundle\Repository\Page\Doctrine\DoctrineTreeRepository"
         >
             <factory service="doctrine" method="getRepository" />
             <tag name="kernel.event_subscriber" />

@@ -4,6 +4,8 @@ synapse:
             page:  &page
                 top:
                     free: ~
+                    menu: ~
+                    page_menu: ~
                 jumbotron:
                     text: ~
                     free: ~
@@ -12,6 +14,7 @@ synapse:
                     text: ~
                     free: ~
                     static: ~
+                    page_menu: ~
                 footer:
                     free: ~
             demo:

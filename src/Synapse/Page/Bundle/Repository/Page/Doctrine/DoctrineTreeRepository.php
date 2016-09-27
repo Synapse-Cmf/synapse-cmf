@@ -1,13 +1,13 @@
 <?php
 
-namespace Synapse\Page\Bundle\Repository\Doctrine;
+namespace Synapse\Page\Bundle\Repository\Page\Doctrine;
 
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Majora\Framework\Repository\Doctrine\DoctrineRepositoryTrait;
 use Synapse\Page\Bundle\Entity\Page;
-use Synapse\Page\Bundle\Event\Event as PageEvent;
-use Synapse\Page\Bundle\Event\Events as PageEvents;
-use Synapse\Page\Bundle\Repository\RepositoryInterface;
+use Synapse\Page\Bundle\Event\Page\Event as PageEvent;
+use Synapse\Page\Bundle\Event\Page\Events as PageEvents;
+use Synapse\Page\Bundle\Repository\Page\RepositoryInterface;
 
 /**
  * Page repository implementation using Doctrine and NestedSet behavior.

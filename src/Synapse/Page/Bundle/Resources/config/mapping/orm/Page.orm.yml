@@ -1,6 +1,6 @@
 Synapse\Page\Bundle\Entity\Page:
     type: entity
-    repositoryClass: Synapse\Page\Bundle\Repository\Doctrine\DoctrineTreeRepository
+    repositoryClass: Synapse\Page\Bundle\Repository\Page\Doctrine\DoctrineTreeRepository
     table: synapse_page
     actAs:
         Timestampable: ~

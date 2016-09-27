@@ -1,11 +1,10 @@
 <?php
 
-namespace Synapse\Page\Bundle\Loader\Doctrine;
+namespace Synapse\Page\Bundle\Loader\Page\Doctrine;
 
 use Majora\Framework\Loader\Bridge\Doctrine\AbstractDoctrineLoader;
 use Majora\Framework\Loader\Bridge\Doctrine\DoctrineLoaderTrait;
-use Synapse\Page\Bundle\Entity\Page;
-use Synapse\Page\Bundle\Loader\LoaderInterface;
+use Synapse\Page\Bundle\Loader\Page\LoaderInterface;
 
 /**
  * Doctrine Page loading implementation.

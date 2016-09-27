@@ -37,11 +37,18 @@
       </ul>
     </nav>
 
+    <!-- Main top for a primary marketing message or call to action -->
+    {% block top %}
+      <div class="top">
+        {{ synapse_zone('top') }}
+      </div>
+    {% endblock %}
+
     <!-- Main jumbotron for a primary marketing message or call to action -->
     {% block jumbotron %}
-    <div class="jumbotron">
-      {{ synapse_zone('jumbotron') }}
-    </div>
+      <div class="jumbotron">
+        {{ synapse_zone('jumbotron') }}
+      </div>
     {% endblock %}
 
     <div class="container">

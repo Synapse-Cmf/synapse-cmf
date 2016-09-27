@@ -44,6 +44,8 @@ synapse_cmf:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        - 'SynapsePageBundle:Form:synapse_admin_form_layout.html.twig'
 
 # Doctrine Configuration
 doctrine:

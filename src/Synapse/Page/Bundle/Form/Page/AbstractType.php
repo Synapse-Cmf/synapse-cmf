@@ -4,8 +4,8 @@ namespace Synapse\Page\Bundle\Form\Page;
 
 use Symfony\Component\Form\AbstractType as SymfonyAbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
-use Synapse\Page\Bundle\Action\AbstractAction as PageAction;
-use Synapse\Page\Bundle\Domain\Action\ActionDispatcherDomain as PageDomain;
+use Synapse\Page\Bundle\Action\Page\AbstractAction as PageAction;
+use Synapse\Page\Bundle\Domain\Page\Action\ActionDispatcherDomain as PageDomain;
 
 /**
  * Page entity use cases form dedicated abstract type.

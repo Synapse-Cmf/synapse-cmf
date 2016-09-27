@@ -5,8 +5,9 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <imports>
-        <import resource="services/domain.xml" />
-        <import resource="services/bundle.xml" />
+        <import resource="services/Page/domain.xml" />
+        <import resource="services/Page/bundle.xml" />
+        <import resource="services/PageMenu/bundle.xml" />
     </imports>
 
 </container>

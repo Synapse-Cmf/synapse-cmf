@@ -1,6 +1,6 @@
 <?php
 
-namespace Synapse\Page\Bundle\Action;
+namespace Synapse\Page\Bundle\Action\Page;
 
 use Majora\Framework\Domain\Action\AbstractAction as MajoraAbstractAction;
 use Majora\Framework\Domain\Action\ActionCollection;
