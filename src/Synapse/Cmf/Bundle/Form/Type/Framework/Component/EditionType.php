@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Synapse\Cmf\Framework\Theme\Component\Action\Dal\UpdateAction;
 use Synapse\Cmf\Framework\Theme\Component\Domain\Action\ActionDispatcherDomain as ComponentDomain;
 use Synapse\Cmf\Framework\Theme\Component\Model\ComponentInterface;
+use Synapse\Cmf\Framework\Theme\Variation\Entity\Variation;
 
 /**
  * Component edition form type.
@@ -40,12 +41,10 @@ class EditionType extends AbstractType implements DataTransformerInterface
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired('component_options');
-        $resolver->setAllowedTypes('component_options', 'array');
+        $resolver->setRequired('variation');
+        $resolver->setAllowedTypes('variation', Variation::class);
 
         $resolver->setDefaults(array(
-            'mapped' => false,
-            'cascade_validation' => false,
             'data_class' => UpdateAction::class,
         ));
     }
@@ -55,9 +54,6 @@ class EditionType extends AbstractType implements DataTransformerInterface
      */
     public function transform($data)
     {
-        if (empty($data)) {
-            return;
-        }
         if ($data instanceof UpdateAction) {
             return $data;
         }
@@ -81,20 +77,22 @@ class EditionType extends AbstractType implements DataTransformerInterface
         $builder
             ->addModelTransformer($this)
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($builder, $options) {
-                if (!$component = $event->getData()) {
-                    return;
-                }
-
                 $form = $event->getForm();
+                $component = $event->getData();
 
-                // build custom "data" component form using component type defined form
-                $form->add($builder
-                    ->create('data', $component->getComponentType()->getFormType(), array_replace_recursive(
-                        $options['component_options'],
-                        array('auto_initialize' => false, 'label' => false)
-                    ))
-                    ->getForm()
-                );
+                // Adds custom "data" component from component type
+                $form->add('data', $component->getComponentType()->getFormType(), array_replace_recursive(
+                    $options['variation']->getConfiguration(
+                        'components',
+                        $component->getComponentType()->getName(),
+                        'config',
+                        array()
+                    ),
+                    array(
+                        'auto_initialize' => false,
+                        'label' => false,
+                    )
+                ));
             })
         ;
     }
@@ -104,7 +102,10 @@ class EditionType extends AbstractType implements DataTransformerInterface
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['component_id'] = $form->getData()->getId();
+        $component = $form->getData();
+
+        $view->vars['label'] = ucfirst($component->getComponentType()->getName());
+        $view->vars['component_id'] = $component->getId();
     }
 
     /**
@@ -112,7 +113,9 @@ class EditionType extends AbstractType implements DataTransformerInterface
      */
     public function reverseTransform($data)
     {
-        return $data->resolve();
+        $data->resolve();
+
+        return $data->getComponent();
     }
 
     /**

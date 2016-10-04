@@ -28,7 +28,9 @@ class UpdateAction extends AbstractDalAction
         }
 
         $this->template = $template;
-        $this->zones = $template->getZones();
+        $this->zones = $template->getZones()
+            ->sortByZoneType()->indexByZoneType()
+        ;
 
         return $this;
     }

@@ -5,6 +5,7 @@ namespace Synapse\Cmf\Bundle\Form\Type\Framework\Template;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -14,9 +15,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Synapse\Cmf\Bundle\Form\Type\Framework\ZoneType;
 use Synapse\Cmf\Framework\Theme\ContentType\Model\ContentTypeInterface;
 use Synapse\Cmf\Framework\Theme\Template\Action\Dal\UpdateAction;
+use Synapse\Cmf\Framework\Theme\Template\Domain\Action\ActionDispatcherDomain as TemplateDomain;
 use Synapse\Cmf\Framework\Theme\Template\Model\TemplateInterface;
 use Synapse\Cmf\Framework\Theme\Theme\Model\ThemeInterface;
-use Synapse\Cmf\Framework\Theme\Template\Domain\Action\ActionDispatcherDomain as TemplateDomain;
 
 /**
  * Template edition form type.
@@ -83,23 +84,20 @@ class EditionType extends AbstractType implements DataTransformerInterface
         $builder
             ->addModelTransformer($this)
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($builder, $options) {
+                $form = $event->getForm();
                 $template = $event->getData();
 
-                // create custom form
-                $form = $event->getForm();
-                foreach ($template->getZones()->sortByZoneType() as $zone) {
-                    $form->add($builder
-                        ->create($zone->getZoneType()->getName(), ZoneType::class, array(
-                            'mapped' => false,
-                            'theme' => $options['theme'],
-                            'content_type' => $options['content_type'],
-                            'template_type' => $template->getTemplateType(),
-                            'auto_initialize' => false,
-                        ))
-                        ->setData($zone)
-                        ->getForm()
-                    );
-                }
+                $form->add('zones', CollectionType::class, array(
+                    'auto_initialize' => false,
+                    'allow_add' => false,
+                    'allow_delete' => false,
+                    'entry_type' => ZoneType::class,
+                    'entry_options' => array(
+                        'theme' => $options['theme'],
+                        'content_type' => $options['content_type'],
+                        'template_type' => $template->getTemplateType(),
+                    ),
+                ));
             })
         ;
     }

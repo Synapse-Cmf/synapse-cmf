@@ -65,6 +65,9 @@ class TemplateType extends AbstractType
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($builder, $options) {
                 $form = $event->getForm();
+                $data = array(
+                    'template' => array(),
+                );
 
                 $localTemplate = $this->templateLoader->retrieveLocal(
                     $templateType = $options['template_type'],
@@ -73,39 +76,42 @@ class TemplateType extends AbstractType
 
                 if ($localTemplate) { // then edit form
                     $variation = $options['variation'];
-                    $form
-                        ->add($builder
-                            ->create('template', EditionType::class, array(
-                                'auto_initialize' => false,
-                                'theme' => $options['theme'],
-                                'content_type' => $content->getType(),
-                            ))
-                            ->setData($localTemplate)
-                            ->getForm()
-                        )
-                        ->add('zone_types', ChoiceType::class, array(
-                            'auto_initialize' => false,
-                            'mapped' => false,
-                            'required' => true,
-                            'expanded' => false,
-                            'choices' => $templateType->getZoneTypes()->indexBy('name'),
-                            'choice_value' => 'name',
-                            'choice_label' => 'name',
-                            'data' => $templateType->getZoneTypes() // look for main zone
-                                ->filter(function (ZoneType $zoneType) use ($variation) {
-                                    return $variation->getConfiguration(
-                                        'zones', $zoneType->getName(), 'main', false
-                                    );
-                                })
-                                ->first() ?: null,
-                        ))
-                    ;
+
+                    // template edition form
+                    $form->add('template', EditionType::class, array(
+                        'auto_initialize' => false,
+                        'theme' => $options['theme'],
+                        'content_type' => $content->getType(),
+                    ));
+                    $data['template'] = $localTemplate;
+
+                    // zone type selection
+                    $form->add('zone_types', ChoiceType::class, array(
+                        'auto_initialize' => false,
+                        'mapped' => false,
+                        'required' => true,
+                        'expanded' => false,
+                        'choices' => $templateType->getZoneTypes()->indexBy('name'),
+                        'choice_value' => 'name',
+                        'choice_label' => 'name',
+
+                        // main zone by default
+                        'data' => $templateType->getZoneTypes()
+                            ->filter(function (ZoneType $zoneType) use ($variation) {
+                                return $variation->getConfiguration(
+                                    'zones', $zoneType->getName(), 'main', false
+                                );
+                            })
+                            ->first() ?: null,
+                    ));
                 } else { // otherwise init form
                     $form->add('template', LocalCreationType::class, array(
                         'template_type' => $templateType,
                         'content' => $content,
                     ));
                 }
+
+                $event->setData($data);
             })
         ;
     }

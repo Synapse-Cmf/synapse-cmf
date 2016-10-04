@@ -3,9 +3,9 @@
 namespace Synapse\Cmf\Bundle\Form\Type\Framework;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\DataMapperInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -27,7 +27,7 @@ use Synapse\Cmf\Framework\Theme\Zone\Model\ZoneInterface;
 /**
  * Zone edition form type.
  */
-class ZoneType extends AbstractType implements DataTransformerInterface, DataMapperInterface
+class ZoneType extends AbstractType implements DataTransformerInterface
 {
     /**
      * @var ZoneDomain
@@ -90,15 +90,6 @@ class ZoneType extends AbstractType implements DataTransformerInterface, DataMap
     }
 
     /**
-     * @see DataMapperInterface::mapDataToForms()
-     */
-    public function mapDataToForms($data, $forms)
-    {
-        $forms = iterator_to_array($forms);
-        $forms['components']->setData($data->getComponents());
-    }
-
-    /**
      * Page form prototype definition.
      *
      * @see FormInterface::buildForm()
@@ -106,45 +97,31 @@ class ZoneType extends AbstractType implements DataTransformerInterface, DataMap
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->setDataMapper($this)
             ->addModelTransformer($this)
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($builder, $options) {
-                if (!$zone = $event->getData()) {
-                    return;
-                }
-
                 $form = $event->getForm();
+                $zone = $event->getData();
 
-                $variation = $this->variationResolver->resolve((new VariationContext())->denormalize(array(
-                    'theme' => $options['theme'],
-                    'content_type' => $options['content_type'],
-                    'template_type' => $options['template_type'],
-                    'zone_type' => $zone->getZoneType(),
-                )));
-
-                // existing components form
-                $componentsForm = $builder->create('components', null, array(
-                    'compound' => true,
+                // Create a component form for each into given zone
+                $form->add('components', CollectionType::class, array(
                     'auto_initialize' => false,
+                    'allow_add' => false,
+                    'allow_delete' => false,
+                    'entry_type' => ComponentEditionType::class,
+                    'entry_options' => array(
+                        'variation' => $this->variationResolver->resolve((new VariationContext())->denormalize(array(
+                            'theme' => $options['theme'],
+                            'content_type' => $options['content_type'],
+                            'template_type' => $options['template_type'],
+                            'zone_type' => $zone->getZoneType(),
+                        ))),
+                    ),
                 ));
-                foreach ($zone->getComponents() as $index => $component) {
-                    $componentsForm->add($index, ComponentEditionType::class, array(
-                        'label' => ucfirst($component->getComponentType()->getName()),
-                        'auto_initialize' => false,
-                        'data' => $component,
-                        'component_options' => $variation->getConfiguration(
-                            'components',
-                            $component->getComponentType()->getName(),
-                            'config',
-                            array()
-                        ),
-                    ));
-                }
-                $form->add($componentsForm->getForm());
 
-                // new component form
+                // New component form widget
                 $form->add('add_component', ComponentCreationType::class, array(
                     'auto_initialize' => false,
+                    'mapped' => false,
                     'component_types' => $zone->getZoneType()->getAllowedComponentTypes(),
                 ));
             })
@@ -170,25 +147,12 @@ class ZoneType extends AbstractType implements DataTransformerInterface, DataMap
     }
 
     /**
-     * @see DataMapperInterface::mapFormsToData()
-     */
-    public function mapFormsToData($forms, &$data)
-    {
-        $forms = iterator_to_array($forms);
-        $componentCollection = $forms['components']->getData();
-
-        if ($component = $forms['add_component']->getData()) {
-            $componentCollection->add($component);
-        }
-
-        $data->setComponents($componentCollection);
-    }
-
-    /**
      * @see DataTransformerInterface::reverseTransform()
      */
     public function reverseTransform($data)
     {
-        return $data->resolve();
+        $data->resolve();
+
+        return $data->getZone();
     }
 }

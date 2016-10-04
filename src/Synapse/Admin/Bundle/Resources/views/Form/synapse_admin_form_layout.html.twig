@@ -33,7 +33,8 @@
       {{ form_widget(templateForm.template) }}
     {% else %}
       <div class="zone-form-container tab-content">
-      {% for zoneName, zoneForm in templateForm.template %}
+      {% set rendered = templateForm.template.setRendered(true) %}
+      {% for zoneName, zoneForm in templateForm.template.children['zones'] %}
         <div class="zone-{{ zoneName }} tab-pane zone-pane {{ loop.first ? 'active' : '' }}" role="tabpanel">
           <div class="clearfix">
             <div class="dropdown pull-right">

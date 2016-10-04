@@ -33,11 +33,11 @@ synapse:
 
         zones:
             top:
-                main: false
                 virtual: true
                 aggregation: inline
             jumbotron: ~
-            content: ~
+            content:
+                main: true
             footer: ~
 
         components:

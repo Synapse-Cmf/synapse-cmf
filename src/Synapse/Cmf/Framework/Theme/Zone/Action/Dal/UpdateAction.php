@@ -29,7 +29,7 @@ class UpdateAction extends AbstractDalAction
         }
 
         $this->zone = $zone;
-        $this->components = $zone->getComponents();
+        $this->components = $zone->getComponents()->indexBy('id');
 
         return $this;
     }

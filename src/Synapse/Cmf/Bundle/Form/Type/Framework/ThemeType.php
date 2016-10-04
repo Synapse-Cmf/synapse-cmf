@@ -71,13 +71,22 @@ class ThemeType extends AbstractType implements DataTransformerInterface
             ->addModelTransformer($this)
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($builder, $options) {
                 $form = $event->getForm();
+                $data = array(
+                    'template_types' => null,
+                    'templates' => array(),
+                );
+
+                // "templates"  field
                 $templateFormBuilder = $builder->create('templates', null, array(
                     'compound' => true,
                     'auto_initialize' => false,
                 ));
                 $templateTypeChoices = array();
 
+                // every template type got his own form
                 foreach ($options['theme']->getTemplateTypes() as $templateType) {
+
+                    // variation calculation
                     $variation = $this->variationResolver->resolve((new VariationContext())->denormalize(array(
                         'theme' => $options['theme'],
                         'content_type' => $contentType = $options['content']->getType(),
@@ -90,18 +99,17 @@ class ThemeType extends AbstractType implements DataTransformerInterface
                         continue;
                     }
 
-                    $templateTypeChoices[$templateType->getId()] = $templateType;
+                    $templateFormBuilder->add($templateType->getName(), TemplateType::class, array(
+                        'auto_initialize' => false,
+                        'variation' => $variation,
+                        'template_type' => $templateType,
+                        'theme' => $options['theme'],
+                        'content' => $options['content'],
+                    ));
+                    $data['templates'][$templateType->getName()] = array();
 
-                    $templateFormBuilder->add($builder
-                        ->create($templateType->getName(), TemplateType::class, array(
-                            'auto_initialize' => false,
-                            'variation' => $variation,
-                            'template_type' => $templateType,
-                            'theme' => $options['theme'],
-                            'content' => $options['content'],
-                        ))
-                        ->setData(array())
-                    );
+                    // template select entry
+                    $templateTypeChoices[$templateType->getId()] = $templateType;
                 }
 
                 $form
@@ -116,6 +124,8 @@ class ThemeType extends AbstractType implements DataTransformerInterface
                     ))
                     ->add($templateFormBuilder->getForm())
                 ;
+
+                $event->setData($data);
             })
         ;
     }
