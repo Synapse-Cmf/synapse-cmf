@@ -8,10 +8,10 @@
     {% block meta %}
       <meta name="description" content="">
       <meta name="author" content="">
-      <link rel="icon" href="../../favicon.ico">
+      <link rel="icon" href="/bundles/synapseadmin/images/logo_blue_small.png">
     {% endblock %}
 
-    <title>{% block title 'Synapse pages admin' %}</title>
+    <title>{% block title 'Synapse :: Admin' %}</title>
 
     {% block stylesheets %}
 
@@ -29,9 +29,9 @@
     <main id="container">
       <header class="header white-bg">
         <!-- logo -->
-        <a href="#" class="logo">
+        <a href="/" class="logo">
         {% block logo %}
-          <img src="{{ asset('/bundles/synapseadmin/images/synapse_logo_color_horizontal.svg') }}" alt="Synapse logo">
+          <img src="{{ asset('/bundles/synapseadmin/images/logo_text_blue_large.png') }}" alt="Synapse logo">
         {% endblock %}
         </a>
         <!-- /logo -->

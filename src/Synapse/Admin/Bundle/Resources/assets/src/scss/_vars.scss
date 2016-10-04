@@ -1,0 +1,57 @@
+// Synapse chart vars
+
+$color-synapse-lighter-blue: #69bce2;
+$color-synapse-blue: #8fd2ef;
+$color-synapse-dark-blue: #3ca3dc;
+
+
+$color-synapse-green-lighter: #8CF3BC;
+$color-synapse-green-light: #8CF3BC;
+$color-synapse-green: #35E386;
+$color-synapse-green-dark: #0FDA6D;
+$color-synapse-green-darker: #00C15A;
+
+$color-synapse-orange-lighter: #FFCE93;
+$color-synapse-orange-light: #FFB863;
+$color-synapse-orange: #FFA53B;
+$color-synapse-orange-dark: #FF9312;
+$color-synapse-orange-darker: #FF8B00;
+
+// Admin theme vars override
+
+$font-0: "Helvetica Neue";
+$font-1: Helvetica;
+$font-2: Arial;
+$font-3: sans-serif;
+
+$color-main-lighter: $color-synapse-lighter-blue;
+$color-main-light: $color-synapse-blue;
+$color-main: $color-synapse-dark-blue;
+$color-main-dark: $color-synapse-dark-blue;
+$color-main-darker: $color-synapse-dark-blue;
+
+$color-bg-main: $color-synapse-dark-blue;
+
+$color-success-lighter: $color-synapse-green-lighter;
+$color-success-light: $color-synapse-green-light;
+$color-success: $color-synapse-green;
+$color-success-dark: $color-synapse-green-dark;
+$color-success-darker: $color-synapse-green-darker;
+
+$color-warning-lighter: $color-synapse-orange-lighter;
+$color-warning-light: $color-synapse-orange-light;
+$color-warning: $color-synapse-orange;
+$color-warning-dark: $color-synapse-orange-dark;
+$color-warning-darker: $color-synapse-orange-darker;
+
+// Local vars
+
+$color-primary-lighter: $color-main-lighter;
+$color-primary-light: $color-main-light;
+$color-primary: $color-main;
+$color-primary-dark: $color-main-dark;
+$color-primary-darker: $color-main-darker;
+
+$syn-button-size: 80px;
+$syn-header-height: 60px;
+$syn-generic-margin: 15px;

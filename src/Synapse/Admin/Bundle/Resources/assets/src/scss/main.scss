@@ -1,14 +1,13 @@
+@import "_vars.scss";
 @import "../../node_modules/majora-admin-theme/src/scss/main.scss";
 
-$syn-button-size: 80px;
-$syn-header-height: 60px;
-$syn-generic-margin: 15px;
+// Styles
 
 a.logo {
-  margin-top: 3px;
-  margin-left: -13px;
+  margin-top: 8px;
+  margin-left: -5px;
   img {
-    height: 2.5em;
+    height: 2.1em;
   }
 }
 .form-control {
@@ -26,20 +25,6 @@ a.logo {
     font-style: italic;
     color: #7087A3;
 }
-
-$color-primary-lighter: hsl(323, 63%, 84%);
-$color-primary-light: hsl(176, 58%, 55%);
-$color-primary: hsl(323, 63%, 44%);
-$color-primary-dark: hsl(176, 98%, 25%);
-$color-primary-darker: hsl(323, 63%, 24%);
-
-// vert hsl(63, 94%, 100%)
-// vert hsl(63, 94%, 81%)
-// vert hsl(63, 94%, 61%)
-
-// bleu hsl(323, 63%, 84%)
-// bleu hsl(323, 63%, 44%)
-// bleu foncé hsl(323, 63%, 24%)
 
 .button-bar {
   text-align: center;

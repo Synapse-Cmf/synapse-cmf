@@ -17,7 +17,7 @@ default_admin:
     host: %admin_host%
     defaults:
         _controller: FrameworkBundle:Redirect:urlRedirect
-        path: /%locale%/page
+        path: /%locale%/pages
         permanent: true
 
 # Front

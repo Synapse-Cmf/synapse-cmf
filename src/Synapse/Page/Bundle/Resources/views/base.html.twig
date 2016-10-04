@@ -1,0 +1,11 @@
+{% extends 'SynapseAdminBundle::base.html.twig' %}
+
+{% block menu_elements %}
+  <li class="menu-item">
+    <a class="menu-link" href="{{ path('synapse_admin_page_list') }}">
+      <i class="icon fa fa-files-o"></i>
+      <span class="menu-label">Pages</span>
+    </a>
+  </li>
+  {{ parent() }}
+{% endblock %}

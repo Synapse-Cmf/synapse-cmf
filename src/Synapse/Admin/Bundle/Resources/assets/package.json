@@ -19,7 +19,7 @@
     "cropper": "^2.3.2",
     "dropzone": "~4.3",
     "jquery": "2.2.4",
-    "majora-admin-theme": "LinkValue/MajoraAdminTheme#develop",
+    "majora-admin-theme": "LinkValue/MajoraAdminTheme",
     "select2": "^4.0.3",
     "select2-bootstrap-theme": "0.1.0-beta.8"
   },
