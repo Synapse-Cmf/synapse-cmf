@@ -1,5 +1,5 @@
 # Synapse Admin
-synapse_admin:
+synapse_cmf_admin:
     resource: "@SynapseAdminBundle/Resources/config/routing.yml"
 
 # Page Admin

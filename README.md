@@ -15,7 +15,7 @@ All built-in bundles are mirrored into external read-only repositories, for sing
 
 ## Documentation
 
-A full featured website is comming, but documentation draft is available [here](/docs).
+A full featured website is comming, but documentation draft is available [there](https://synapse-cmf.github.io/documentation/fr/); for now only in french.
 
 ## License
 
