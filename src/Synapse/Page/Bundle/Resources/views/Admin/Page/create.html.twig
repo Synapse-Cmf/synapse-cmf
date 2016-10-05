@@ -4,27 +4,38 @@
 
 {% block content %}
   {{ form_start(form) }}
-  <div class="row">
-    <div class="col-lg-12">
+
+  <div class="row-fluid">
+    <div class="col-fill">
       <div class="panel">
         <header class="panel-heading composed bg-main">
           <a href class="combo">
             <i class="fa fa-file-text-o"></i>
           </a>
           <h3>New page</h3>
-          <a href="{{ path('synapse_admin_page_list') }}" class="combo">
-            <i class="fa fa-times"></i>
-            <span>Cancel</span>
-          </a>
         </header>
         <div class="panel-body">
           {{ form_row(form.name) }}
-          {{ form_row(form.path) }}
           {{ form_row(form.parent) }}
-          {{ form_row(form.submit, { 'attr' : { 'class' : 'btn btn-primary' } }) }}
+          {{ form_row(form.title) }}
+          {{ form_row(form.path) }}
         </div>
       </div>
     </div>
-  </div>
+    <div class="col-fix">
+      <div class="button-bar" data-spy="affix" data-offset-top="55">
+        <a class="btn btn-big btn-warning" href="{{ path('synapse_admin_page_list') }}">
+          <i class="fa fa-times"></i>
+          <span>Cancel</span>
+        </a>
+        {% set void = form.submit.setRendered(true) %}
+        <button class="btn btn-big btn-success" type="submit"
+          id="{{ form.submit.vars.id }}" name="{{ form.submit.vars.full_name }}"
+        >
+          <i class="fa fa-2x fa-check"></i>
+          Submit
+        </button>
+      </div>
+    </div>
   {{ form_end(form) }}
 {% endblock %}

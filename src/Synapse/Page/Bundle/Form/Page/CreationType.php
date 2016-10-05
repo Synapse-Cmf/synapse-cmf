@@ -66,7 +66,10 @@ class CreationType extends AbstractType
         $builder
             ->addModelTransformer($this)
             ->add('name', TextType::class)
-            ->add('path', TextType::class)
+            ->add('title', TextType::class)
+            ->add('path', TextType::class, array(
+                'required' => false,
+            ))
             ->add('parent', ChoiceType::class, array(
                 'required' => true,
                 'choices' => $this->pageLoader->retrieveAll(),

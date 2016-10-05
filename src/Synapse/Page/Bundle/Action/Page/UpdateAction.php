@@ -24,6 +24,7 @@ class UpdateAction extends AbstractAction
 
         $this->page = $page;
         $this->online = $page->isOnline();
+        $this->name = $page->getName();
         $this->meta = $page->getMeta();
         $this->openGraph = $page->getOpenGraph();
         $this->title = $page->getTitle();
@@ -37,6 +38,7 @@ class UpdateAction extends AbstractAction
     public function resolve()
     {
         $this->page
+            ->setName($this->name)
             ->setOnline($this->online)
             ->setTitle($this->title)
             ->setMeta(array_replace_recursive(

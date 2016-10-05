@@ -31,14 +31,14 @@
           <i class="fa fa-2x fa-sitemap"></i>
           Metas
         </a>
-        <a href="#form-template" class="btn btn-big btn-primary">
+        <a href="#form-content" class="btn btn-big btn-primary">
           <i class="fa fa-2x fa-scribd"></i>
-          Template
+          Content
         </a>
-        <a href="#form-tech" class="btn btn-big btn-primary">
+        {# <a href="#form-tech" class="btn btn-big btn-primary">
           <i class="fa fa-2x fa-wrench"></i>
           Tech
-        </a>
+        </a> #}
       </div>
     </div>
     <div class="col-fill">
@@ -52,7 +52,7 @@
           <h3>General</h3>
         </header>
         <div class="panel-body">
-          {{ form_row(form.title) }}
+          {{ form_row(form.name) }}
           {{ form_row(form.online) }}
         </div>
       </div>
@@ -70,13 +70,13 @@
         </div>
       </div>
 
-      {# Template #}
-      <div id="form-template">
+      {# Content #}
+      <div id="form-content">
         {{ form_widget(form.synapse) }}
       </div>
 
       {# Tech #}
-      <div id="form-tech" class="panel">
+      {# <div id="form-tech" class="panel">
         <header class="panel-heading composed bg-main">
           <a href class="combo">
             <i class="fa fa-wrench"></i>
@@ -84,9 +84,9 @@
           <h3>Tech</h3>
         </header>
         <div class="panel-body">
-          {# nothing for now #}
+
         </div>
-      </div>
+      </div> #}
 
     </div>
     <div class="col-fix">

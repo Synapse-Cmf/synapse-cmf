@@ -28,7 +28,7 @@
           <tr>
             <td>
                 {% for i in range(0, page.lvl) if i > 0 %}|---{% endfor %}
-                {{ page.title }}
+                {{ page.name }}
             </td>
             <td>
                 {% set url = url(page_rendering_route, { path: page.path }, 0) %}
