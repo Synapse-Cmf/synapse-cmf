@@ -49,14 +49,11 @@ class CreateAction extends AbstractAction
             ->setName($this->name)
             ->setParent($this->parent)
             ->setOnline(!empty($this->online))
-            ->setTitle($this->title ?: $this->name)
-            ->setMeta(array(
-                'title' => $this->title ?: $this->name,
-            ))
-            ->setPath($this->pathGenerator->generatePath(
-                $this->page,
-                is_null($this->path) ? $this->page->getTitle() : $this->path
-            ))
+            ->setTitle($this->title)
+            ->setMeta(array('title' => $this->title))
+            ->setPath($this->pathGenerator
+                ->generatePath($this->page, $this->path ?: '')
+            )
         ;
 
         $this->assertEntityIsValid($this->page, array('Page', 'creation'));

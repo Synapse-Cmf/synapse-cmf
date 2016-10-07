@@ -51,6 +51,7 @@ class EditionType extends AbstractType
     {
         $builder
             ->addModelTransformer($this)
+            ->add('name', TextType::class, array())
             ->add('online', ChoiceType::class, array(
                 'expanded' => true,
                 'multiple' => false,
@@ -59,7 +60,6 @@ class EditionType extends AbstractType
                     'No' => false,
                 ),
             ))
-            ->add('title', TextType::class, array())
             ->add('meta', MetadataType::class, array(
                 'label' => false,
                 'supported_metadata' => array('title', 'description', 'keywords'),
