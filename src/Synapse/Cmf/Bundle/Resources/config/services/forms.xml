@@ -13,69 +13,48 @@
             <argument type="service" id="synapse.content.resolver" />
         </service>
 
-        <!-- Theme general type -->
-        <service id="synapse.theme.type" class="Synapse\Cmf\Bundle\Form\Type\Framework\ThemeType">
+        <!-- Theme type -->
+        <service id="synapse.theme.type" class="Synapse\Cmf\Bundle\Form\Type\Theme\ThemeType">
             <tag name="form.type" />
             <argument type="service" id="synapse.variation.resolver" />
-        </service>
-
-        <!-- Template general type -->
-        <service id="synapse.template.type" class="Synapse\Cmf\Bundle\Form\Type\Framework\TemplateType">
-            <tag name="form.type" />
             <argument type="service" id="synapse.template.loader" />
         </service>
 
-        <!-- Template form types -->
-        <service id="synapse.template.global_creation_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Template\GlobalCreationType">
+        <!-- Template type -->
+        <service id="synapse.template.type" class="Synapse\Cmf\Bundle\Form\Type\Theme\TemplateType">
             <tag name="form.type" />
             <argument type="service" id="synapse.template.domain" />
-            <argument type="service" id="synapse.content_type.loader" />
-            <argument type="service" id="synapse.template_type.loader" />
-        </service>
-
-        <service id="synapse.template.local_creation_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Template\LocalCreationType">
-            <tag name="form.type" />
-            <argument type="service" id="synapse.template.domain" />
-        </service>
-
-        <service id="synapse.template.edition_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Template\EditionType">
-            <tag name="form.type" />
-            <argument type="service" id="synapse.template.domain" />
+            <argument type="service" id="synapse.variation.resolver" />
         </service>
 
         <!-- Zone edition type -->
-        <service id="synapse.zone.edition_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\ZoneType">
+        <service id="synapse.zone.edition_type" class="Synapse\Cmf\Bundle\Form\Type\Theme\ZoneType">
             <tag name="form.type" />
             <argument type="service" id="synapse.zone.domain" />
             <argument type="service" id="synapse.variation.resolver" />
         </service>
 
-        <!-- Component form types -->
-        <service id="synapse.component.edition_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Component\EditionType">
+        <!-- Component form type -->
+        <service id="synapse.component.edition_type" class="Synapse\Cmf\Bundle\Form\Type\Theme\ComponentType">
             <tag name="form.type" />
             <argument type="service" id="synapse.component.domain" />
-        </service>
-        <service id="synapse.component.creation_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Component\CreationType">
-            <tag name="form.type" />
-            <argument type="service" id="synapse.component.domain" />
-            <argument type="service" id="synapse.component_type.loader" />
         </service>
 
         <!-- Image form type -->
-        <service id="synapse.image.form_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Media\ImageType">
+        <service id="synapse.image.form_type" class="Synapse\Cmf\Bundle\Form\Type\Media\ImageType">
             <tag name="form.type" />
             <argument type="service" id="synapse.image.domain" />
         </service>
 
         <!-- Image Choice form type -->
-        <service id="synapse.image_choice.form_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Media\ImageChoiceType">
+        <service id="synapse.image_choice.form_type" class="Synapse\Cmf\Bundle\Form\Type\Media\ImageChoiceType">
             <tag name="form.type" />
             <argument type="service" id="synapse.image.loader" />
             <argument type="service" id="synapse.image_format.loader" />
         </service>
 
         <!-- Image format form type -->
-        <service id="synapse.image.format.form_type" class="Synapse\Cmf\Bundle\Form\Type\Framework\Media\FormatType">
+        <service id="synapse.image.format.form_type" class="Synapse\Cmf\Bundle\Form\Type\Media\FormatType">
             <tag name="form.type" />
             <argument type="service" id="synapse.image.domain" />
         </service>

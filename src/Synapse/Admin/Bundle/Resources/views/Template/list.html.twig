@@ -1,0 +1,70 @@
+{% extends 'SynapseAdminBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel">
+      <header class="panel-heading composed bg-main">
+        <a href class="combo">
+          <i class="fa fa-object-group"></i>
+        </a>
+        <h3>Templates</h3>
+      </header>
+      <div class="panel-body panel-body-info">
+        <p class="info">
+          <span class="badge label-info"><i class="fa fa-info"></i></span>
+          This templates are default ones, used when no template is defined for a content. They are the way to define content type global components.
+        </p>
+      </div>
+      <table class="table table-advance table-hover">
+        <thead>
+          <tr>
+            <th>Template type</th>
+            <th>Content type</th>
+            <th>Active</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for contentType in content_types %}
+          <tr>
+            <td>{{ contentType.name | humanize }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          {% for templateType in theme.templateTypes %}
+          <tr>
+            <td>|--</td>
+            <td>{{ templateType.name | humanize }}</td>
+            <td>
+            {% if templates[templateType.name][contentType.name] is defined %}
+              <span class="badge label-success">
+                <i class="fa fa-check"></i>
+              </span>
+            {% else %}
+              <span class="badge label-danger">
+                <i class="fa fa-times"></i>
+              </span>
+            {% endif %}
+            </td>
+            <td class="text-right">
+            {% if templates[templateType.name][contentType.name] is defined %}
+              <a class="btn btn-success btn-sm" href="{{ path('synapse_admin_template_edition', { id: templates[templateType.name][contentType.name].id }) }}">
+                <i class="fa fa-edit"></i>
+              </a>
+            {% else %}
+              <a class="btn btn-primary btn-sm" href="{{ path('synapse_admin_template_init', { templateType: templateType.id, contentType: contentType.id }) }}">
+                <i class="fa fa-plus"></i>
+              </a>
+            {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

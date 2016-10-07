@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Synapse\Cmf\Bundle\Form\Type\Framework\Component\DataType;
-use Synapse\Cmf\Bundle\Form\Type\Framework\Media\ImageChoiceType;
+use Synapse\Cmf\Bundle\Form\Type\Media\ImageChoiceType;
 
 /**
  * Gallery component form type.

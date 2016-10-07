@@ -7,37 +7,36 @@
     <div class="col-md-12">
       <ul class="breadcrumb">
         <li>
-          <a href="{{ path('synapse_admin_skeleton_list') }}">
+          <a href="{{ path('synapse_admin_template_list') }}">
             <i class="fa fa-object-group"></i>
-            Skeletons
+            Templates
           </a>
         </li>
-        <li class="active">{{ skeleton.templateType.name | humanize }}</li>
-        <li class="active">{{ skeleton.contentType.name | humanize }}</li>
+        <li class="active">{{ template.templateType.name | humanize }}</li>
+        <li class="active">{{ template.contentType.name | humanize }}</li>
         <li class="active">edit</li>
       </ul>
     </div>
   </div>
 
   {{ form_start(form) }}
-  <div class="row-fluid synapse-theme-form">
+  <div class="row-fluid synapse-theme-form synapse-template-form">
     <div class="col-fill">
       <div class="panel">
         <header class="panel-heading composed bg-main">
           <a href class="combo">
             <i class="fa fa-object-group"></i>
           </a>
-          <h3>Edit skeleton <b>{{ skeleton.templateType.name | humanize }}</b> for <b>{{ skeleton.contentType.name | humanize }}</b> content type</h3>
+          <h3>Edit template <b>{{ template.templateType.name | humanize }}</b> for <b>{{ template.contentType.name | humanize }}</b> content type</h3>
         </header>
         <div class="panel-body">
-
+          {{ form_widget(form) }}
         </div>
-        {{ form_widget(form) }}
       </div>
     </div>
     <div class="col-fix">
       <div class="button-bar" data-spy="affix" data-offset-top="55">
-        <a class="btn btn-big btn-warning" href="{{ path('synapse_admin_skeleton_list') }}">
+        <a class="btn btn-big btn-warning" href="{{ path('synapse_admin_template_list') }}">
           <i class="fa fa-times"></i>
           <span>Cancel</span>
         </a>

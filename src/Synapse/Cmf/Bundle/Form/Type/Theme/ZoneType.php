@@ -1,6 +1,6 @@
 <?php
 
-namespace Synapse\Cmf\Bundle\Form\Type\Framework;
+namespace Synapse\Cmf\Bundle\Form\Type\Theme;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -12,13 +12,12 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Synapse\Cmf\Bundle\Form\Type\Framework\Component\CreationType as ComponentCreationType;
-use Synapse\Cmf\Bundle\Form\Type\Framework\Component\EditionType as ComponentEditionType;
 use Synapse\Cmf\Framework\Engine\Resolver\VariationResolver;
 use Synapse\Cmf\Framework\Theme\ComponentType\Model\ComponentTypeInterface;
 use Synapse\Cmf\Framework\Theme\ContentType\Model\ContentTypeInterface;
 use Synapse\Cmf\Framework\Theme\TemplateType\Model\TemplateTypeInterface;
 use Synapse\Cmf\Framework\Theme\Theme\Model\ThemeInterface;
+use Synapse\Cmf\Framework\Theme\Variation\Entity\Variation;
 use Synapse\Cmf\Framework\Theme\Variation\Entity\VariationContext;
 use Synapse\Cmf\Framework\Theme\Zone\Action\Dal\UpdateAction;
 use Synapse\Cmf\Framework\Theme\Zone\Domain\Action\ActionDispatcherDomain as ZoneDomain;
@@ -98,6 +97,7 @@ class ZoneType extends AbstractType implements DataTransformerInterface
     {
         $builder
             ->addModelTransformer($this)
+
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($builder, $options) {
                 $form = $event->getForm();
                 $zone = $event->getData();
@@ -107,7 +107,7 @@ class ZoneType extends AbstractType implements DataTransformerInterface
                     'auto_initialize' => false,
                     'allow_add' => false,
                     'allow_delete' => false,
-                    'entry_type' => ComponentEditionType::class,
+                    'entry_type' => ComponentType::class,
                     'entry_options' => array(
                         'variation' => $this->variationResolver->resolve((new VariationContext())->denormalize(array(
                             'theme' => $options['theme'],
@@ -116,13 +116,6 @@ class ZoneType extends AbstractType implements DataTransformerInterface
                             'zone_type' => $zone->getZoneType(),
                         ))),
                     ),
-                ));
-
-                // New component form widget
-                $form->add('add_component', ComponentCreationType::class, array(
-                    'auto_initialize' => false,
-                    'mapped' => false,
-                    'component_types' => $zone->getZoneType()->getAllowedComponentTypes(),
                 ));
             })
         ;
@@ -133,7 +126,7 @@ class ZoneType extends AbstractType implements DataTransformerInterface
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        // here data are not yet transformed, so form data is zone
+        // here data are not transformed, so form data is zone
         $zone = $form->getData();
 
         $view->vars['component_types'] = $zone->getZoneType()
@@ -144,6 +137,7 @@ class ZoneType extends AbstractType implements DataTransformerInterface
                 })
         ;
         $view->vars['zone_id'] = $zone->getId();
+        $view->vars['zone_name'] = $zone->getZoneType()->getName();
     }
 
     /**

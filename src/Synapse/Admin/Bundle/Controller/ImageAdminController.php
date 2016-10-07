@@ -9,8 +9,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Synapse\Cmf\Bundle\Form\Type\Framework\Media\FormatType;
-use Synapse\Cmf\Bundle\Form\Type\Framework\Media\ImageType;
+use Synapse\Cmf\Bundle\Form\Type\Media\FormatType;
+use Synapse\Cmf\Bundle\Form\Type\Media\ImageType;
 use Synapse\Cmf\Framework\Media\Image\Entity\Image;
 
 /**
