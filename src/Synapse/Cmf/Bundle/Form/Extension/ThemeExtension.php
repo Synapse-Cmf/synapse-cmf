@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Synapse\Cmf\Bundle\Form\Type\Framework\ThemeType;
+use Synapse\Cmf\Bundle\Form\Type\Theme\ThemeType;
 use Synapse\Cmf\Framework\Theme\Content\Model\ContentInterface;
 use Synapse\Cmf\Framework\Theme\Content\Resolver\ContentResolver;
 use Synapse\Cmf\Framework\Theme\Theme\Loader\LoaderInterface as ThemeLoader;

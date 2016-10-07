@@ -26,6 +26,7 @@ Synapse\Page\Bundle\Entity\Page:
             type: boolean
         title:
             type: string
+            nullable: true
         meta:
             type: json_array
         openGraph:

@@ -14,13 +14,13 @@ interface DomainInterface
     /**
      * Create a local template linked to given content only, on given template type.
      *
-     * @param ContentInterface             $content
+     * @param ContentInterface|Content     $content
      * @param string|TemplateTypeInterface $templateType template type object or template type name
      * @param ZoneCollection               $zones
      *
      * @return TemplateInterface
      */
-    public function createLocal(ContentInterface $content, $templateType, ZoneCollection $zones = null);
+    public function createLocal($content, $templateType, ZoneCollection $zones = null);
 
     /**
      * Create a global template for given content type, on given template type.

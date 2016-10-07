@@ -15,10 +15,8 @@
         <a href="#upload" class="combo" role="tab" data-toggle="tab">
           <i class="fa fa-cloud-upload"></i>
         </a>
-        <a href="#sync" class="combo">
-          <i class="fa fa-refresh"></i>
-        </a>
       </header>
+      {% if medias is not empty %}
       <div id="list" class="panel-body active tab-pane" role="tabpanel">
         <div class="mediatheque">
           {% for media in medias if media.type == 'image' %}
@@ -36,6 +34,12 @@
           {% endfor %}
         </div>
       </div>
+      {% else %}
+      <div id="list" class="panel-body active tab-pane" role="tabpanel">
+        <span class="badge label-info"><i class="fa fa-info"></i></span>
+        There's no media registered, try to upload some with the dedicated tool !
+      </div>
+      {% endif %}
       <div id="upload" class="tab-pane panel-body" role="tabpanel">
         <h4>Upload</h4>
         <form action="{{ url('synapse_admin_media_xhr_upload') }}" method="POST"

@@ -1,27 +1,27 @@
 <?php
 
-namespace Synapse\Cmf\Bundle\Form\Type\Framework\Media;
+namespace Synapse\Cmf\Bundle\Form\Type\Media;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Synapse\Cmf\Framework\Media\Image\Action\Dal\UpdateAction;
-use Synapse\Cmf\Framework\Media\Image\Domain\Action\ActionDispatcherDomain as ImageDomain;
+use Synapse\Cmf\Framework\Media\Format\Model\FormatInterface;
+use Synapse\Cmf\Framework\Media\Image\Action\Dal\FormatAction;
+use Synapse\Cmf\Framework\Media\Image\Domain\DomainInterface as ImageDomain;
 use Synapse\Cmf\Framework\Media\Image\Model\ImageInterface;
 
 /**
- * Custom form type for image use cases.
+ * Formatted image creation type.
  */
-class ImageType extends AbstractType implements DataTransformerInterface
+class FormatType extends AbstractType implements DataTransformerInterface
 {
     /**
      * @var ImageDomain
      */
     protected $imageDomain;
+
+    protected $format;
 
     /**
      * Construct.
@@ -38,9 +38,12 @@ class ImageType extends AbstractType implements DataTransformerInterface
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired('format');
+        $resolver->setAllowedTypes('format', FormatInterface::class);
+
         $resolver->setDefaults(array(
             'cascade_validation' => false,
-            'data_class' => UpdateAction::class,
+            'data_class' => FormatAction::class,
         ));
     }
 
@@ -49,42 +52,31 @@ class ImageType extends AbstractType implements DataTransformerInterface
      */
     public function transform($data)
     {
-        if ($data instanceof UpdateAction) {
+        if ($data instanceof FormatAction) {
             return $data;
         }
         if ($data instanceof ImageInterface) {
-            return $this->imageDomain->getAction('edit', $data);
+            return $this->imageDomain->getAction('format', $data);
         }
 
         throw new TransformationFailedException(sprintf(
-            'Image edition type only supports image or image update action. "%s" given.',
+            'Image format type only supports image or image format action. "%s" given.',
             gettype($data)
         ));
     }
 
     /**
-     * Page form prototype definition.
+     * Options form prototype definition.
      *
      * @see FormInterface::buildForm()
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->format = $options['format'];
+
         $builder
             ->addModelTransformer($this)
-            ->add('name', TextType::class)
-            ->add('title', TextType::class)
-            ->add('headline', TextareaType::class, array(
-                'required' => false,
-            ))
-            ->add('externalLink', TextType::class, array(
-                'required' => false,
-            ))
-            ->add('alt', TextType::class, array(
-                'required' => false,
-            ))
-            ->add('tags', TextType::class, array(
-                'required' => false,
-            ))
+            ->add('options', FormatOptionsType::class, array())
         ;
     }
 
@@ -93,6 +85,9 @@ class ImageType extends AbstractType implements DataTransformerInterface
      */
     public function reverseTransform($data)
     {
-        return $data->resolve();
+        return $data
+            ->setFormat($this->format)
+            ->resolve()
+        ;
     }
 }

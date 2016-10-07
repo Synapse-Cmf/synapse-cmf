@@ -1,6 +1,6 @@
 <?php
 
-namespace Synapse\Cmf\Bundle\Form\Type\Framework;
+namespace Synapse\Cmf\Bundle\Form\Type\Theme;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -8,10 +8,14 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Synapse\Cmf\Bundle\Form\Mapper\TemplateActionCollection;
 use Synapse\Cmf\Framework\Engine\Resolver\VariationResolver;
+use Synapse\Cmf\Framework\Theme\ContentType\Model\ContentTypeInterface;
 use Synapse\Cmf\Framework\Theme\Content\Entity\Content;
+use Synapse\Cmf\Framework\Theme\Template\Loader\LoaderInterface as TemplateLoader;
 use Synapse\Cmf\Framework\Theme\Theme\Model\ThemeInterface;
 use Synapse\Cmf\Framework\Theme\Variation\Entity\VariationContext;
 
@@ -27,13 +31,20 @@ class ThemeType extends AbstractType implements DataTransformerInterface
     protected $variationResolver;
 
     /**
+     * @var TemplateLoader
+     */
+    protected $templateLoader;
+
+    /**
      * Construct.
      *
      * @param VariationResolver $variationResolver
+     * @param TemplateLoader    $templateLoader
      */
-    public function __construct(VariationResolver $variationResolver)
+    public function __construct(VariationResolver $variationResolver, TemplateLoader $templateLoader)
     {
         $this->variationResolver = $variationResolver;
+        $this->templateLoader = $templateLoader;
     }
 
     /**
@@ -44,12 +55,18 @@ class ThemeType extends AbstractType implements DataTransformerInterface
         $resolver->setRequired('theme');
         $resolver->setAllowedTypes('theme', array(ThemeInterface::class));
 
-        $resolver->setRequired('content');
-        $resolver->setAllowedTypes('content', Content::class);
-
         $resolver->setDefaults(array(
+            'content' => null,
             'cascade_validation' => false,
         ));
+        $resolver->setAllowedTypes('content', array('null', Content::class));
+
+        $resolver->setRequired('content_type');
+        $resolver->setAllowedTypes('content_type', array(ContentTypeInterface::class));
+
+        $resolver->setDefault('content_type', function (Options $options) {
+            return $options['content'] ? $options['content']->getType() : null;
+        });
     }
 
     /**
@@ -89,7 +106,7 @@ class ThemeType extends AbstractType implements DataTransformerInterface
                     // variation calculation
                     $variation = $this->variationResolver->resolve((new VariationContext())->denormalize(array(
                         'theme' => $options['theme'],
-                        'content_type' => $contentType = $options['content']->getType(),
+                        'content_type' => $contentType = $options['content_type'],
                         'template_type' => $templateType,
                     )));
                     if (!$templateType->supportsContentType(
@@ -99,17 +116,27 @@ class ThemeType extends AbstractType implements DataTransformerInterface
                         continue;
                     }
 
-                    $templateFormBuilder->add($templateType->getName(), TemplateType::class, array(
-                        'auto_initialize' => false,
-                        'variation' => $variation,
-                        'template_type' => $templateType,
-                        'theme' => $options['theme'],
-                        'content' => $options['content'],
-                    ));
-                    $data['templates'][$templateType->getName()] = array();
-
                     // template select entry
                     $templateTypeChoices[$templateType->getId()] = $templateType;
+
+                    // template form construction
+                    $template = $options['content']
+                        ? $this->templateLoader->retrieveLocal($templateType, $options['content'])
+                        : $this->templateLoader->retrieveGlobal($templateType, $contentType)
+                    ;
+                    if (!$template) {  // no template to edit : nothing to do
+                        continue;
+                    }
+
+                    $data['templates'][$templateType->getName()] = $template;
+
+                    $templateFormBuilder->add($templateType->getName(), TemplateType::class, array(
+                        'auto_initialize' => false,
+                        'content_type' => $options['content_type'],
+                        'theme' => $options['theme'],
+                        'template_type' => $templateType,
+                        'variation' => $variation,
+                    ));
                 }
 
                 $form
@@ -131,10 +158,33 @@ class ThemeType extends AbstractType implements DataTransformerInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        // build template init map
+        $templatesInitMap = array();
+        foreach ($options['theme']->getTemplateTypes() as $templateType) {
+            if ($form->get('templates')->has($templateType->getName())) {
+                continue;
+            }
+
+            $templatesInitMap[$templateType->getName()] = array(
+                'template_type_id' => $templateType->getId(),
+                'content_type' => $options['content_type']->getId(),
+                'content_id' => $options['content'] ? $options['content']->getContentId() : null,
+            );
+        }
+
+        $view->vars['templates_init_map'] = $templatesInitMap;
+    }
+
+    /**
      * @see DataTransformerInterface::reverseTransform()
      */
     public function reverseTransform($data)
     {
+        // create a proxy collection for actions to resolve on demand, triggered by caller
         return new TemplateActionCollection($data['templates']);
     }
 }

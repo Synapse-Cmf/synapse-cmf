@@ -1,6 +1,6 @@
 <?php
 
-namespace Synapse\Cmf\Bundle\Form\Type\Framework\Component;
+namespace Synapse\Cmf\Bundle\Form\Type\Theme;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -19,7 +19,7 @@ use Synapse\Cmf\Framework\Theme\Variation\Entity\Variation;
 /**
  * Component edition form type.
  */
-class EditionType extends AbstractType implements DataTransformerInterface
+class ComponentType extends AbstractType implements DataTransformerInterface
 {
     /**
      * @var ComponentDomain
@@ -116,13 +116,5 @@ class EditionType extends AbstractType implements DataTransformerInterface
         $data->resolve();
 
         return $data->getComponent();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'component_edition';
     }
 }

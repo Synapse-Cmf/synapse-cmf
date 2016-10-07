@@ -1,15 +1,15 @@
 <?php
 
-namespace Synapse\Cmf\Bundle\Form\Type\Framework\Component;
+namespace Synapse\Cmf\Bundle\Form\Type\Theme;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Base form type for component types.
+ * Base form type for component data types.
  */
-class DataType extends AbstractType
+class ComponentDataType extends AbstractType
 {
     /**
      * {@inheritdoc}

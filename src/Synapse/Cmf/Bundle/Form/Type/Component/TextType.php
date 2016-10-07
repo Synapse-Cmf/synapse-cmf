@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Synapse\Cmf\Bundle\Form\Type\Framework\Media\ImageChoiceType;
+use Synapse\Cmf\Bundle\Form\Type\Media\ImageChoiceType;
 
 /**
  * Text component form type.

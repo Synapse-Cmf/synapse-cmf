@@ -1,0 +1,27 @@
+# template init
+synapse_admin_template_init:
+    path: /init/{templateType}/{contentType}/{contentId}
+    defaults:
+        _controller: "SynapseAdminBundle:TemplateAdmin:init"
+        contentId: ~
+    requirements:
+        contentId: \d*
+    methods:
+        - GET
+
+# template edition
+synapse_admin_template_edition:
+    path: /{id}/edit
+    defaults:
+        _controller: "SynapseAdminBundle:TemplateAdmin:edit"
+    methods:
+        - GET
+        - POST
+    requirements:
+        id: \d+
+
+# template list
+synapse_admin_template_list:
+    path: /
+    defaults:
+        _controller: "SynapseAdminBundle:TemplateAdmin:list"

@@ -1,6 +1,6 @@
 <?php
 
-namespace Synapse\Cmf\Bundle\Form\Type\Framework\Media;
+namespace Synapse\Cmf\Bundle\Form\Type\Media;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;

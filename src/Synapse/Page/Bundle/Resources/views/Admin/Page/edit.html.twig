@@ -12,7 +12,7 @@
             Pages
           </a>
         </li>
-        <li class="active">{{ page.title }}</li>
+        <li class="active">{{ page.name }}</li>
         <li class="active">edit</li>
       </ul>
     </div>
@@ -71,7 +71,13 @@
       </div>
 
       {# Content #}
-      <div id="form-content">
+      <div id="form-content" class="synapse-theme-form panel">
+        <header class="panel-heading composed bg-main">
+          <a href class="combo">
+            <i class="fa fa-scribd"></i>
+          </a>
+          <h3>Content</h3>
+        </header>
         {{ form_widget(form.synapse) }}
       </div>
 

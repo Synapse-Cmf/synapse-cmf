@@ -41,6 +41,9 @@
 # Assets managed by Bower
 /web/assets/vendor/
 
+# Demo theme assets
+/web/assets/demo
+
 # PHPUnit
 /app/phpunit.xml
 /phpunit.xml

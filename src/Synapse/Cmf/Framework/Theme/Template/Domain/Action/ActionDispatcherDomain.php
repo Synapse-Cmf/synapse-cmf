@@ -87,11 +87,14 @@ class ActionDispatcherDomain extends MajoraActionDispatcherDomain implements Dom
     /**
      * @see DomainInterface::createLocal()
      */
-    public function createLocal(ContentInterface $content, $templateType, ZoneCollection $zones = null)
+    public function createLocal($content, $templateType, ZoneCollection $zones = null)
     {
         // create and resolve promise
         return $this->getAction('create_local')
-            ->setContent($this->contentResolver->resolve($content))
+            ->setContent($content instanceof Content
+                ? $content
+                : $this->contentResolver->resolve($content)
+            )
             ->setTemplateType($this->resolveTemplateType($templateType))
             ->setZones($zones ?: new ZoneCollection())
             ->resolve()
