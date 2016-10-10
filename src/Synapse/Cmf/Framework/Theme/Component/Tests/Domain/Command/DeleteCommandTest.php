@@ -1,18 +1,18 @@
 <?php
 
-namespace Synapse\Cmf\Framework\Theme\Component\Tests\Action\Dal;
+namespace Synapse\Cmf\Framework\Theme\Component\Tests\Domain\Command;
 
-use Synapse\Cmf\Framework\Theme\Component\Action\Dal\DeleteAction;
+use Prophecy\Argument;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Synapse\Cmf\Framework\Theme\Component\Domain\Command\DeleteCommand;
 use Synapse\Cmf\Framework\Theme\Component\Entity\Component;
 use Synapse\Cmf\Framework\Theme\Component\Event\Event;
 use Synapse\Cmf\Framework\Theme\Component\Event\Events;
-use Prophecy\Argument;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Unit test class for Component DeleteAction throught Dal.
+ * Unit test class for Component DeleteCommand.
  */
-class DeleteActionTest extends \PHPUnit_Framework_TestCase
+class DeleteCommandTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Provides use cases to resolve() function tests.
@@ -38,9 +38,8 @@ class DeleteActionTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider resolvingCasesProvider
      */
-    public function testResolve(
-        Component $givenComponent
-    ) {
+    public function testResolve(Component $givenComponent)
+    {
         $asserter = $this;
 
         // Event dispatcher
@@ -59,11 +58,11 @@ class DeleteActionTest extends \PHPUnit_Framework_TestCase
             ->shouldBeCalled()
         ;
 
-        // Action
-        $action = new DeleteAction();
-        $action->setEventDispatcher($eventDispatcher->reveal());
-        $action->init($givenComponent);
+        // Command
+        $command = new DeleteCommand();
+        $command->setEventDispatcher($eventDispatcher->reveal());
+        $command->init($givenComponent);
 
-        $action->resolve();
+        $command->resolve();
     }
 }

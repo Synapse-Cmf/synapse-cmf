@@ -1,6 +1,6 @@
 <?php
 
-namespace Synapse\Cmf\Framework\Theme\Component\Action\Dal;
+namespace Synapse\Cmf\Framework\Theme\Component\Domain\Command;
 
 use Synapse\Cmf\Framework\Theme\Component\Event\Event as ComponentEvent;
 use Synapse\Cmf\Framework\Theme\Component\Event\Events as ComponentEvents;
@@ -9,7 +9,7 @@ use Synapse\Cmf\Framework\Theme\Component\Model\ComponentInterface;
 /**
  * Component edition action representation.
  */
-class UpdateAction extends AbstractDalAction
+class UpdateCommand extends AbstractCommand
 {
     /**
      * @var array
@@ -21,12 +21,8 @@ class UpdateAction extends AbstractDalAction
      *
      * @param ComponentInterface $zone
      */
-    public function init(ComponentInterface $component = null)
+    public function init(ComponentInterface $component)
     {
-        if (!$component) {
-            return $this;
-        }
-
         $this->component = $component;
         $this->data = $component->getData();
 
@@ -34,7 +30,7 @@ class UpdateAction extends AbstractDalAction
     }
 
     /**
-     * @see ActionInterface::resolve()
+     * @see CommandInterface::resolve()
      */
     public function resolve()
     {

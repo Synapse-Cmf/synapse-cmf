@@ -1,6 +1,6 @@
 <?php
 
-namespace Synapse\Cmf\Framework\Theme\Component\Action\Dal;
+namespace Synapse\Cmf\Framework\Theme\Component\Domain\Command;
 
 use Synapse\Cmf\Framework\Theme\ComponentType\Model\ComponentTypeInterface;
 use Synapse\Cmf\Framework\Theme\Component\Entity\Component;
@@ -10,7 +10,7 @@ use Synapse\Cmf\Framework\Theme\Component\Event\Events as ComponentEvents;
 /**
  * Component creation action representation.
  */
-class CreateAction extends AbstractDalAction
+class CreateCommand extends AbstractCommand
 {
     /**
      * @var string
@@ -46,7 +46,7 @@ class CreateAction extends AbstractDalAction
     public function resolve()
     {
         if (empty($this->componentType)) {
-            return;
+            throw new \BadMethodCallException('You have to provide a component type to create a component.');
         }
 
         $this->component = new $this->componentClass();

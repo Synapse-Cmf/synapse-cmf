@@ -54,9 +54,7 @@ class Component implements ComponentInterface
     }
 
     /**
-     * Returns Component id.
-     *
-     * @return int
+     * @see ComponentInterface::getId()
      */
     public function getId()
     {
@@ -64,11 +62,7 @@ class Component implements ComponentInterface
     }
 
     /**
-     * Define Component id.
-     *
-     * @param int $id
-     *
-     * @return self
+     * @see ComponentInterface::setId()
      */
     public function setId($id)
     {
@@ -78,9 +72,7 @@ class Component implements ComponentInterface
     }
 
     /**
-     * Returns Component component type.
-     *
-     * @return ComponentTypeInterface
+     * @see ComponentInterface::getComponentType()
      */
     public function getComponentType()
     {
@@ -88,11 +80,7 @@ class Component implements ComponentInterface
     }
 
     /**
-     * Define Component component type.
-     *
-     * @param ComponentTypeInterface $componentType
-     *
-     * @return self
+     * @see ComponentInterface::setComponentType()
      */
     public function setComponentType(ComponentTypeInterface $componentType)
     {
@@ -102,12 +90,7 @@ class Component implements ComponentInterface
     }
 
     /**
-     * Returns Component all data or for given key.
-     *
-     * @param string $key     optionnal data key to read
-     * @param mixed  $default optionnal default value if key is missing
-     *
-     * @return array|mixed
+     * @see ComponentInterface::getData()
      */
     public function getData($key = null, $default = null)
     {
@@ -115,18 +98,11 @@ class Component implements ComponentInterface
             return $this->data;
         }
 
-        return $key && isset($this->data[$key])
-            ? $this->data[$key]
-            : $default
-        ;
+        return isset($this->data[$key]) ? $this->data[$key] : $default;
     }
 
     /**
-     * Define Component data.
-     *
-     * @param array $data
-     *
-     * @return self
+     * @see ComponentInterface::setData()
      */
     public function setData(array $data)
     {
@@ -136,9 +112,7 @@ class Component implements ComponentInterface
     }
 
     /**
-     * Returns Component ranking.
-     *
-     * @return int
+     * @see ComponentInterface::getRanking()
      */
     public function getRanking()
     {
@@ -146,11 +120,7 @@ class Component implements ComponentInterface
     }
 
     /**
-     * Define Component ranking.
-     *
-     * @param int $ranking
-     *
-     * @return self
+     * @see ComponentInterface::setRanking()
      */
     public function setRanking($ranking)
     {

@@ -14,7 +14,7 @@
 
     <testsuites>
         <testsuite name="synapse_cmf">
-            <directory>src/</directory>
+            <directory>src/Synapse/Cmf/Framework</directory>
         </testsuite>
     </testsuites>
 
@@ -22,7 +22,7 @@
         <whitelist>
             <directory>src</directory>
             <exclude>
-                <directory>Resources</directory>
+                <directory>src/**/Resources</directory>
                 <directory>src/Synapse/Cmf/Framework/*/*/Tests</directory>
                 <directory>src/Synapse/*/*/*/Tests</directory>
             </exclude>

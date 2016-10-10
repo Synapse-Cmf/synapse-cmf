@@ -2,9 +2,9 @@
 
 namespace Synapse\Cmf\Framework\Theme\Component\Event;
 
-use Synapse\Cmf\Framework\Theme\Component\Action\AbstractAction;
-use Synapse\Cmf\Framework\Theme\Component\Entity\Component;
 use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
+use Synapse\Cmf\Framework\Theme\Component\Domain\Command\AbstractCommand;
+use Synapse\Cmf\Framework\Theme\Component\Entity\Component;
 
 /**
  * Component specific event class.
@@ -17,17 +17,17 @@ class Event extends SymfonyEvent
     protected $component;
 
     /**
-     * @var AbstractAction
+     * @var AbstractCommand
      */
     protected $action;
 
     /**
      * construct.
      *
-     * @param Component      $component
-     * @param AbstractAction $action
+     * @param Component       $component
+     * @param AbstractCommand $action
      */
-    public function __construct(Component $component, AbstractAction $action = null)
+    public function __construct(Component $component, AbstractCommand $action = null)
     {
         $this->component = $component;
         $this->action = $action;
@@ -56,7 +56,7 @@ class Event extends SymfonyEvent
     /**
      * Return action which have trigger this event.
      *
-     * @return AbstractAction
+     * @return AbstractCommand
      */
     public function getAction()
     {

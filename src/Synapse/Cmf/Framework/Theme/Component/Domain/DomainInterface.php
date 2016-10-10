@@ -21,20 +21,17 @@ interface DomainInterface
     public function create(ComponentTypeInterface $componentType, array $data = array());
 
     /**
-     * Create and returns an action for update a Component.
+     * Edit given Component with given data.
      *
      * @param ComponentInterface $component
-     *
-     * @return UpdateComponentAction
+     * @param array              $data
      */
-    public function edit(ComponentInterface $component);
+    public function edit(ComponentInterface $component, array $data = array());
 
     /**
-     * Create and returns an action for delete a Component.
+     * Delete given Component.
      *
      * @param ComponentInterface $component
-     *
-     * @return DeleteComponentAction
      */
     public function delete(ComponentInterface $component);
 }
