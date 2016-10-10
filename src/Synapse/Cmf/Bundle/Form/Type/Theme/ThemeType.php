@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Synapse\Cmf\Bundle\Form\Mapper\TemplateActionCollection;
 use Synapse\Cmf\Framework\Engine\Resolver\VariationResolver;
 use Synapse\Cmf\Framework\Theme\ContentType\Model\ContentTypeInterface;
 use Synapse\Cmf\Framework\Theme\Content\Entity\Content;

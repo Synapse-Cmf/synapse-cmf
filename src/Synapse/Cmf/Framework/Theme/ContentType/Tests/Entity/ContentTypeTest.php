@@ -37,6 +37,8 @@ class ContentTypeTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             'id' => array('id', 42),
+            'name' => array('name', 'synapse'),
+            'content_class' => array('contentClass', $this->prophesize(ContentInterface::class)->reveal()),
         );
     }
 

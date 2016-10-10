@@ -2,6 +2,7 @@
 
 namespace Synapse\Cmf\Framework\Theme\Component\Domain;
 
+use Majora\Framework\Domain\ActionDispatcherDomain;
 use Majora\Framework\Domain\Action\ActionFactory;
 use Synapse\Cmf\Framework\Theme\ComponentType\Model\ComponentTypeInterface;
 use Synapse\Cmf\Framework\Theme\Component\Model\ComponentInterface;
@@ -9,7 +10,7 @@ use Synapse\Cmf\Framework\Theme\Component\Model\ComponentInterface;
 /**
  * Component domain use cases class.
  */
-class ComponentDomain implements DomainInterface
+class ComponentDomain extends ActionDispatcherDomain implements DomainInterface
 {
     /**
      * @var ActionFactory
@@ -24,6 +25,8 @@ class ComponentDomain implements DomainInterface
     public function __construct(ActionFactory $commandFactory)
     {
         $this->commandFactory = $commandFactory;
+
+        parent::__construct($commandFactory); // backward compatibility
     }
 
     /**

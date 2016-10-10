@@ -37,6 +37,12 @@ class ComponentTypeTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             'id' => array('id', 42),
+            'name' => array('name', 'synapse'),
+            'labels' => array('labels', array('fr' => 'synapse')),
+            'formType' => array('formType', 'form\\type'),
+            'controller' => array('controller', 'contr\\oller'),
+            'templatePath' => array('templatePath', 'template:path'),
+            'config' => array('config', array('hello' => 'world')),
         );
     }
 

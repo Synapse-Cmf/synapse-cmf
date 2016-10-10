@@ -11,8 +11,8 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Synapse\Cmf\Framework\Theme\Component\Command\UpdateCommand;
-use Synapse\Cmf\Framework\Theme\Component\Domain\Action\ActionDispatcherDomain as ComponentDomain;
+use Synapse\Cmf\Framework\Theme\Component\Domain\Command\UpdateCommand;
+use Synapse\Cmf\Framework\Theme\Component\Domain\ComponentDomain;
 use Synapse\Cmf\Framework\Theme\Component\Model\ComponentInterface;
 use Synapse\Cmf\Framework\Theme\Variation\Entity\Variation;
 
