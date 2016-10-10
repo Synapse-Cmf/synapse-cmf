@@ -143,6 +143,6 @@ bin/ocular:
 	chmod +x bin/ocular || /bin/true
 
 travis: ci-install-composer bin/ocular
-	#./vendor/phpunit/phpunit/phpunit src -c phpunit.xml.dist --coverage-clover=coverage.clover
+	./vendor/phpunit/phpunit/phpunit src -c phpunit.xml.dist --coverage-clover=coverage.clover
 	php bin/ocular code-coverage:upload --format=php-clover coverage.clover
 
