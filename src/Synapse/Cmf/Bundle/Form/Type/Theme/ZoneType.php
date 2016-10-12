@@ -19,8 +19,8 @@ use Synapse\Cmf\Framework\Theme\TemplateType\Model\TemplateTypeInterface;
 use Synapse\Cmf\Framework\Theme\Theme\Model\ThemeInterface;
 use Synapse\Cmf\Framework\Theme\Variation\Entity\Variation;
 use Synapse\Cmf\Framework\Theme\Variation\Entity\VariationContext;
-use Synapse\Cmf\Framework\Theme\Zone\Action\Dal\UpdateAction;
-use Synapse\Cmf\Framework\Theme\Zone\Domain\Action\ActionDispatcherDomain as ZoneDomain;
+use Synapse\Cmf\Framework\Theme\Zone\Domain\Command\UpdateCommand;
+use Synapse\Cmf\Framework\Theme\Zone\Domain\ZoneDomain;
 use Synapse\Cmf\Framework\Theme\Zone\Model\ZoneInterface;
 
 /**
@@ -66,7 +66,7 @@ class ZoneType extends AbstractType implements DataTransformerInterface
 
         $resolver->setDefaults(array(
             'cascade_validation' => false,
-            'data_class' => UpdateAction::class,
+            'data_class' => UpdateCommand::class,
         ));
     }
 

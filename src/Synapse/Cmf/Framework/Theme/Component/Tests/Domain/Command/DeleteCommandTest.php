@@ -15,45 +15,19 @@ use Synapse\Cmf\Framework\Theme\Component\Event\Events;
 class DeleteCommandTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Provides use cases to resolve() function tests.
-     *
-     * @example
-     *     array(
-     *         "given_component"
-     *     )
-     *
-     * @return array()
-     */
-    public function resolvingCasesProvider()
-    {
-        return array(
-            'default_case' => array(
-                new Component(),
-            ),
-        );
-    }
-
-    /**
      * Tests resolve() function.
-     *
-     * @dataProvider resolvingCasesProvider
      */
-    public function testResolve(Component $givenComponent)
+    public function testResolve()
     {
         $asserter = $this;
+        $givenComponent = new Component();
 
         // Event dispatcher
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher
-            ->dispatch(
-                Events::COMPONENT_DELETED,
-                Argument::type(Event::class)
-            )
+            ->dispatch(Events::COMPONENT_DELETED, Argument::type(Event::class))
             ->will(function ($args) use ($asserter, $givenComponent) {
-                $asserter->assertEquals(
-                    $givenComponent,
-                    $args[1]->getComponent()
-                );
+                $asserter->assertEquals($givenComponent, $args[1]->getComponent());
             })
             ->shouldBeCalled()
         ;

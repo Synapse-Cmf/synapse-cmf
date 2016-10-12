@@ -140,6 +140,20 @@ class ZoneType implements ZoneTypeInterface
     }
 
     /**
+     * Define ZoneType labels.
+     *
+     * @param array $labels
+     *
+     * @return self
+     */
+    public function setLabels(array $labels)
+    {
+        $this->labels = $labels;
+
+        return $this;
+    }
+
+    /**
      * Returns ZoneType order.
      *
      * @return int

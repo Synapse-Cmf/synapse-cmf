@@ -32,56 +32,41 @@
 
         <!-- Zone Domain -->
         <service id="synapse.zone.domain" public="true"
-            class="Synapse\Cmf\Framework\Theme\Zone\Domain\Action\ActionDispatcherDomain"
+            class="Synapse\Cmf\Framework\Theme\Zone\Domain\ZoneDomain"
         >
-            <argument type="service" id="synapse.zone.action_factory" />
-        </service>
+            <argument type="service">
+                <service class="Majora\Framework\Domain\Action\ActionFactory">
+                    <argument type="collection">
 
-        <!-- Zone Dal action factory -->
-        <service id="synapse.zone.dal_action_factory" public="false"
-            class="Majora\Framework\Domain\Action\ActionFactory"
-        >
-            <tag name="majora.domain.action_factory" namespace="synapse.zone.dal" />
-            <tag name="majora.alias" alias="synapse.zone.action_factory" />
-        </service>
+                        <!-- Creation command -->
+                        <argument key="create" type="service">
+                            <service class="Synapse\Cmf\Framework\Theme\Zone\Domain\Command\CreateCommand">
+                                <argument>Synapse\Cmf\Bundle\Entity\Orm\Zone</argument>
+                                <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
+                                <call method="setValidator"><argument type="service" id="validator" /></call>
+                            </service>
+                        </argument>
 
-        <!-- Zone abstract dal action -->
-        <service id="synapse.zone.abstract_dal_action" parent="majora.domain.abstract_action" abstract="true"
-            class="Synapse\Cmf\Framework\Theme\Zone\Action\Dal\AbstractDalAction"
-        />
+                        <!-- Edition command -->
+                        <argument key="update" type="service">
+                            <service class="Synapse\Cmf\Framework\Theme\Zone\Domain\Command\UpdateCommand">
+                                <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
+                                <call method="setValidator"><argument type="service" id="validator" /></call>
+                            </service>
+                        </argument>
 
-        <!-- Zone Dal creation action -->
-        <service id="synapse.zone.dal_creation_action" public="false"
-            parent="synapse.zone.abstract_dal_action"
-            class="Synapse\Cmf\Framework\Theme\Zone\Action\Dal\CreateAction"
-        >
-            <tag name="majora.domain.action" namespace="synapse.zone.dal" alias="create" />
-            <argument>Synapse\Cmf\Bundle\Entity\Orm\Zone</argument>
-        </service>
+                        <!-- Add Component command -->
+                        <argument key="add_component" type="service">
+                            <service class="Synapse\Cmf\Framework\Theme\Zone\Domain\Command\AddComponentCommand">
+                                <argument type="service" id="synapse.component.domain" />
+                                <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
+                                <call method="setValidator"><argument type="service" id="validator" /></call>
+                            </service>
+                        </argument>
 
-        <!-- Zone Dal edition action -->
-        <service id="synapse.zone.dal_edition_action"  public="false"
-            parent="synapse.zone.abstract_dal_action"
-            class="Synapse\Cmf\Framework\Theme\Zone\Action\Dal\UpdateAction"
-        >
-            <tag name="majora.domain.action" namespace="synapse.zone.dal" alias="update" />
-        </service>
-
-        <!-- Zone Dal add component action -->
-        <service id="synapse.zone.dal_add_component_action"  public="false"
-            parent="synapse.zone.dal_edition_action"
-            class="Synapse\Cmf\Framework\Theme\Zone\Action\Dal\AddComponentDalAction"
-        >
-            <tag name="majora.domain.action" namespace="synapse.zone.dal" alias="add_component" />
-            <argument type="service" id="synapse.component.domain" />
-        </service>
-
-        <!-- Zone Dal deletion action -->
-        <service id="synapse.zone.dal_deletion_action" public="false"
-            parent="synapse.zone.abstract_dal_action"
-            class="Synapse\Cmf\Framework\Theme\Zone\Action\Dal\DeleteAction"
-        >
-            <tag name="majora.domain.action" namespace="synapse.zone.dal" alias="delete" />
+                    </argument>
+                </service>
+            </argument>
         </service>
 
     </services>

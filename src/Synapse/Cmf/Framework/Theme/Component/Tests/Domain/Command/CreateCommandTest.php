@@ -34,9 +34,6 @@ class CreateCommandTest extends \PHPUnit_Framework_TestCase
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
         $eventDispatcher
             ->dispatch(Events::COMPONENT_CREATED, Argument::type(Event::class))
-            ->will(function ($args) use ($asserter) {
-                $asserter->assertInstanceOf(Component::class, $args[1]->getComponent());
-            })
             ->shouldBeCalled()
         ;
 

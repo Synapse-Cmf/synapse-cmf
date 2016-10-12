@@ -27,25 +27,13 @@ class UpdateCommandTest extends \PHPUnit_Framework_TestCase
 
         // Validator
         $validator = $this->prophesize(ValidatorInterface::class);
-        $validator
-            ->validate(
-                Argument::type(Component::class),
-                null,
-                array('Component', 'edition')
-            )
+        $validator->validate(Argument::type(Component::class), null, array('Component', 'edition'))
             ->shouldBeCalled()
         ;
 
         // Event dispatcher
         $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
-        $eventDispatcher
-            ->dispatch(Events::COMPONENT_EDITED, Argument::type(Event::class))
-            ->will(function ($args) use ($asserter, $component) {
-                $asserter->assertEquals(
-                    $component,
-                    $args[1]->getComponent()
-                );
-            })
+        $eventDispatcher->dispatch(Events::COMPONENT_EDITED, Argument::type(Event::class))
             ->shouldBeCalled()
         ;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Synapse\Cmf\Framework\Theme\Zone\Action\Dal;
+namespace Synapse\Cmf\Framework\Theme\Zone\Domain\Command;
 
 use Synapse\Cmf\Framework\Theme\Component\Entity\ComponentCollection;
 use Synapse\Cmf\Framework\Theme\ZoneType\Model\ZoneTypeInterface;
@@ -9,9 +9,9 @@ use Synapse\Cmf\Framework\Theme\Zone\Event\Event as ZoneEvent;
 use Synapse\Cmf\Framework\Theme\Zone\Event\Events as ZoneEvents;
 
 /**
- * Zone creation action representation.
+ * Zone creation command representation.
  */
-class CreateAction extends AbstractDalAction
+class CreateCommand extends AbstractCommand
 {
     /**
      * @var string

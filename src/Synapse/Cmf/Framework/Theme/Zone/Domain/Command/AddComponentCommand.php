@@ -1,19 +1,24 @@
 <?php
 
-namespace Synapse\Cmf\Framework\Theme\Zone\Action\Dal;
+namespace Synapse\Cmf\Framework\Theme\Zone\Domain\Command;
 
 use Synapse\Cmf\Framework\Theme\ComponentType\Model\ComponentTypeInterface;
 use Synapse\Cmf\Framework\Theme\Component\Domain\DomainInterface as ComponentDomain;
 
 /**
- * Zone add component action representation.
+ * Zone add component command representation.
  */
-class AddComponentDalAction extends UpdateAction
+class AddComponentCommand extends UpdateCommand
 {
     /**
      * @var ComponentTypeInterface
      */
     protected $componentType;
+
+    /**
+     * @var array
+     */
+    protected $componentData;
 
     /**
      * @var ComponentDomain
@@ -28,6 +33,7 @@ class AddComponentDalAction extends UpdateAction
     public function __construct(ComponentDomain $componentDomain)
     {
         $this->componentDomain = $componentDomain;
+        $this->componentData = array();
     }
 
     /**
@@ -36,10 +42,15 @@ class AddComponentDalAction extends UpdateAction
     public function resolve()
     {
         $this->components->add(
-            $this->componentDomain->create($this->componentType)
+            $component = $this->componentDomain->create(
+                $this->componentType,
+                $this->componentData
+            )
         );
 
-        return parent::resolve();
+        parent::resolve();
+
+        return $component;
     }
 
     /**
@@ -52,6 +63,20 @@ class AddComponentDalAction extends UpdateAction
     public function setComponentType(ComponentTypeInterface $componentType)
     {
         $this->componentType = $componentType;
+
+        return $this;
+    }
+
+    /**
+     * Define object component data.
+     *
+     * @param array $componentData
+     *
+     * @return self
+     */
+    public function setComponentData(array $componentData)
+    {
+        $this->componentData = $componentData;
 
         return $this;
     }

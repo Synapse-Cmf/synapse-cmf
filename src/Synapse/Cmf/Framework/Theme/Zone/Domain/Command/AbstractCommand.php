@@ -1,36 +1,25 @@
 <?php
 
-namespace Synapse\Cmf\Framework\Theme\Zone\Action;
+namespace Synapse\Cmf\Framework\Theme\Zone\Domain\Command;
 
-use Majora\Framework\Domain\Action\AbstractAction as MajoraAbstractAction;
+use Majora\Framework\Domain\Action\ActionInterface;
+use Majora\Framework\Domain\Action\Dal\DalActionTrait;
 use Synapse\Cmf\Framework\Theme\Component\Entity\ComponentCollection;
 use Synapse\Cmf\Framework\Theme\Component\Model\ComponentInterface;
 use Synapse\Cmf\Framework\Theme\Zone\Entity\Zone;
 use Synapse\Cmf\Framework\Theme\Zone\Model\ZoneInterface;
 
 /**
- * Base class for Zone Actions.
- *
- * @property $zone
+ * Base class for Zone commands.
  */
-abstract class AbstractAction extends MajoraAbstractAction
+abstract class AbstractCommand implements ActionInterface
 {
+    use DalActionTrait;
+
     /**
      * @var ZoneInterface
      */
     protected $zone;
-
-    /**
-     * Initialisation function.
-     *
-     * @param ZoneInterface $zone
-     */
-    public function init(ZoneInterface $zone = null)
-    {
-        $this->zone = $zone;
-
-        return $this;
-    }
 
     /**
      * Return related Zone if defined.

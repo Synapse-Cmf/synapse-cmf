@@ -1,6 +1,6 @@
 <?php
 
-namespace Synapse\Cmf\Framework\Theme\Zone\Action\Dal;
+namespace Synapse\Cmf\Framework\Theme\Zone\Domain\Command;
 
 use Synapse\Cmf\Framework\Theme\Component\Entity\ComponentCollection;
 use Synapse\Cmf\Framework\Theme\Zone\Event\Event as ZoneEvent;
@@ -8,9 +8,9 @@ use Synapse\Cmf\Framework\Theme\Zone\Event\Events as ZoneEvents;
 use Synapse\Cmf\Framework\Theme\Zone\Model\ZoneInterface;
 
 /**
- * Zone edition action representation.
+ * Zone edition command representation.
  */
-class UpdateAction extends AbstractDalAction
+class UpdateCommand extends AbstractCommand
 {
     /**
      * @var ComponentCollection
@@ -22,12 +22,8 @@ class UpdateAction extends AbstractDalAction
      *
      * @param ZoneInterface $zone
      */
-    public function init(ZoneInterface $zone = null)
+    public function init(ZoneInterface $zone)
     {
-        if (!$zone) {
-            return $this;
-        }
-
         $this->zone = $zone;
         $this->components = $zone->getComponents()->indexBy('id');
 
@@ -35,7 +31,7 @@ class UpdateAction extends AbstractDalAction
     }
 
     /**
-     * @see ActionInterface::resolve()
+     * Edition trigger method.
      */
     public function resolve()
     {

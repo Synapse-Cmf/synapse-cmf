@@ -2,9 +2,9 @@
 
 namespace Synapse\Cmf\Framework\Theme\Zone\Event;
 
-use Synapse\Cmf\Framework\Theme\Zone\Action\AbstractAction;
-use Synapse\Cmf\Framework\Theme\Zone\Entity\Zone;
 use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
+use Synapse\Cmf\Framework\Theme\Zone\Domain\Command\AbstractCommand;
+use Synapse\Cmf\Framework\Theme\Zone\Entity\Zone;
 
 /**
  * Zone specific event class.
@@ -17,17 +17,17 @@ class Event extends SymfonyEvent
     protected $zone;
 
     /**
-     * @var AbstractAction
+     * @var AbstractCommand
      */
     protected $action;
 
     /**
      * construct.
      *
-     * @param Zone           $zone
-     * @param AbstractAction $action
+     * @param Zone            $zone
+     * @param AbstractCommand $action
      */
-    public function __construct(Zone $zone, AbstractAction $action = null)
+    public function __construct(Zone $zone, AbstractCommand $action = null)
     {
         $this->zone = $zone;
         $this->action = $action;

@@ -2,6 +2,7 @@
 
 namespace Synapse\Cmf\Framework\Theme\Zone\Tests\Entity;
 
+use Synapse\Cmf\Framework\Theme\ZoneType\Entity\ZoneType;
 use Synapse\Cmf\Framework\Theme\Zone\Entity\Zone;
 use Synapse\Cmf\Framework\Theme\Zone\Entity\ZoneCollection;
 
@@ -10,6 +11,52 @@ use Synapse\Cmf\Framework\Theme\Zone\Entity\ZoneCollection;
  */
 class ZoneCollectionTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Test collection sorting on zone type order.
+     */
+    public function testSortByZoneType()
+    {
+        $zone1 = (new Zone())->setZoneType((new ZoneType())
+            ->setOrder(2)
+        );
+        $zone2 = (new Zone())->setZoneType((new ZoneType())
+            ->setOrder(3)
+        );
+        $zone3 = (new Zone())->setZoneType((new ZoneType())
+            ->setOrder(1)
+        );
+
+        $this->assertEquals(
+            new ZoneCollection(array($zone3, $zone1, $zone2)),
+            (new ZoneCollection(array($zone1, $zone2, $zone3)))->sortByZoneType()
+        );
+    }
+
+    /**
+     * Test zone type name indexation.
+     */
+    public function testIndexByZoneType()
+    {
+        $zone1 = (new Zone())->setZoneType((new ZoneType())
+            ->setName('zone_1')
+        );
+        $zone2 = (new Zone())->setZoneType((new ZoneType())
+            ->setName('zone_2')
+        );
+        $zone3 = (new Zone())->setZoneType((new ZoneType())
+            ->setName('zone_3')
+        );
+
+        $this->assertEquals(
+            new ZoneCollection(array(
+                'zone_1' => $zone1,
+                'zone_3' => $zone3,
+                'zone_2' => $zone2,
+            )),
+            (new ZoneCollection(array($zone1, $zone3, $zone2)))->indexByZoneType()
+        );
+    }
+
     /**
      * Tests serialization process.
      */
