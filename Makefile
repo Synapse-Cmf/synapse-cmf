@@ -130,7 +130,8 @@ push-subrepo:
 tests: bin/phpunit
 	./bin/phpunit -c . --testsuite synapse_cmf
 tests-covered: bin/phpunit
-	php -dzend_extension=xdebug.so bin/phpunit -c . --testsuite synapse_cmf --coverage-html web/coverage
+	rm -rf web/coverage || true
+	php -dzend_extension=xdebug.so bin/phpunit -c phpunit.xml.dist --testsuite synapse_cmf --coverage-html web/coverage
 	@echo "\nCoverage report : \n\033[1;32m http://tests.synapse.dev/coverage/index.html\033[0m\n"
 
 #
@@ -143,6 +144,6 @@ bin/ocular:
 	chmod +x bin/ocular || /bin/true
 
 travis: ci-install-composer bin/ocular
-	./vendor/phpunit/phpunit/phpunit src -c phpunit.xml.dist --coverage-clover=coverage.clover
-	php bin/ocular code-coverage:upload --format=php-clover coverage.clover
+	./vendor/phpunit/phpunit/phpunit src -c phpunit.xml.dist --testsuite synapse_cmf --coverage-clover=coverage.clover
+	(test -f coverage.clover && php bin/ocular code-coverage:upload --format=php-clover coverage.clover) || true
 

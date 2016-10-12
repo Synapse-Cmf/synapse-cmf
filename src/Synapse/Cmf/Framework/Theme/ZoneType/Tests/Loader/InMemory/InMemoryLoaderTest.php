@@ -23,17 +23,14 @@ class InMemoryLoaderTest extends \PHPUnit_Framework_TestCase
         $normalizer = $this->prophesize(MajoraNormalizer::class);
         $normalizer->denormalize(Argument::type('array'), ZoneType::class)
             ->willReturn((new ZoneType())->setId(42))
-            ->shouldBeCalled()
         ;
 
         $componentTypeLoader = $this->prophesize(LoaderInterface::class);
         $componentTypeLoader->retrieve('component_type_1')
             ->willReturn($componentType1 = (new ComponentType())->setId('component_type_1'))
-            ->shouldBeCalled()
         ;
         $componentTypeLoader->retrieve('component_type_2')
             ->willReturn($componentType2 = (new ComponentType())->setId('component_type_2'))
-            ->shouldBeCalled()
         ;
 
         $zoneLoader = new InMemoryLoader(

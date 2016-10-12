@@ -112,6 +112,20 @@ class TemplateType implements TemplateTypeInterface
     }
 
     /**
+     * Define TemplateType labels.
+     *
+     * @param array $labels
+     *
+     * @return self
+     */
+    public function setLabels(array $labels)
+    {
+        $this->labels = $labels;
+
+        return $this;
+    }
+
+    /**
      * Returns TemplateType zone types.
      *
      * @return ZoneTypeCollection

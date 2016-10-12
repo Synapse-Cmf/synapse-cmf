@@ -29,4 +29,4 @@ coding_style:
 tools:
     external_code_coverage:
         timeout: 180
-        runs: 4
+        runs: 2

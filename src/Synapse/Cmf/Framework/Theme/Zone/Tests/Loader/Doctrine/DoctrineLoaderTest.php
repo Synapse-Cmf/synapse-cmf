@@ -22,11 +22,7 @@ class DoctrineLoaderTest extends \PHPUnit_Framework_TestCase
         $repository->delete()->shouldNotBeCalled();
 
         $loader = new DoctrineLoader();
-        $loader->setUp(
-            Zone::class,
-            array('majora' => 'entity'),
-            ZoneCollection::class,
-            $repository->reveal()
-        );
+        $loader->setEntityRepository($repository->reveal());
+        $loader->configureMetadata(Zone::class, array('majora' => 'entity'), ZoneCollection::class);
     }
 }
