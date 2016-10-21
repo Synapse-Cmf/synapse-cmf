@@ -7,10 +7,10 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Synapse\Cmf\Bundle\Form\Type\Framework\Component\DataType;
 use Symfony\Component\Validator\Constraints as Assert;
-use Synapse\Page\Bundle\Loader\Page\LoaderInterface;
+use Synapse\Cmf\Bundle\Form\Type\Theme\ComponentDataType;
 use Synapse\Page\Bundle\Entity\Page;
+use Synapse\Page\Bundle\Loader\Page\LoaderInterface;
 
 class PageMenuItemType extends AbstractType
 {
@@ -34,7 +34,7 @@ class PageMenuItemType extends AbstractType
      */
     public function getParent()
     {
-        return DataType::class;
+        return ComponentDataType::class;
     }
 
     /**

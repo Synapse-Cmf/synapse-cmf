@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Synapse\Cmf\Bundle\Form\Type\Framework\Component\DataType;
+use Synapse\Cmf\Bundle\Form\Type\Theme\ComponentDataType;
 
 /**
  * PageMenu component form type.
@@ -19,7 +19,7 @@ class PageMenuType extends AbstractType
      */
     public function getParent()
     {
-        return DataType::class;
+        return ComponentDataType::class;
     }
 
     /**
