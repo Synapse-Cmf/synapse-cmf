@@ -14,7 +14,8 @@ synapse:
                     text: ~
                     free: ~
                     static: ~
-                    page_menu: ~
+                    gallery: ~
+                    menu: ~
                 footer:
                     free: ~
             demo:
@@ -24,12 +25,19 @@ synapse:
                 content:
                     text: ~
                     free: ~
+            test:
+                content:
+                    text: ~
+                    free: ~
+                    static: ~
 
         templates:
             demo:
                 path: "SynapseDemoThemeBundle:Template:page.html.twig"
             page:
                 path: "SynapseDemoThemeBundle:Template:page.html.twig"
+            test:
+                path: "SynapseDemoThemeBundle:Template:test.html.twig"
 
         zones:
             top:
@@ -55,6 +63,7 @@ synapse:
                     templates:
                         default: SynapseCmfBundle:Component:static.html.twig
                         logo: SynapseDemoThemeBundle:Component:static-logo.html.twig
+                        pricing: SynapseDemoThemeBundle:Component:pricing.html.twig
             free:
                 path: SynapseDemoThemeBundle:Component:free.html.twig
                 config: ~

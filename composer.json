@@ -4,6 +4,7 @@
     "description": "Full version of Synapse CMF, main developpement repository",
     "keywords": ["content management", "framework", "symfony", "cmf"],
     "license": "MIT",
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Quentin Cerny",

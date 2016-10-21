@@ -22,48 +22,58 @@
 
   <body>
 
-    <nav class="navbar navbar-static-top navbar-dark bg-inverse">
-      <a class="navbar-brand" href="#">Synapse Demo</a>
+    <nav class="navbar navbar-static-top navbar-light bg-faded">
+      <a class="navbar-brand" href="http://demo.synapse.dev/demo_dev.php/fr/">Synapse Demo</a>
       <ul class="nav navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
+          <a class="nav-link" href="http://demo.synapse.dev/demo_dev.php/fr/">Home</a>
         </li>
       </ul>
     </nav>
 
-    <!-- Main top for a primary marketing message or call to action -->
-    {% block top %}
-      <div class="top">
-        {{ synapse_zone('top') }}
-      </div>
-    {% endblock %}
+    <div class="container-fluid" style="padding: 0;">
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
+      {% block top %}
+
+        <div class="top">
+          {{ synapse_zone('top') }}
+        </div>
+
+      {% endblock %}
+
+    </div>
+
     {% block jumbotron %}
+
       <div class="jumbotron">
-        {{ synapse_zone('jumbotron') }}
+        <div class="container">
+          {{ synapse_zone('jumbotron') }}
+        </div>
       </div>
+
     {% endblock %}
 
     <div class="container">
-    {% block content %}
-      <div class="row">
-        {{ synapse_zone('content') }}
+      {% block content %}
+
+        <div class="row">
+          {{ synapse_zone('content') }}
+        </div>
+
+      {% endblock %}
+    </div>
+
+    <br>
+    <hr>
+    <br>
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          {{ synapse_zone('footer') }}
+        </div>
       </div>
-    {% endblock %}
-
-      <hr>
-
-      <footer>
-        <p>&copy; LinkValue 2016</p>
-      </footer>
-    </div> <!-- /container -->
+    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
