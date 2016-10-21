@@ -14,17 +14,19 @@
 
     <testsuites>
         <testsuite name="synapse_cmf">
-            <directory>src/</directory>
+            <directory>src/Synapse/Cmf/Framework</directory>
+            <directory>src/Synapse/Page</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>src</directory>
+            <directory>src/Synapse/Cmf/Framework</directory>
+            <directory>src/Synapse/Page</directory>
             <exclude>
-                <directory>Resources</directory>
                 <directory>src/Synapse/Cmf/Framework/*/*/Tests</directory>
                 <directory>src/Synapse/*/*/*/Tests</directory>
+                <directory>src/Synapse/*/*/*/Resources</directory>
             </exclude>
         </whitelist>
     </filter>

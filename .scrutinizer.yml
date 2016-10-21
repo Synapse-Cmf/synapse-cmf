@@ -6,6 +6,7 @@ filter:
         - 'src/*'
     excluded_paths:
         - '*Tests/*'
+        - '*Resources/*'
 
 coding_style:
     php:

@@ -2,7 +2,13 @@
 
 namespace Synapse\Cmf\Framework\Theme\Template\Tests\Entity;
 
+use Synapse\Cmf\Framework\Theme\ContentType\Entity\ContentType;
+use Synapse\Cmf\Framework\Theme\Content\Entity\Content;
+use Synapse\Cmf\Framework\Theme\Content\Model\ContentInterface;
+use Synapse\Cmf\Framework\Theme\TemplateType\Entity\TemplateType;
 use Synapse\Cmf\Framework\Theme\Template\Entity\Template;
+use Synapse\Cmf\Framework\Theme\Template\Model\TemplateInterface;
+use Synapse\Cmf\Framework\Theme\Zone\Entity\ZoneCollection;
 
 /**
  * Unit test class for Template.
@@ -37,6 +43,14 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             'id' => array('id', 42),
+            'template_type' => array('templateType', new TemplateType()),
+            'content' => array('content', new Content(
+                $this->prophesize(ContentInterface::class)->reveal(),
+                new ContentType()
+            )),
+            'content_type' => array('contentType', new ContentType()),
+            'global_template' => array('globalTemplate', new Template()),
+            'zones' => array('zones', new ZoneCollection()),
         );
     }
 
@@ -122,5 +136,27 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
                 sprintf('Template "%s" scope provides an array with "%s" key.', $scope, $expectedKey)
             );
         }
+    }
+
+    /**
+     * Test "local" scope definition.
+     */
+    public function testScopeLocal()
+    {
+        $this->assertEquals(
+            TemplateInterface::LOCAL_SCOPE,
+            (new Template())->setLocal()->getScope()
+        );
+    }
+
+    /**
+     * Test "global" scope definition.
+     */
+    public function testScopeGlobal()
+    {
+        $this->assertEquals(
+            TemplateInterface::GLOBAL_SCOPE,
+            (new Template())->setGlobal()->getScope()
+        );
     }
 }

@@ -60,7 +60,7 @@ class TemplateAdminController extends Controller
                 $templateType
             )
             : $templateDomain->createLocal(
-                $this->container->get('synapse.content.resolver')->resolve($contentType, $contentId),
+                $this->container->get('synapse.content.resolver')->resolveContentId($contentType, $contentId),
                 $templateType
             )
         ;

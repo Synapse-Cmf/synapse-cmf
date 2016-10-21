@@ -2,7 +2,7 @@
 
 namespace Synapse\Cmf\Framework\Theme\Component\Tests\Event;
 
-use Synapse\Cmf\Framework\Theme\Component\Action\AbstractAction;
+use Synapse\Cmf\Framework\Theme\Component\Domain\Command\AbstractCommand;
 use Synapse\Cmf\Framework\Theme\Component\Entity\Component;
 use Synapse\Cmf\Framework\Theme\Component\Event\Event;
 
@@ -16,7 +16,7 @@ class EventTest extends \PHPUnit_Framework_TestCase
      */
     public function testAccessors()
     {
-        $action = $this->prophesize(AbstractAction::class)->reveal();
+        $action = $this->prophesize(AbstractCommand::class)->reveal();
 
         // Event
         $event = new Event(

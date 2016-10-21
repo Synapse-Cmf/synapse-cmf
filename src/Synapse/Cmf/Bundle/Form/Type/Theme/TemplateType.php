@@ -13,8 +13,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Synapse\Cmf\Framework\Engine\Resolver\VariationResolver;
 use Synapse\Cmf\Framework\Theme\ContentType\Model\ContentTypeInterface;
 use Synapse\Cmf\Framework\Theme\TemplateType\Model\TemplateTypeInterface;
-use Synapse\Cmf\Framework\Theme\Template\Action\Dal\UpdateAction;
-use Synapse\Cmf\Framework\Theme\Template\Domain\Action\ActionDispatcherDomain as TemplateDomain;
+use Synapse\Cmf\Framework\Theme\Template\Domain\Command\UpdateCommand;
+use Synapse\Cmf\Framework\Theme\Template\Domain\TemplateDomain;
 use Synapse\Cmf\Framework\Theme\Template\Model\TemplateInterface;
 use Synapse\Cmf\Framework\Theme\Theme\Model\ThemeInterface;
 use Synapse\Cmf\Framework\Theme\Variation\Entity\Variation;
@@ -74,7 +74,7 @@ class TemplateType extends AbstractType implements DataTransformerInterface
 
         $resolver->setDefaults(array(
             'cascade_validation' => false,
-            'data_class' => UpdateAction::class,
+            'data_class' => UpdateCommand::class,
         ));
     }
 
@@ -83,7 +83,7 @@ class TemplateType extends AbstractType implements DataTransformerInterface
      */
     public function transform($data)
     {
-        if ($data instanceof UpdateAction) {
+        if ($data instanceof UpdateCommand) {
             return $data;
         }
         if ($data instanceof TemplateInterface) {

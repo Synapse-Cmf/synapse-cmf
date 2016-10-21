@@ -56,12 +56,4 @@ class InMemoryLoader extends AbstractInMemoryLoader implements LoaderInterface
 
         $this->entityCollection->set($templateType->getId(), $templateType);
     }
-
-    /**
-     * @see LoaderInterface::retrieveContentAllowed()
-     */
-    public function retrieveContentAllowed($content)
-    {
-        return $this->retrieveAll(); // @todo
-    }
 }

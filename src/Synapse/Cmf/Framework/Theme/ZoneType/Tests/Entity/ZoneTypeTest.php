@@ -2,6 +2,7 @@
 
 namespace Synapse\Cmf\Framework\Theme\ZoneType\Tests\Entity;
 
+use Synapse\Cmf\Framework\Theme\ComponentType\Entity\ComponentTypeCollection;
 use Synapse\Cmf\Framework\Theme\ZoneType\Entity\ZoneType;
 
 /**
@@ -37,6 +38,10 @@ class ZoneTypeTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             'id' => array('id', 42),
+            'name' => array('name', 'synapse'),
+            'labels' => array('labels', array('fr' => 'monde', 'en' => 'worlds')),
+            'allowed_component_types' => array('allowedComponentTypes', new ComponentTypeCollection()),
+            'order' => array('order', 42),
         );
     }
 

@@ -11,8 +11,8 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Synapse\Cmf\Framework\Theme\Component\Action\Dal\UpdateAction;
-use Synapse\Cmf\Framework\Theme\Component\Domain\Action\ActionDispatcherDomain as ComponentDomain;
+use Synapse\Cmf\Framework\Theme\Component\Domain\Command\UpdateCommand;
+use Synapse\Cmf\Framework\Theme\Component\Domain\ComponentDomain;
 use Synapse\Cmf\Framework\Theme\Component\Model\ComponentInterface;
 use Synapse\Cmf\Framework\Theme\Variation\Entity\Variation;
 
@@ -45,7 +45,7 @@ class ComponentType extends AbstractType implements DataTransformerInterface
         $resolver->setAllowedTypes('variation', Variation::class);
 
         $resolver->setDefaults(array(
-            'data_class' => UpdateAction::class,
+            'data_class' => UpdateCommand::class,
         ));
     }
 
@@ -54,7 +54,7 @@ class ComponentType extends AbstractType implements DataTransformerInterface
      */
     public function transform($data)
     {
-        if ($data instanceof UpdateAction) {
+        if ($data instanceof UpdateCommand) {
             return $data;
         }
         if ($data instanceof ComponentInterface) {

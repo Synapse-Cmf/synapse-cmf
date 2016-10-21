@@ -3,6 +3,7 @@
 namespace Synapse\Cmf\Framework\Theme\TemplateType\Tests\Entity;
 
 use Synapse\Cmf\Framework\Theme\TemplateType\Entity\TemplateType;
+use Synapse\Cmf\Framework\Theme\ZoneType\Entity\ZoneTypeCollection;
 
 /**
  * Unit test class for TemplateType.
@@ -37,6 +38,9 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             'id' => array('id', 42),
+            'name' => array('name', 'synapse'),
+            'labels' => array('labels', array('fr' => 'bonjour', 'en' => 'world')),
+            'zone_types' => array('zoneTypes', new ZoneTypeCollection()),
         );
     }
 
@@ -122,5 +126,44 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
                 sprintf('TemplateType "%s" scope provides an array with "%s" key.', $scope, $expectedKey)
             );
         }
+    }
+
+    /**
+     * Provider method for content type support testing.
+     *
+     * @return array
+     */
+    public function contentTypeProvider()
+    {
+        return array(
+            'empty_content_types' => array(
+                'fake_type',
+                array(),
+                true,
+            ),
+            'existing_content_types' => array(
+                'synapse_content_type1',
+                array('synapse_content_type1', 'synapse_content_type2'),
+                true,
+            ),
+            'not_supported_content_types' => array(
+                'synapse_content_type3',
+                array('synapse_content_type1', 'synapse_content_type2'),
+                false,
+            ),
+        );
+    }
+
+    /**
+     * Tests supportsContentType() method.
+     *
+     * @dataProvider contentTypeProvider
+     */
+    public function testSupportsContentType($contentTypeAlias, $contentTypes, $result)
+    {
+        $this->assertEquals(
+            $result,
+            (new TemplateType())->supportsContentType($contentTypeAlias, $contentTypes)
+        );
     }
 }

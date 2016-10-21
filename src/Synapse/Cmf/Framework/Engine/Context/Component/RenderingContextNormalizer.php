@@ -111,7 +111,7 @@ class RenderingContextNormalizer
         }
 
         return array(
-            $this->contentResolver->resolve(...$data['content']),
+            $this->contentResolver->resolveContentId(...$data['content']),
             $this->themeLoader->retrieveByName($data['theme']),
             $template,
             $zone,

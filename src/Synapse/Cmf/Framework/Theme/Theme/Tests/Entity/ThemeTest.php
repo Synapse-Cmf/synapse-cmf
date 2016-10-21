@@ -2,6 +2,8 @@
 
 namespace Synapse\Cmf\Framework\Theme\Theme\Tests\Entity;
 
+use Synapse\Cmf\Framework\Media\Format\Entity\FormatCollection;
+use Synapse\Cmf\Framework\Theme\TemplateType\Entity\TemplateTypeCollection;
 use Synapse\Cmf\Framework\Theme\Theme\Entity\Theme;
 
 /**
@@ -37,6 +39,10 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             'id' => array('id', 42),
+            'name' => array('name', 'synapse'),
+            'labels' => array('labels', array('fr' => 'Bonjour', 'en' => 'World')),
+            'template_types' => array('templateTypes', new TemplateTypeCollection()),
+            'image_formats' => array('imageFormats', new FormatCollection()),
         );
     }
 

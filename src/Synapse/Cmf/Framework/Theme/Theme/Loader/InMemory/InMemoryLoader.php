@@ -53,7 +53,10 @@ class InMemoryLoader extends AbstractInMemoryLoader implements LoaderInterface
     public function registerTheme(array $themeData)
     {
         $theme = $this->normalizer->denormalize(
-            array('id' => $themeData['id'], 'name' => $themeData['name']),
+            array(
+                'id' => $themeData['id'],
+                'name' => $themeData['id'],
+            ),
             $this->entityCollection->getEntityClass()
         );
         foreach ($themeData['templates'] as $templateTypeId) {

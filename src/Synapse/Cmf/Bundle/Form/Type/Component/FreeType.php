@@ -5,7 +5,7 @@ namespace Synapse\Cmf\Bundle\Form\Type\Component;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Synapse\Cmf\Bundle\Form\Type\Framework\Component\DataType;
+use Synapse\Cmf\Bundle\Form\Type\Theme\ComponentDataType;
 
 /**
  * Free component form type.
@@ -17,7 +17,7 @@ class FreeType extends AbstractType
      */
     public function getParent()
     {
-        return DataType::class;
+        return ComponentDataType::class;
     }
 
     /**

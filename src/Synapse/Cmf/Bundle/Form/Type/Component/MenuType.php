@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Synapse\Cmf\Bundle\Form\Type\Framework\Component\DataType;
+use Synapse\Cmf\Bundle\Form\Type\Theme\ComponentDataType;
 
 /**
  * Menu component form type.
@@ -21,7 +21,7 @@ class MenuType extends AbstractType implements DataTransformerInterface
      */
     public function getParent()
     {
-        return DataType::class;
+        return ComponentDataType::class;
     }
 
     /**

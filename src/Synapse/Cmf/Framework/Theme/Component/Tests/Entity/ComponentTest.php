@@ -2,6 +2,7 @@
 
 namespace Synapse\Cmf\Framework\Theme\Component\Tests\Entity;
 
+use Synapse\Cmf\Framework\Theme\ComponentType\Entity\ComponentType;
 use Synapse\Cmf\Framework\Theme\Component\Entity\Component;
 
 /**
@@ -37,6 +38,9 @@ class ComponentTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             'id' => array('id', 42),
+            'data' => array('data', array('hello' => 'world')),
+            'component_type' => array('componentType', new ComponentType()),
+            'ranking' => array('ranking', 11),
         );
     }
 
@@ -122,5 +126,37 @@ class ComponentTest extends \PHPUnit_Framework_TestCase
                 sprintf('Component "%s" scope provides an array with "%s" key.', $scope, $expectedKey)
             );
         }
+    }
+
+    /**
+     * Provider for getData test.
+     *
+     * @return array
+     */
+    public function singleDataProvider()
+    {
+        return array(
+            'defined_key' => array('foo', 'default', 'bar'),
+            'empty_value' => array('empty', 'default', 'default'),
+            'undefined_key' => array('fake', 'default', 'default'),
+        );
+    }
+
+    /**
+     * Tests Component special get.
+     *
+     * @dataProvider singleDataProvider
+     */
+    public function testGetSingleData($key, $default, $return)
+    {
+        $component = (new Component())->setData(array(
+            'foo' => 'bar',
+            'empty' => null,
+        ));
+
+        $this->assertEquals(
+            $return,
+            $component->getData($key, $default)
+        );
     }
 }

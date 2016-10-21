@@ -29,51 +29,70 @@ class ContentResolver
     }
 
     /**
-     * Resolve given ContentInterface into a Synapse content object.
+     * Resolve given Content into Synapse internal content class.
      *
-     * @param ContentInterface|string $content Content object or content type name
-     * @param scalar                  $id      Content id, required if name given
+     * @param ContentInterface $content
      *
      * @return Content
-     *
-     * @throws BadMethodCallException  If no id given with content type name as first arg
-     * @throws InvalidContentException If given content isnt supported
      */
-    public function resolve($content, $id = null)
+    public function resolve(ContentInterface $content)
     {
-        if (is_string($content) && !$id) {
-            throw new \BadMethodCallException(
-                'You have to provide both content type name and content id without given ContentInterface object.'
-            );
-        }
-        if (is_object($content) && !$content instanceof ContentInterface) {
-            throw new \InvalidArgumentException(sprintf(
-                'Given %s object is not a ContentInterface.',
-                get_class($content)
-            ));
-        }
-
-        // iterate over all content types for inheritence checking
-        $contentType = $content instanceof ContentInterface
-            ? $this->contentTypeLoader->retrieveAll()
-                ->filter(function (ContentTypeInterface $contentType) use ($content) {
-                    return is_a($content, $contentType->getContentClass());
-                })
-                ->first()
-            : $this->contentTypeLoader->retrieve($content)
+        $contentType = $this->contentTypeLoader->retrieveAll()
+            ->filter(function (ContentTypeInterface $contentType) use ($content) {
+                return is_a($content, $contentType->getContentClass());
+            })
+            ->first()
         ;
         if (!$contentType) {
             throw new InvalidContentException(sprintf(
-                'Unsupported content : "%s", check you configuration.',
+                'No content type registered for "%s" content, check you configuration.',
                 is_string($content) ? $content : get_class($content)
             ));
         }
 
-        return new Content(
-            $content instanceof ContentInterface
-                ? $content
-                : $contentType->retrieveContent($id),
-            $contentType
-        );
+        return $this->wrap($contentType, $content);
+    }
+
+    /**
+     * Resolve given content type id / content id couple into Synapse internal content class.
+     *
+     * @param string $contentTypeId
+     * @param string $contentId
+     *
+     * @return Content
+     */
+    public function resolveContentId($contentTypeId, $contentId)
+    {
+        // content type ?
+        if (!$contentType = $this->contentTypeLoader->retrieve($contentTypeId)) {
+            throw new InvalidContentException(sprintf(
+                'No content type registered under "%s" id, check you configuration.',
+                $contentTypeId
+            ));
+        }
+
+        // content object
+        if (!$content = $contentType->retrieveContent($contentId)) {
+            throw new InvalidContentException(sprintf(
+                'Unable to get a "%s" content under "%s" id.',
+                $contentType->getName(),
+                $contentId
+            ));
+        }
+
+        return $this->wrap($contentType, $content);
+    }
+
+    /**
+     * Wrap given content type and content object into Synapse Content internal wrapper.
+     *
+     * @param ContentTypeInterface $contentType
+     * @param ContentInterface     $content
+     *
+     * @return Content
+     */
+    protected function wrap(ContentTypeInterface $contentType, ContentInterface $content)
+    {
+        return new Content($content, $contentType);
     }
 }

@@ -47,8 +47,10 @@ class Variation
     {
         $propertyPath = sprintf('[%s][%s][%s]', $namespace, $element, $key);
 
-        return $this->propertyAccessor->getValue($this->configurations, $propertyPath)
-            ?: $default
-        ;
+        if ($value = $this->propertyAccessor->getValue($this->configurations, $propertyPath)) {
+            return $value;
+        }
+
+        return $default;
     }
 }

@@ -47,6 +47,7 @@
 # PHPUnit
 /app/phpunit.xml
 /phpunit.xml
+/web/coverage
 
 # Build data
 /build/

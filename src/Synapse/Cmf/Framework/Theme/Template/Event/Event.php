@@ -2,9 +2,9 @@
 
 namespace Synapse\Cmf\Framework\Theme\Template\Event;
 
-use Synapse\Cmf\Framework\Theme\Template\Action\AbstractAction;
-use Synapse\Cmf\Framework\Theme\Template\Entity\Template;
 use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
+use Synapse\Cmf\Framework\Theme\Template\Domain\Command\AbstractCommand;
+use Synapse\Cmf\Framework\Theme\Template\Entity\Template;
 
 /**
  * Template specific event class.
@@ -17,20 +17,20 @@ class Event extends SymfonyEvent
     protected $template;
 
     /**
-     * @var AbstractAction
+     * @var AbstractCommand
      */
-    protected $action;
+    protected $command;
 
     /**
      * construct.
      *
-     * @param Template       $template
-     * @param AbstractAction $action
+     * @param Template        $template
+     * @param AbstractCommand $command
      */
-    public function __construct(Template $template, AbstractAction $action = null)
+    public function __construct(Template $template, AbstractCommand $command = null)
     {
         $this->template = $template;
-        $this->action = $action;
+        $this->command = $command;
     }
 
     /**
@@ -54,12 +54,12 @@ class Event extends SymfonyEvent
     }
 
     /**
-     * Return action which have trigger this event.
+     * Return command which have trigger this event.
      *
-     * @return AbstractAction
+     * @return AbstractCommand
      */
     public function getAction()
     {
-        return $this->action;
+        return $this->command;
     }
 }

@@ -6,8 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Synapse\Cmf\Bundle\Form\Type\Framework\Component\DataType;
 use Synapse\Cmf\Bundle\Form\Type\Media\ImageChoiceType;
+use Synapse\Cmf\Bundle\Form\Type\Theme\ComponentDataType;
 
 /**
  * Gallery component form type.
@@ -19,7 +19,7 @@ class GalleryType extends AbstractType
      */
     public function getParent()
     {
-        return DataType::class;
+        return ComponentDataType::class;
     }
 
     /**

@@ -24,17 +24,14 @@ class ZoneCollection extends EntityCollection
      */
     public function sortByZoneType()
     {
-        return new self($this
-            ->sort(function (Zone $zone1, Zone $zone2) {
-                $zone1Order = $zone1->getZoneType()->getOrder();
-                $zone2Order = $zone2->getZoneType()->getOrder();
+        return $this->sort(function (Zone $zone1, Zone $zone2) {
+            $zone1Order = $zone1->getZoneType()->getOrder();
+            $zone2Order = $zone2->getZoneType()->getOrder();
 
-                // implement alpha sort on name if equal ?
+            // implement alpha sort on name if equal ?
 
-                return $zone1Order >= $zone2Order ? 1 : -1;
-            })
-            ->toArray()
-        );
+            return $zone1Order >= $zone2Order ? 1 : -1;
+        });
     }
 
     /**
