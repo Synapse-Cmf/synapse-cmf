@@ -117,7 +117,7 @@ class ZoneRenderer
                     })
                     ->toArray()
                 ;
-            }),
+            }, []),
             $aggregationConfig
         );
     }
