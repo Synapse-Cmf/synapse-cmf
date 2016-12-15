@@ -19,7 +19,9 @@ sites:
 fpm_pools:
     - { name: 'www', user: 'vagrant', group: 'vagrant' }
 
-php_extensions:
+php_versions: ['5.6']
+
+php56_extensions:
   - php5.6-common
   - php5.6-curl
   - php5.6-imagick
@@ -39,6 +41,6 @@ mysql:
   databases:
     - { name: 'synapse' }
   users:
-    - { name: 'synapse', host: '%' }
+    - { name: 'synapse' }
 
 etc_hosts_lines: []
