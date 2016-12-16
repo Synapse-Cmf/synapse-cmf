@@ -23,8 +23,8 @@ make init
 Edit your hostfile (/etc/hosts) :
 ```
 ### Synapse ###
-192.168.100.80  synapse.dev
-192.168.100.80  admin-synapse.dev
+192.168.100.80  demo.synapse.dev
+192.168.100.80  demo.admin-synapse.dev
 ```
 
 ### Project build
