@@ -81,6 +81,13 @@ class ZoneRenderer
 
         // render component into zone
         $aggregationConfig = $context->getZoneAggregation($zoneName);
+        if (!$aggregationConfig) {
+            throw new InvalidZoneException(sprintf(
+                'The zone "%s" isn\'t registred. Check your configuration.',
+                $zoneName
+            ));
+        }
+
         $aggregationType = $aggregationConfig['type'];
 
         if (!isset($this->aggregators[$aggregationType])) {
