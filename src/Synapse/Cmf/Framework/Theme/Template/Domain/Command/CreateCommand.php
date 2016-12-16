@@ -6,7 +6,6 @@ use Synapse\Cmf\Framework\Theme\TemplateType\Model\TemplateTypeInterface;
 use Synapse\Cmf\Framework\Theme\Template\Entity\Template;
 use Synapse\Cmf\Framework\Theme\Template\Event\Event as TemplateEvent;
 use Synapse\Cmf\Framework\Theme\Template\Event\Events as TemplateEvents;
-use Synapse\Cmf\Framework\Theme\Zone\Domain\DomainInterface as ZoneDomain;
 use Synapse\Cmf\Framework\Theme\Zone\Entity\ZoneCollection;
 
 /**
@@ -20,11 +19,6 @@ abstract class CreateCommand extends AbstractCommand
     private $templateClass;
 
     /**
-     * @var ZoneDomain
-     */
-    private $zoneDomain;
-
-    /**
      * @var TemplateTypeInterface
      */
     protected $templateType;
@@ -32,12 +26,10 @@ abstract class CreateCommand extends AbstractCommand
     /**
      * Construct.
      *
-     * @param ZoneDomain $zoneDomain
-     * @param string     $templateClass
+     * @param string $templateClass
      */
-    public function __construct(ZoneDomain $zoneDomain, $templateClass = Template::class)
+    public function __construct($templateClass = Template::class)
     {
-        $this->zoneDomain = $zoneDomain;
         $this->templateClass = $templateClass;
         $this->zones = new ZoneCollection();
     }
@@ -50,23 +42,6 @@ abstract class CreateCommand extends AbstractCommand
      * @return TemplateInterface
      */
     abstract protected function createTemplate($templateClass);
-
-    /**
-     * Template creation event handler.
-     *
-     * @param TemplateEvent $event
-     */
-    public function onTemplateCreated(TemplateEvent $event)
-    {
-        $template = $event->getTemplate();
-        $zones = $template->getZones();
-        foreach ($template->getTemplateType()->getZoneTypes() as $zoneType) {
-            if ($zones->search(array('zoneType' => $zoneType))->isEmpty()) {
-                $zones->add($this->zoneDomain->create($zoneType));
-            }
-        }
-        $template->setZones($zones);
-    }
 
     /**
      * Template creation method.

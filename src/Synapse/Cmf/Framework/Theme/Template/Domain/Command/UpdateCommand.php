@@ -37,9 +37,14 @@ class UpdateCommand extends AbstractCommand
 
         $this->assertEntityIsValid($this->template, array('Template', 'edition'));
 
+        $this->eventDispatcher->addListener(
+            TemplateEvents::TEMPLATE_EDITED,
+            $handler = array($this, 'onTemplateCreated')
+        );
         $this->fireEvent(
             TemplateEvents::TEMPLATE_EDITED,
             new TemplateEvent($this->template, $this)
         );
+        $this->eventDispatcher->removeListener(TemplateEvents::TEMPLATE_EDITED, $handler);
     }
 }

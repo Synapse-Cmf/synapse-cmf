@@ -42,8 +42,8 @@
                         <!-- Global template creation command -->
                         <argument key="create_global" type="service">
                             <service class="Synapse\Cmf\Framework\Theme\Template\Domain\Command\CreateGlobalCommand">
-                                <argument type="service" id="synapse.zone.domain" />
                                 <argument>Synapse\Cmf\Bundle\Entity\Orm\Template</argument>
+                                <call method="setZoneDomain"><argument type="service" id="synapse.zone.domain" /></call>
                                 <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
                                 <call method="setValidator"><argument type="service" id="validator" /></call>
                             </service>
@@ -52,8 +52,8 @@
                         <!-- Local template creation command -->
                         <argument key="create_local" type="service">
                             <service class="Synapse\Cmf\Framework\Theme\Template\Domain\Command\CreateLocalCommand">
-                                <argument type="service" id="synapse.zone.domain" />
                                 <argument>Synapse\Cmf\Bundle\Entity\Orm\Template</argument>
+                                <call method="setZoneDomain"><argument type="service" id="synapse.zone.domain" /></call>
                                 <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
                                 <call method="setValidator"><argument type="service" id="validator" /></call>
                             </service>
@@ -62,6 +62,7 @@
                         <!-- Edition command -->
                         <argument key="update" type="service">
                             <service class="Synapse\Cmf\Framework\Theme\Template\Domain\Command\UpdateCommand">
+                                <call method="setZoneDomain"><argument type="service" id="synapse.zone.domain" /></call>
                                 <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
                                 <call method="setValidator"><argument type="service" id="validator" /></call>
                             </service>

@@ -44,7 +44,8 @@ class CreateGlobalCommandTest extends \PHPUnit_Framework_TestCase
         ;
 
         // Command
-        $command = new CreateGlobalCommand($this->prophesize(DomainInterface::class)->reveal(), Template::class);
+        $command = new CreateGlobalCommand(Template::class);
+        $command->setZoneDomain($this->prophesize(DomainInterface::class)->reveal());
         $command->setValidator($validator->reveal());
         $command->setEventDispatcher($eventDispatcher->reveal());
 
