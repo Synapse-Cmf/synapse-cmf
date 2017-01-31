@@ -123,10 +123,10 @@ update-composer: bin/composer
 # Git
 #
 push-subrepo:
-	git subrepo push src/Synapse/Cmf
-	git subrepo push src/Synapse/Admin
-	git subrepo push src/Synapse/Page
-	git subrepo push src/Synapse/Demo
+	git subrepo push src/Synapse/Cmf --force
+	git subrepo push src/Synapse/Admin --force
+	git subrepo push src/Synapse/Page --force
+	git subrepo push src/Synapse/Demo --force
 
 #
 # Tests
