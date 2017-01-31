@@ -62,10 +62,14 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $treeBuilder->root('synapse')
+            ->info('Define themes structure, templates, zones and components. You have to define at least one.')
+            ->requiresAtLeastOneElement()
             ->useAttributeAsKey('name')
             ->prototype('array')
                 ->children()
                     ->arrayNode('structure')
+                        ->isRequired()
+                        ->requiresAtLeastOneElement()
                         ->useAttributeAsKey('name')
                         ->prototype('array') // templates
                             ->useAttributeAsKey('name')
@@ -82,8 +86,13 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end()
                     ->end()
-                    ->append($this->createVariableNode('templates', 'hydrateTemplatesNode'))
-                    ->append($this->createVariableNode('zones', 'hydrateZonesNode'))
+                    ->append($this
+                        ->createVariableNode('templates', 'hydrateTemplatesNode')
+                            ->requiresAtLeastOneElement()
+                    )
+                    ->append($this
+                        ->createVariableNode('zones', 'hydrateZonesNode')
+                    )
                     ->append($this
                         ->createVariableNode('components', 'hydrateComponentsNode')
                         ->validate()
@@ -123,6 +132,7 @@ class Configuration implements ConfigurationInterface
         $builder = new TreeBuilder();
         $node = $builder->root($nodeName);
         $prototype = $node
+            ->isRequired()
             ->useAttributeAsKey('name')
             ->prototype('array')
                 ->addDefaultsIfNotSet()

@@ -23,10 +23,26 @@ class DoctrineRepository extends MajoraDoctrineRepository implements RepositoryI
     public static function getSubscribedEvents()
     {
         return array(
-            ZoneEvents::ZONE_CREATED => array('onWriteZone', -100),
+            ZoneEvents::ZONE_CREATED => array('onCreateZone', -100),
             ZoneEvents::ZONE_EDITED => array('onWriteZone', -100),
             ZoneEvents::ZONE_DELETED => array('onDeleteZone', -100),
         );
+    }
+
+    /**
+     * Zone creation event handler.
+     * Triggers persistence call only if component was defined into it.
+     *
+     * @param ZoneEvent $event
+     */
+    public function onCreateZone(ZoneEvent $event)
+    {
+        $zone = $event->getZone();
+        if ($zone->getComponents()->isEmpty()) {
+            return;
+        }
+
+        $this->save($zone);
     }
 
     /**

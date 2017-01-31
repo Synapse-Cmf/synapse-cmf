@@ -42,6 +42,8 @@ class CompilerPass implements CompilerPassInterface
             ),
             $this->config
         );
+        if (empty($config)) {
+        }
 
         $variationResolver = $container->getDefinition('synapse.variation.resolver');
         $themeLoaderDefinition = $container->getDefinition('synapse.theme.in_memory_loader');

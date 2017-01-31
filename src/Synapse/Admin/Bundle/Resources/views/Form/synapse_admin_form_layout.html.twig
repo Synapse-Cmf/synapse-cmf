@@ -50,7 +50,7 @@
   </div>
   <div class="zone-form-container tab-content">
   {% for zoneForm in form.zones %}
-    {{ form_widget(zoneForm) }}
+    {{ form_widget(zoneForm, { template: form.vars.data.template }) }}
   {% endfor %}
   </div>
 {% endblock %}
@@ -67,7 +67,7 @@
         <ul class="dropdown-menu" aria-labelledby="add-components">
         {% for componentTypeId, componentTypeName in component_types %}
           <li>
-            <a href="{{ path('synapse_admin_zone_add_component', { id: zone_id, componentTypeId: componentTypeId }) }}">
+            <a href="{{ path('synapse_admin_template_add_component', { id: template.id, zoneTypeId: zone_type_id, componentTypeId: componentTypeId }) }}">
               {{ componentTypeName | humanize }}
             </a>
           </li>

@@ -11,8 +11,10 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Synapse\Cmf\Bundle\Form\Type\Theme\ThemeType;
+use Synapse\Cmf\Framework\Engine\Exception\InvalidThemeException;
 use Synapse\Cmf\Framework\Theme\Content\Model\ContentInterface;
 use Synapse\Cmf\Framework\Theme\Content\Resolver\ContentResolver;
+use Synapse\Cmf\Framework\Theme\Theme\Entity\Theme;
 use Synapse\Cmf\Framework\Theme\Theme\Loader\LoaderInterface as ThemeLoader;
 
 /**
@@ -87,11 +89,24 @@ class ThemeExtension extends AbstractTypeExtension
 
         $resolver->setDefined(array('synapse_theme'));
         $resolver->setNormalizer('synapse_theme', function (Options $options, $value) {
-            if (empty($value)) {
-                return $value;
-            }
+            switch (true) {
+                case empty($value):
+                    return $value;
 
-            return $this->themeLoader->retrieveByName($value);
+                case $value instanceof Theme:
+                    return $value;
+
+                default:
+                    if (!$theme = $this->themeLoader->retrieveByName($value)) {
+                        throw new InvalidThemeException(sprintf(
+                            'Theme "%s" not registered. Only %s are, check your configuration.',
+                            $value,
+                            $this->themeLoader->retrieveAll()->display('name')
+                        ));
+                    }
+
+                    return $theme;
+            }
         });
     }
 

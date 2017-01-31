@@ -21,30 +21,10 @@
   {{ form_start(form) }}
 
   <div class="row-fluid">
-    <div class="col-fix">
-      <div class="button-bar" data-spy="affix" data-offset-top="55">
-        <a href="#form-general" class="btn btn-big btn-primary">
-          <i class="fa fa-2x fa-file-text-o"></i>
-          General
-        </a>
-        <a href="#form-meta" class="btn btn-big btn-primary">
-          <i class="fa fa-2x fa-sitemap"></i>
-          Metas
-        </a>
-        <a href="#form-content" class="btn btn-big btn-primary">
-          <i class="fa fa-2x fa-scribd"></i>
-          Content
-        </a>
-        {# <a href="#form-tech" class="btn btn-big btn-primary">
-          <i class="fa fa-2x fa-wrench"></i>
-          Tech
-        </a> #}
-      </div>
-    </div>
-    <div class="col-fill">
+    <div class="col-fill row">
 
       {# General #}
-      <div id="form-general" class="panel">
+      <div id="form-general" class="panel col-md-6">
         <header class="panel-heading composed bg-main">
           <a href class="combo">
             <i class="fa fa-file-text-o"></i>
@@ -58,7 +38,7 @@
       </div>
 
       {# Metas #}
-      <div id="form-meta" class="panel">
+      <div id="form-meta" class="panel col-md-6">
         <header class="panel-heading composed bg-main">
           <a href class="combo">
             <i class="fa fa-sitemap"></i>
@@ -71,7 +51,7 @@
       </div>
 
       {# Content #}
-      <div id="form-content" class="synapse-theme-form panel">
+      <div id="form-content" class="synapse-theme-form panel col-md-12">
         <header class="panel-heading composed bg-main">
           <a href class="combo">
             <i class="fa fa-scribd"></i>
@@ -81,24 +61,14 @@
         {% if form.synapse is defined %}
           {{ form_widget(form.synapse) }}
         {% else %}
-          <div class="panel-body">
-            WARNING: You have not active theme. You will not be able to display the page. Create one of them to apply a template to this content.
+          <div class="panel-body panel-body-info">
+            <p class="info">
+              <span class="badge label-warning"><i class="fa fa-warning"></i></span>
+              You don't have any active theme, you won't be able to display the page. Create a theme and at least a template to apply one to this content.
+            </p>
           </div>
         {% endif %}
       </div>
-
-      {# Tech #}
-      {# <div id="form-tech" class="panel">
-        <header class="panel-heading composed bg-main">
-          <a href class="combo">
-            <i class="fa fa-wrench"></i>
-          </a>
-          <h3>Tech</h3>
-        </header>
-        <div class="panel-body">
-
-        </div>
-      </div> #}
 
     </div>
     <div class="col-fix">

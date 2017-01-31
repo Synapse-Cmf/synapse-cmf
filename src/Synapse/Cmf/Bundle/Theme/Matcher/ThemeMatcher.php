@@ -7,6 +7,7 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Synapse\Cmf\Framework\Engine\Engine;
 use Synapse\Cmf\Framework\Engine\Exception\InvalidThemeException;
+use Synapse\Cmf\Framework\Theme\Theme\Model\ThemeInterface;
 
 /**
  * Aggregator class for all matching strategies.
@@ -113,6 +114,8 @@ class ThemeMatcher
      * @param string|array         $options
      * @param ThemeMatchingContext $context
      *
+     * @return ThemeInterface
+     *
      * @throws InvalidThemeException
      * @throws \InvalidArgumentException
      * @throws \Symfony\Component\OptionsResolver\Exception\ExceptionInterface
@@ -134,21 +137,37 @@ class ThemeMatcher
         foreach ($options as $key => $option) {
             try {
                 if ($local = $this->resolutionStrategies[$key]($option, $context)) {
-                    $theme = $local;
+                    $themeName = $local;
                 }
             } catch (InvalidThemeException $e) {
                 continue;
             }
         }
-        if (empty($theme)) {
+
+        // Guess theme name from strategies
+        if (empty($themeName)) {
             throw new InvalidThemeException(sprintf(
-                'Unavailable to match a theme throught "%s" strategies and given context. Check your configuration.',
+                'Unavailable to determine requested theme name throught ["%s"] strategies and given context. Check your configuration.',
                 implode('", "', array_keys($options))
             ));
         }
 
-        $this->synapseEngine->enableTheme($theme);
-
-        return $theme;
+        // Try to activate this theme into Synapse engine
+        try {
+            return $this->synapseEngine
+                ->enableTheme($themeName)
+                ->getCurrentTheme()
+            ;
+        } catch (InvalidThemeException $e) {
+            throw new InvalidThemeException(
+                sprintf(
+                    'Unavailable to activate a theme with "%s" name, guessed from given context, using ["%s"] strategies.',
+                    $themeName,
+                    implode('", "', array_keys($options))
+                ),
+                0,
+                $e
+            );
+        }
     }
 }

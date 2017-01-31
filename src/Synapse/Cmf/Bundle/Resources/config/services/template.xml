@@ -18,6 +18,8 @@
             />
             <argument type="service" id="synapse.template_type.loader" />
             <argument type="service" id="synapse.content_type.loader" />
+            <argument type="service" id="synapse.zone.loader" />
+            <argument type="service" id="synapse.zone.domain" />
         </service>
         <service id="synapse.template.loader" alias="synapse.template.orm_loader" />
 

@@ -6,6 +6,8 @@ use Majora\Framework\Loader\Bridge\Doctrine\AbstractDoctrineLoader;
 use Majora\Framework\Loader\Bridge\Doctrine\DoctrineLoaderTrait;
 use Majora\Framework\Loader\LazyLoaderInterface;
 use Synapse\Cmf\Bundle\Entity\Orm\Template;
+use Synapse\Cmf\Bundle\Entity\Orm\Zone;
+use Synapse\Cmf\Bundle\Loader\Orm\ZoneOrmLoader as ZoneLoader;
 use Synapse\Cmf\Framework\Theme\ContentType\Loader\LoaderInterface as ContentTypeLoader;
 use Synapse\Cmf\Framework\Theme\ContentType\Model\ContentTypeInterface;
 use Synapse\Cmf\Framework\Theme\Content\Entity\Content;
@@ -13,6 +15,9 @@ use Synapse\Cmf\Framework\Theme\TemplateType\Entity\TemplateType;
 use Synapse\Cmf\Framework\Theme\TemplateType\Loader\LoaderInterface as TemplateTypeLoader;
 use Synapse\Cmf\Framework\Theme\Template\Loader\LoaderInterface as TemplateLoaderInterface;
 use Synapse\Cmf\Framework\Theme\Template\Model\TemplateInterface;
+use Synapse\Cmf\Framework\Theme\ZoneType\Model\ZoneTypeInterface;
+use Synapse\Cmf\Framework\Theme\Zone\Domain\ZoneDomain;
+use Synapse\Cmf\Framework\Theme\Zone\Entity\ZoneCollection;
 
 /**
  * Template loader override to register lazy loaders.
@@ -32,17 +37,33 @@ class TemplateOrmLoader extends AbstractDoctrineLoader implements TemplateLoader
     protected $contentTypeLoader;
 
     /**
+     * @var ZoneLoader
+     */
+    protected $zoneLoader;
+
+    /**
+     * @var ZoneDomain
+     */
+    protected $zoneDomain;
+
+    /**
      * Construct.
      *
      * @param TemplateTypeLoader $templateTypeLoader
      * @param ContentTypeLoader  $contentTypeLoader
+     * @param ZoneLoader         $zoneLoader
+     * @param ZoneDomain         $zoneDomain
      */
     public function __construct(
         TemplateTypeLoader $templateTypeLoader,
-        ContentTypeLoader $contentTypeLoader
+        ContentTypeLoader $contentTypeLoader,
+        ZoneLoader $zoneLoader,
+        ZoneDomain $zoneDomain
     ) {
         $this->templateTypeLoader = $templateTypeLoader;
         $this->contentTypeLoader = $contentTypeLoader;
+        $this->zoneLoader = $zoneLoader;
+        $this->zoneDomain = $zoneDomain;
     }
 
     /**
@@ -51,9 +72,6 @@ class TemplateOrmLoader extends AbstractDoctrineLoader implements TemplateLoader
     public function getLoadingDelegates()
     {
         return array(
-            'templateType' => function (Template $template) {
-                return $this->templateTypeLoader->retrieve($template->getTemplateTypeId());
-            },
             'contentType' => function (Template $template) {
                 return $this->contentTypeLoader->retrieve($template->getContentTypeName());
             },
@@ -61,17 +79,39 @@ class TemplateOrmLoader extends AbstractDoctrineLoader implements TemplateLoader
     }
 
     /**
-     * Overriden to always load zones and components.
+     * Loader invocable handler as proxy for template factory method
      *
-     * @return QueryBuilder
+     * @param Template $template
+     *
+     * @return Template
      */
-    protected function createQuery($alias)
+    public function __invoke(Template $template)
     {
-        return $this->getEntityRepository()->createQueryBuilder($alias)
-            ->select(array($alias, 'zones', 'components'))
-                ->innerJoin($alias.'.zones', 'zones')
-                ->leftJoin('zones.components', 'components')
-            ->addOrderBy('components.ranking', 'asc')
+        // fetch TemplateType
+        if (!$templateType = $this->templateTypeLoader->retrieve($template->getTemplateTypeId())) {
+            throw new \RuntimeException(sprintf(
+                'Unavailable to load template type "%s", from template "%s". Maybe your data and configurations have diverged, available templates types are : %s. Please check your themes configurations.',
+                $template->getTemplateTypeId(),
+                $template->getId(),
+                $this->templateTypeLoader->retrieveAll()->display('id')
+            ));
+        }
+
+        // due to Doctrine joined hydration concurrency with events,
+        // we have to direct call zone hydration from another request
+        $templateZones = $this->zoneLoader->retrieveForTemplate($template);
+
+        $template
+            ->setTemplateType($templateType)
+            ->setZones(new ZoneCollection(
+                $templateType->getZoneTypes()
+                    ->map(function (ZoneTypeInterface $zoneType) use ($template, $templateZones) {
+                        return $templateZones->search(array('zoneType' => $zoneType))->first()
+                            ?: $this->zoneDomain->create($zoneType)
+                        ;
+                    })
+                    ->toArray()
+            ))
         ;
     }
 
@@ -80,7 +120,9 @@ class TemplateOrmLoader extends AbstractDoctrineLoader implements TemplateLoader
      */
     public function retrieveDisplayable(TemplateType $templateType, Content $content)
     {
-        $queryBuilder = $this->createQuery('template');
+        $queryBuilder = $this->getEntityRepository()
+            ->createQueryBuilder('template')
+        ;
 
         $displayableTemplates = $this->toEntityCollection(
             $queryBuilder

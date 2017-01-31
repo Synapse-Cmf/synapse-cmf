@@ -20,6 +20,16 @@ synapse_admin_template_edition:
     requirements:
         id: \d+
 
+# component creation
+synapse_admin_template_add_component:
+    path: /{id}/zone/{zoneTypeId}/add_component/{componentTypeId}
+    defaults:
+        _controller: "SynapseAdminBundle:TemplateAdmin:addComponent"
+    methods:
+        - GET
+    requirements:
+        id: \d+
+
 # template list
 synapse_admin_template_list:
     path: /

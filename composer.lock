@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "59a128b788300927302c0d6ca8cb8557",
+    "content-hash": "6238af6f8da5870cde6508601816b13c",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1189,16 +1189,16 @@
         },
         {
             "name": "majora/framework-extra-bundle",
-            "version": "v1.4.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LinkValue/MajoraFrameworkExtraBundle.git",
-                "reference": "2f551e08a3a327124ffc0890778b501447472f0d"
+                "reference": "a8a2482e13a92ed2d527934c05f5a90e9bfd4bda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LinkValue/MajoraFrameworkExtraBundle/zipball/2f551e08a3a327124ffc0890778b501447472f0d",
-                "reference": "2f551e08a3a327124ffc0890778b501447472f0d",
+                "url": "https://api.github.com/repos/LinkValue/MajoraFrameworkExtraBundle/zipball/a8a2482e13a92ed2d527934c05f5a90e9bfd4bda",
+                "reference": "a8a2482e13a92ed2d527934c05f5a90e9bfd4bda",
                 "shasum": ""
             },
             "require": {
@@ -1217,6 +1217,20 @@
                 "majora/orientdb-graph-bundle": "If you want to work with graph stack"
             },
             "type": "library",
+            "extra": {
+                "symfony-app-dir": "apps",
+                "symfony-bin-dir": "bin",
+                "symfony-var-dir": "var",
+                "symfony-web-dir": "web",
+                "symfony-tests-dir": "tests",
+                "symfony-assets-install": "relative",
+                "incenteev-parameters": {
+                    "file": "apps/demo/config/parameters.yml"
+                },
+                "branch-alias": {
+                    "dev-master": "1.5-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Majora\\Bundle\\": "src/Majora/Bundle",
@@ -1249,7 +1263,7 @@
                 "framework",
                 "symfony"
             ],
-            "time": "2017-01-06T12:57:08+00:00"
+            "time": "2017-01-31 14:40:06"
         },
         {
             "name": "monolog/monolog",
@@ -4059,6 +4073,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "majora/framework-extra-bundle": 20,
         "majora/generator-bundle": 20
     },
     "prefer-stable": false,

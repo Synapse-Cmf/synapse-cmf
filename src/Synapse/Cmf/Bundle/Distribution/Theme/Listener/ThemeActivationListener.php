@@ -63,14 +63,11 @@ class ThemeActivationListener extends ThemeMatcher implements EventSubscriberInt
             return;
         }
 
-        $request->attributes->set(
-            'synapse_theme',
-            $this->match(
-                $themeOptions,
-                (new ThemeMatchingContext())->denormalize(array(
-                    'host' => $request->server->get('HTTP_HOST'),
-                ))
-            )
-        );
+        $request->attributes->set('synapse_theme', $this->match(
+            $themeOptions,
+            new ThemeMatchingContext(array(
+                'host' => $request->server->get('HTTP_HOST'),
+            ))
+        ));
     }
 }

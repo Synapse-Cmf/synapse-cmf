@@ -12,7 +12,7 @@
         >
             <tag name="majora.loader"
                 entity="Synapse\Cmf\Bundle\Entity\Orm\Zone"
-                collection="Synapse\Template\Component\Entity\ZoneCollection"
+                collection="Synapse\Cmf\Framework\Theme\Zone\Entity\ZoneCollection"
                 repository="synapse.zone.orm_repository"
                 lazy="true"
             />

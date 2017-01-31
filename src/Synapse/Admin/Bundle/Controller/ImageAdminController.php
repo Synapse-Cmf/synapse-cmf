@@ -81,8 +81,11 @@ class ImageAdminController extends Controller implements ParamConverterInterface
 
         return $this->render('SynapseAdminBundle:Image:edit.html.twig', array(
             'image' => $image,
-            'theme' => $this->container->get('synapse.theme.loader')->retrieve(
-                $request->attributes->get('synapse_theme')
+            'theme' => $request->attributes->get(
+                'synapse_theme',
+                $this->container->get('synapse')
+                    ->enableDefaultTheme()
+                    ->getCurrentTheme()
             ),
             'form' => $form->createView(),
         ));

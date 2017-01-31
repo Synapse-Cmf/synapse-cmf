@@ -79,8 +79,11 @@ class SkeletonAdminController extends Controller
                 ->retrieveAll(array('id' => $id, 'scope' => TemplateInterface::GLOBAL_SCOPE))
                 ->first(),
             array(
-                'theme' => $this->container->get('synapse.theme.loader')->retrieve(
-                    $request->attributes->get('synapse_theme')
+                'theme' => $request->attributes->get(
+                    'synapse_theme',
+                    $this->container->get('synapse')
+                        ->enableDefaultTheme()
+                        ->getCurrentTheme()
                 ),
                 'content_type' => $template->getContentType(),
                 'action' => $formUrl = $this->container->get('router')->generate(

@@ -35,7 +35,7 @@
         "stof/doctrine-extensions-bundle": "~1.2",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
-        "majora/framework-extra-bundle": "~1.4",
+        "majora/framework-extra-bundle": "v1.5.x-dev",
         "incenteev/composer-parameter-handler": "^2.0",
         "imagine/imagine": "~0.6"
     },

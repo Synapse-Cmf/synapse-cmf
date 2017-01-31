@@ -52,7 +52,7 @@ class Engine
     }
 
     /**
-     * Enable given theme name.
+     * Enable given theme name if he exists.
      *
      * @param string $themeName
      *
@@ -60,9 +60,35 @@ class Engine
      */
     public function enableTheme($themeName)
     {
-        $this->currentThemeName = $themeName;
+        // Resolve theme right now to not have an unstable
+        // context with an inexisting theme
+        $this->currentTheme = $this->themeResolver->resolve(
+            $themeName
+        );
 
         return $this;
+    }
+
+    /**
+     * Enable default theme.
+     *
+     * @return self
+     */
+    public function enableDefaultTheme()
+    {
+        $this->currentTheme = $this->themeResolver->resolve(null);
+
+        return $this;
+    }
+
+    /**
+     * Returns current activated theme.
+     *
+     * @return ThemeInterface
+     */
+    public function getCurrentTheme()
+    {
+        return $this->currentTheme;
     }
 
     /**
@@ -75,15 +101,12 @@ class Engine
      */
     public function createDecorator($decorable, $templateTypeName = null)
     {
-        // Resolve theme
-        $theme = $this->themeResolver->resolve($this->currentThemeName);
-
         // Main content rendering
         if ($decorable instanceof ContentInterface) {
             return new ImmutableDecorator(
                 $decorable,
                 $this->contentDecorator,
-                $theme,
+                $this->currentTheme ?: $this->themeResolver->resolve(),
                 $templateTypeName
             );
         }

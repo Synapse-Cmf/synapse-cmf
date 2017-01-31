@@ -132,11 +132,9 @@ class ZoneType extends AbstractType implements DataTransformerInterface
         $view->vars['component_types'] = $zone->getZoneType()
             ->getAllowedComponentTypes()
                 ->indexBy('id')
-                ->map(function (ComponentTypeInterface $componentType) {
-                    return $componentType->getName();
-                })
+                ->column('name')
         ;
-        $view->vars['zone_id'] = $zone->getId();
+        $view->vars['zone_type_id'] = $zone->getZoneType()->getId();
         $view->vars['zone_name'] = $zone->getZoneType()->getName();
     }
 
