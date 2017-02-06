@@ -29,6 +29,11 @@ class Image extends Media implements ImageInterface
     protected $type = 'image';
 
     /**
+     * @var string
+     */
+    protected $defaultFormat;
+
+    /**
      * @var array
      */
     protected $tags;
@@ -90,6 +95,16 @@ class Image extends Media implements ImageInterface
         $this->id = $id;
 
         return $this;
+    }
+
+    /**
+     * Returns image type.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**
@@ -175,6 +190,20 @@ class Image extends Media implements ImageInterface
     }
 
     /**
+     * Define image formatted images.
+     *
+     * @param FormattedImageCollection $formattedImages
+     *
+     * @return self
+     */
+    public function setFormattedImages(FormattedImageCollection $formattedImages)
+    {
+        $this->formattedImages = $formattedImages;
+
+        return $this;
+    }
+
+    /**
      * Returns image formatted for given format name or FormatInterface object.
      *
      * @param string|FormatInterface $format
@@ -205,8 +234,12 @@ class Image extends Media implements ImageInterface
      *
      * @return string
      */
-    public function getFormatWebPath($format)
+    public function getFormatWebPath($format = null)
     {
+        if (!$format = $format ?: $this->defaultFormat) {
+            return $this->getWebPath();
+        }
+
         return ($formattedImage = $this->getFormattedImage($format))
             ? $formattedImage->getWebPath()
             : $this->getWebPath()
@@ -214,26 +247,16 @@ class Image extends Media implements ImageInterface
     }
 
     /**
-     * Define image formatted images.
+     * Define object default format.
      *
-     * @param FormattedImageCollection $formattedImages
+     * @param string $defaultFormat
      *
      * @return self
      */
-    public function setFormattedImages(FormattedImageCollection $formattedImages)
+    public function setDefaultFormat($defaultFormat)
     {
-        $this->formattedImages = $formattedImages;
+        $this->defaultFormat = $defaultFormat;
 
         return $this;
-    }
-
-    /**
-     * Returns image type.
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 }

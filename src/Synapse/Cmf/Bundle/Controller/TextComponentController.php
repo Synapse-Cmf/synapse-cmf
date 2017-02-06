@@ -2,8 +2,10 @@
 
 namespace Synapse\Cmf\Bundle\Controller;
 
+use Majora\Framework\Model\EntityCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Synapse\Cmf\Framework\Media\Image\Model\ImageInterface;
 use Synapse\Cmf\Framework\Theme\Component\Model\ComponentInterface;
 use Synapse\Cmf\Framework\Theme\Content\Model\ContentInterface;
 
@@ -23,48 +25,53 @@ class TextComponentController extends Controller
      */
     public function renderAction(ComponentInterface $component, array $config, ContentInterface $content)
     {
-        if (!$component->getData('text') && !$component->getData('title')) {
-            // @todo log
+        //
+        // Data validation
+        //
+        if (!$component->getData('text')) {
+            $this->container->get('logger')->warning(
+                'Incomplete text component, "text" field has to be fullfilled.',
+                array(
+                    'component_id' => $component->getId(),
+                    'content_class' => get_class($content),
+                    'content_id' => $content->getId()
+                )
+            );
+
             return new Response('');
         }
 
-        // guess medias
-        $mediaCollection = array();
+        $templateParameters = array(
+            'config' => $config,
+            'content' => $content,
+        );
 
-        if ($component->getData('video_link')) {            // video
-            $mediaCollection[sprintf('%s-video', $component->getId())] = array(
-                'type' => 'video',
-                'src' => $component->getData('video_link'),
-            );
-        }
-
-        if ($component->getData('images', array())) {       // images
-            foreach ((array) $component->getData('images', array()) as $index => $imageId) {
-                if (!$image = $this->get('synapse.image.loader')->retrieve($imageId)) {
-                    continue;
-                }
-                $mediaCollection[sprintf('%s-%s-%s', $component->getId(), $imageId, $index)] = array(
-                    'type' => 'image',
-                    'label' => $image->getTitle(),
-                    'object' => $image,
+        //
+        // Medias
+        //
+        $templateParameters['images'] = (new EntityCollection((array) $component->getData('images')))
+            ->map(function ($imageId) {
+                return $this->get('synapse.image.loader')->retrieve($imageId);
+            })
+            ->filter(function ($image) {
+                return (bool) $image;
+            })
+            ->map(function (ImageInterface $image) use ($config) {
+                return $image->setDefaultFormat(
+                    empty($config['images']['format']) ? null : $config['images']['format']
                 );
-            }
+            })
+        ;
+        if (!$config['images']['multiple']) {
+            $templateParameters['image'] = $templateParameters['images']->first();
         }
 
-        // links
-        $linkCollection = array();
-        if ($component->getData('link')) {  // read more link
-            $linkCollection[$component->getData('link_label', 'Read more')] = $component->getData('link');
-        }
-
+        //
+        // Resolution
+        //
         return $this->get('synapse')
             ->createDecorator($component)
-            ->decorate(array(
-                'config' => $config,
-                'content' => $content,
-                'media_collection' => $mediaCollection,
-                'link_collection' => $linkCollection,
-            ))
+            ->decorate($templateParameters)
         ;
     }
 }

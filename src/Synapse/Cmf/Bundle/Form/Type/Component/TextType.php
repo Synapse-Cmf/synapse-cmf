@@ -26,14 +26,12 @@ class TextType extends AbstractType
             'headline' => array('enabled' => false),
             'read_more' => array('enabled' => false),
             'images' => array(),
-            'video' => array('enabled' => false),
             'ckeditor_config' => array(),
         ));
         $resolver->setAllowedTypes('html', 'array');
         $resolver->setAllowedTypes('headline', 'array');
         $resolver->setAllowedTypes('read_more', array('array', 'null'));
         $resolver->setAllowedTypes('images', array('array', 'null'));
-        $resolver->setAllowedTypes('video', array('array', 'null'));
         $resolver->setAllowedTypes('ckeditor_config', 'array');
     }
 
@@ -45,11 +43,15 @@ class TextType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // title
-        $builder->add('title', SymfonyTextType::class, array());
+        $builder->add('title', SymfonyTextType::class, array(
+            'required' => false
+        ));
 
         // headline (on demand)
         if (!empty($options['headline']['enabled'])) {
-            $builder->add('headline', TextareaType::class, array());
+            $builder->add('headline', TextareaType::class, array(
+                'required' => false
+            ));
         }
 
         // text (rich editor or not)
@@ -79,15 +81,6 @@ class TextType extends AbstractType
                     'required' => false,
                 ))
                 ->add('link_label', SymfonyTextType::class, array(
-                    'required' => false,
-                ))
-            ;
-        }
-
-        // Video embbeding (on demand)
-        if (!empty($options['video'])) {
-            $builder
-                ->add('video_link', SymfonyTextType::class, array(
                     'required' => false,
                 ))
             ;
