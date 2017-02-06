@@ -36,7 +36,7 @@ class UpdateCommand extends AbstractCommand
     public function resolve()
     {
         $this->zone->setComponents(
-            $this->rankComponents($this->components)
+            $this->components->buildRanking()
         );
 
         $this->assertEntityIsValid($this->zone, array('Zone', 'edition'));

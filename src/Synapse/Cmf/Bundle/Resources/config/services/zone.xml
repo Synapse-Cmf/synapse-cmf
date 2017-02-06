@@ -64,6 +64,15 @@
                             </service>
                         </argument>
 
+                        <!-- Add Component command -->
+                        <argument key="remove_component" type="service">
+                            <service class="Synapse\Cmf\Framework\Theme\Zone\Domain\Command\AddComponentCommand">
+                                <argument type="service" id="synapse.component.domain" />
+                                <call method="setEventDispatcher"><argument type="service" id="event_dispatcher" /></call>
+                                <call method="setValidator"><argument type="service" id="validator" /></call>
+                            </service>
+                        </argument>
+
                     </argument>
                 </service>
             </argument>

@@ -1,8 +1,8 @@
 # component deletion
 synapse_admin_component_delete:
-    path: /{id}/delete
+    path: /{zoneId}/{componentId}/delete
     defaults:
-        _controller: "SynapseAdminBundle:ComponentAdmin:delete"
+        _controller: "SynapseAdminBundle:ZoneAdmin:delete"
     methods:
         - GET
     requirements:

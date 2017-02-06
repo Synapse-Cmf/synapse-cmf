@@ -30,20 +30,4 @@ abstract class AbstractCommand implements ActionInterface
     {
         return $this->zone;
     }
-
-    /**
-     * Rank given component collection.
-     *
-     * @param ComponentCollection $components
-     *
-     * @return ComponentCollection
-     */
-    protected function rankComponents(ComponentCollection $components)
-    {
-        $i = 0;
-
-        return $components->map(function (ComponentInterface $component) use (&$i) {
-            return $component->setRanking(++$i);
-        });
-    }
 }
