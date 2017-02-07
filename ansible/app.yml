@@ -1,15 +1,16 @@
 ---
 
 - hosts: local
-  sudo: yes
+  become: yes
+  become_user: root
   roles:
-    - etc-hosts
-    - ssh-forward
     - common-packages
-    - nginx
-    - mysql
-    - php
+    - etc-hosts
     - oh-my-zsh
+    - nginx
+    - php
+    - composer
+    - mysql
   vars_files:
     - vars.yml
     - vars.local.yml

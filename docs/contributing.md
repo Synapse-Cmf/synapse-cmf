@@ -16,7 +16,8 @@ First, get Homebrew, Vagrant and Ansible :
 cd your/workspace
 git clone git@github.com:synapse-cmf/synapse-cmf
 cd synapse-cmf
-make init        # could be (very) long
+make vm-provision        # could be (very) long
+make init
 ```
 
 Edit your hostfile (/etc/hosts) :

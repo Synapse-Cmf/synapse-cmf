@@ -4,21 +4,25 @@ APPS = $(shell ls bin | grep console | sed s/console_//g)
 #
 # Dev environment
 #
-init: ansible/vars.local.yml ansible/roles
-	(vagrant ssh -c "cd /var/www" && (vagrant provision || true)) || vagrant up --provision;
-	vagrant reload || true
-	vagrant ssh -c " cd /var/www/synapse-cmf" || true
+init: vm-up vm-ssh
 
-ansible/vars.local.yml:
-	cp ansible/vars.local.yml.dist ansible/vars.local.yml
+vm-ssh:
+	vagrant ssh
 
-ansible/roles:
-	ansible-galaxy install --force -p ansible --role-file=ansible/ansible_galaxy.yml
+vm-up:
+	vagrant up
+
+vm-halt:
+	vagrant halt
+
+vm-provision:
+	vagrant up --no-provision
+	vagrant provision
 
 vm-destroy:
-	vagrant destroy -f || /bin/true
+	vagrant destroy
 
-vm-rebuild: vm-destroy init
+vm-rebuild: vm-destroy vm-provision
 
 #
 # Main tasks

@@ -1,12 +1,15 @@
 #########################################################
 #                                                       #
-# Ansible Galaxy requirements file for Majora roles     #
+# Ansible Galaxy requirements file for non-Majora roles #
 #                                                       #
-# You probably don't need to edit this file,            #
-# please edit "galaxy-additionals.yml" instead.         #
+# Theses roles will be installed in "roles" folder.     #
 #                                                       #
 #########################################################
 
-- src: https://github.com/LinkValue/majora-ansible-playbook
-  name: roles
-  version: v1.3.1
+- name: ruby
+  src: https://github.com/rvm/rvm1-ansible
+  version: v1.3.8
+
+- name: redis
+  src: https://github.com/DavidWittman/ansible-redis
+  version: 1.2.0

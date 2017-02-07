@@ -1,0 +1,42 @@
+---
+
+# VM RAM usage (in MB)
+vm_memory: 2048
+
+# VM CPUs usage
+vm_cpus: 2
+
+# VM IP address
+vm_ip: '192.168.100.80'
+
+# List of aliases bound to the Virtual Machine's IP (see "vm_ip")
+# If the plugin "vagrant-hostmanager" is installed, these aliases will be added to your "/etc/hosts" file automatically.
+# Else, aliases will be displayed in the console during VM provisioning, then it will be up to you to copy/paste this output in your "/etc/hosts" file.
+vm_ip_aliases: ['synapse.dev', 'admin-synapse.dev', 'demo.synapse.dev', 'demo.admin-synapse.dev']
+
+# VM hostname (this will be added to the "vm_ip_aliases" list, displayed in your SSH terminal, etc.)
+vm_hostname: 'synapse'
+
+# Shared folders strategy, possible values are 'self' or 'subdirectory'.
+# 'self'         => share this project root with the VM (i.e. "Vagrantfile" is shared),
+#                   this strategy is perfect to host a single project in your VM (i.e. the vagrant is included in the project)
+# 'subdirectory' => share only a subdirectory of this project root (i.e. "Vagrantfile" is not shared),
+#                   this strategy is perfect to host multiple projects in your VM (i.e. the vagrant is outside of the projects)
+sharing_strategy: 'self'
+
+# Absolute path of this project root on the VM side (used if shared folders strategy is 'self')
+sharing_self_absolute_path_in_vm: '/var/www/synapse-cmf'
+
+# Relative path from this project root to the subdirectory to share (used if shared folders strategy is 'subdirectory')
+sharing_subdirectory_relative_path: 'www'
+
+# Absolute path of the shared subdirectory on the VM side (used if shared folders strategy is 'subdirectory')
+sharing_subdirectory_absolute_path_in_vm: '/var/www'
+
+# Relative paths from your user home directory to a file (or a directory) which you want to be available in the user home directory of the VM
+# Note: the forwarded files are not synchronized => files are only copied from host to guest at provisioning
+# Note2: the forwarded files permissions are set to "700" which is low enough for "private keys" forwarding
+forwarded_files_from_home: ['.ssh/id_rsa']
+
+# If you set this to false, the "roles" directory won't be (re)downloaded during VM provisioning
+install_ansible_roles: true
