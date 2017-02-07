@@ -32,7 +32,10 @@ class TemplateAdminController extends Controller
         );
 
         $templateCollection = $this->container->get('synapse.template.loader')
-            ->retrieveAll(array('scope' => TemplateInterface::GLOBAL_SCOPE))
+            ->retrieveAll(array(
+                'scope' => TemplateInterface::GLOBAL_SCOPE,
+                'templateTypeId' => $theme->getTemplateTypes()->column('id')
+            ))
         ;
         $templateMap = array();
         foreach ($templateCollection as $template) {
