@@ -4,6 +4,7 @@ namespace Synapse\Cmf\Framework\Theme\Zone\Domain;
 
 use Synapse\Cmf\Framework\Theme\ComponentType\Model\ComponentTypeInterface;
 use Synapse\Cmf\Framework\Theme\Component\Entity\ComponentCollection;
+use Synapse\Cmf\Framework\Theme\Component\Model\ComponentInterface;
 use Synapse\Cmf\Framework\Theme\ZoneType\Model\ZoneTypeInterface;
 use Synapse\Cmf\Framework\Theme\Zone\Model\ZoneInterface;
 
@@ -40,4 +41,12 @@ interface DomainInterface
      * @return ComponentInterface
      */
     public function addComponent(ZoneInterface $zone, ComponentTypeInterface $componentType, array $componentData = array());
+
+    /**
+     * Remove a Component from given zone.
+     *
+     * @param ZoneInterface      $zone
+     * @param ComponentInterface $component
+     */
+    public function removeComponent(ZoneInterface $zone, ComponentInterface $component);
 }

@@ -49,7 +49,7 @@ class CreateCommand extends AbstractCommand
         $this->zone = new $this->zoneClass();
         $this->zone->setZoneType($this->zoneType);
         $this->zone->setComponents(
-            $this->rankComponents($this->components)
+            $this->components->buildRanking()
         );
 
         $this->assertEntityIsValid($this->zone, array('Zone', 'creation'));

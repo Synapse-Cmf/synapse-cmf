@@ -3,10 +3,10 @@ synapse_admin_template:
     resource: "routing/template.yml"
     prefix: /templates
 
-# Components
-synapse_admin_component:
-    resource: "routing/component.yml"
-    prefix: /components
+# Zones
+synapse_admin_zone:
+    resource: "routing/zone.yml"
+    prefix: /zones
 
 # Medias
 synapse_admin_media:

@@ -6,6 +6,7 @@ use Majora\Framework\Domain\ActionDispatcherDomain;
 use Majora\Framework\Domain\Action\ActionFactory;
 use Synapse\Cmf\Framework\Theme\ComponentType\Model\ComponentTypeInterface;
 use Synapse\Cmf\Framework\Theme\Component\Entity\ComponentCollection;
+use Synapse\Cmf\Framework\Theme\Component\Model\ComponentInterface;
 use Synapse\Cmf\Framework\Theme\ZoneType\Model\ZoneTypeInterface;
 use Synapse\Cmf\Framework\Theme\Zone\Model\ZoneInterface;
 
@@ -67,6 +68,19 @@ class ZoneDomain extends ActionDispatcherDomain implements DomainInterface
                 ->init($zone)
                 ->setComponentType($componentType)
                 ->setComponentData($componentData)
+            ->resolve()
+        ;
+    }
+
+    /**
+     * @see DomainInterface::removeComponent()
+     */
+    public function removeComponent(ZoneInterface $zone, ComponentInterface $component)
+    {
+        return $this->commandFactory
+            ->createAction('delete_component')
+                ->init($zone)
+                ->setComponent($component)
             ->resolve()
         ;
     }
