@@ -78,7 +78,7 @@
     </div>
     <div class="component-form-container">
     {% for componentForm in form.components %}
-      {{ form_widget(componentForm) }}
+      {{ form_widget(componentForm, { zone: form.vars.data.zone }) }}
     {% endfor %}
     </div>
   </div>
@@ -105,7 +105,7 @@
       </label>
       <button class="action btn btn-link" type="button"><i class="fa fa-arrows"></i></button>
       <a class="action btn btn-link"
-        href="{{ url('synapse_admin_component_delete', { id: form.vars.component_id }) }}" >
+        href="{{ url('synapse_admin_component_delete', { zoneId: zone.id, componentId: form.vars.component_id }) }}" >
         <i class="fa fa-trash"></i>
       </a>
     </header>

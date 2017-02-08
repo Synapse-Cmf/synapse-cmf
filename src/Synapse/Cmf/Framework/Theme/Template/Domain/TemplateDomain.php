@@ -153,7 +153,7 @@ class TemplateDomain extends ActionDispatcherDomain implements DomainInterface
     public function edit(TemplateInterface $template, ...$arguments)
     {
         return $this->commandFactory
-            ->createAction('edit')
+            ->createAction('update')
                 ->init($template)
                 ->denormalize($arguments)
             ->resolve()
