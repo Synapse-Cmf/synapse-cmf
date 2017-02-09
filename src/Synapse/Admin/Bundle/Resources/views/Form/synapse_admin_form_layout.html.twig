@@ -109,11 +109,20 @@
         <i class="fa fa-trash"></i>
       </a>
     </header>
-    {{ form_widget(form, {
-      attr: {
-        class: 'component-form-content collapse',
-        'aria-expanded':  'false'
-      }
-    }) }}
+    {% if form.data.count > 0 %}
+      {{ form_widget(form, {
+        attr: {
+          class: 'component-form-content collapse',
+          'aria-expanded':  'false'
+        }
+      }) }}
+    {% else %}
+      <div id="{{ form.vars.id }}" class="component-form-content collapse" aria-expanded="false">
+        <p class="info">
+          <span class="badge label-info"><i class="fa fa-info"></i></span>
+          This component has no customisable options.<br>
+        </p>
+      </div>
+    {% endif %}
   </div>
 {% endblock %}

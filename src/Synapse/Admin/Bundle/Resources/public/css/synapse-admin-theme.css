@@ -9906,6 +9906,13 @@ a.logo {
 .panel-body-info p {
   margin: 0; }
 
+p.info span.badge {
+  margin-right: 5px; }
+
+.component-form-content p.info {
+  padding-left: 10px;
+  padding-bottom: 5px; }
+
 .dropzone {
   border: 2px dotted #7087a3; }
   .dropzone .dz-default.dz-message {

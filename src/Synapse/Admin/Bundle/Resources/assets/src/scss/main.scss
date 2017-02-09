@@ -30,6 +30,15 @@ a.logo {
     margin: 0;
   }
 }
+p.info {
+  span.badge {
+    margin-right: 5px;
+  }
+}
+.component-form-content p.info {
+  padding-left: 10px;
+  padding-bottom: 5px;
+}
 
 .dropzone {
   border: 2px dotted $color-dropzone;
