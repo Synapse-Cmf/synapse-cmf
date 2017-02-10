@@ -39,6 +39,7 @@ class AdminExtension extends \Twig_Extension implements \Twig_Extension_GlobalsI
     {
         return array('synapse' => array('admin' => array(
             'base_layout' => $this->synapseAdmin->getBaseLayout(),
+            'front_assets_package' => $this->synapseAdmin->getFrontAssetsPackage(),
         )));
     }
 }

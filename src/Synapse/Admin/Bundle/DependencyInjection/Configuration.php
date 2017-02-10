@@ -24,6 +24,9 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                     ->defaultValue('SynapseAdminBundle::base.html.twig')
                 ->end()
+                ->scalarNode('front_assets_package')
+                    ->defaultNull()
+                ->end()
             ->end()
         ;
 

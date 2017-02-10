@@ -13,22 +13,39 @@ class SynapseAdmin
     protected $baseLayout;
 
     /**
+     * @var string
+     */
+    protected $frontAssetsPackage;
+
+    /**
      * Construct.
      *
      * @param string $baseLayout
+     * @param string $frontAssetsPackage
      */
-    public function __construct($baseLayout)
+    public function __construct($baseLayout, $frontAssetsPackage)
     {
         $this->baseLayout = $baseLayout;
+        $this->frontAssetsPackage = $frontAssetsPackage;
     }
 
     /**
-     * Returns object base twig template.
+     * Returns admin base twig template.
      *
      * @return string
      */
     public function getBaseLayout()
     {
         return $this->baseLayout;
+    }
+
+    /**
+     * Returns admin assets host.
+     *
+     * @return string
+     */
+    public function getFrontAssetsPackage()
+    {
+        return $this->frontAssetsPackage;
     }
 }

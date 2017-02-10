@@ -12,6 +12,9 @@ $(() => {
     `
   };
 
+  // image links to clipboard
+  new Clipboard('.btn-clipboard');
+
   $('.synapse-image-format').each((index, elt) => {
     let $this = $(elt);
     let croppers = {};

@@ -27,5 +27,6 @@ class SynapseAdminExtension extends Extension
 
         // base layout exposition
         $container->getDefinition('synapse.admin')->replaceArgument(0, $config['base_layout']);
+        $container->getDefinition('synapse.admin')->replaceArgument(1, $config['front_assets_package']);
     }
 }

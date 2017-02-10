@@ -12,6 +12,7 @@ gulp.task('js', () => gulp
     'node_modules/select2/dist/js/select2.js',
     'node_modules/cropper/dist/cropper.js',
     'node_modules/dropzone/dist/dropzone.js',
+    'node_modules/clipboard/dist/clipboard.js',
     'src/js/**/*.js'
   ])
   .pipe(concat('synapse-admin-theme.js'))

@@ -9,6 +9,7 @@
         <!-- Config holder -->
         <service id="synapse.admin" class="Synapse\Admin\Bundle\SynapseAdmin" public="false">
             <argument><!-- base layout --></argument>
+            <argument><!-- assets host --></argument>
         </service>
 
         <!-- Media admin controller -->

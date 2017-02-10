@@ -1,5 +1,20 @@
 {% extends 'SynapseAdminBundle::layout.html.twig' %}
 
+{% import _self as clipboard %}
+
+{% macro url_widget(id, web_path) %}
+  <div class="input-group input-group-sm">
+    <input id="{{ id }}" type="text" class="form-control" readonly="readonly"
+      value="{{ asset(web_path, synapse.admin.front_assets_package) }}"
+    />
+    <span class="input-group-btn">
+      <button class="btn btn-info btn-clipboard" type="button" data-clipboard-target="#{{ id }}">
+        <i class="fa fa-clipboard"></i>
+      </button>
+    </span>
+  </div>
+{% endmacro %}
+
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block content %}
@@ -20,18 +35,6 @@
 
   {{ form_start(form) }}
   <div class="row-fluid">
-    <div class="col-fix">
-      <div class="button-bar" data-spy="affix" data-offset-top="55">
-        <a href="#form-general" class="btn btn-big btn-primary">
-          <i class="fa fa-2x fa-picture-o"></i>
-          General
-        </a>
-        <a href="#form-formats" class="btn btn-big btn-primary">
-          <i class="fa fa-2x fa-crop"></i>
-          Formats
-        </a>
-      </div>
-    </div>
     <div class="col-fill synapse-image-format">
       <div class="panel">
         <header class="panel-heading composed bg-main">
@@ -70,7 +73,14 @@
           </ul>
           <div class="panel-body tab-content">
             <div id="format-origin" class="tab-pane active">
-              <p class="lead">Original image</p>
+              <div class="row">
+                <div class="col-md-9">
+                  <p class="lead">Original image</p>
+                </div>
+                <div class="col-md-3">
+                  {{ clipboard.url_widget('link-' ~ image.id ~ '-origin', image.webPath) }}
+                </div>
+              </div>
               <div class="image-container">
                 <img src="{{ asset(image.webPath) }}" />
               </div>
@@ -82,7 +92,16 @@
                 class="display-area tab-pane {{ formattedImage is not empty ? 'active' : '' }}"
                 data-assets-prefix="{{ asset('/') }}"
               >
-                <p class="lead">"{{ format.name|humanize }}" formatted image</p>
+                <div class="row">
+                  <div class="col-md-9">
+                    <p class="lead">"{{ format.name|humanize }}" formatted image</p>
+                  </div>
+                {% if formattedImage is not empty %}
+                  <div class="col-md-3">
+                    {{ clipboard.url_widget('link-' ~ image.id ~ '-' ~ format.name, formattedImage.webPath) }}
+                  </div>
+                {% endif %}
+                </div>
                 <div class="image-container formatted-image">
                 {% if formattedImage is not empty %}
                   <img src="{{ asset(formattedImage.webPath) }}" />
