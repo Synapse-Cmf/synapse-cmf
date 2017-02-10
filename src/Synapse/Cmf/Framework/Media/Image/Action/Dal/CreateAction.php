@@ -38,7 +38,7 @@ class CreateAction extends AbstractDalAction
 
         $this->image = (new $this->imageClass())
             ->setFile($this->file)
-            ->setName($this->name ?: $this->file->getName())
+            ->setName($this->name ?: $this->file->getOriginalName())
             ->setTitle($this->title ?: $this->name)
             ->setTags($this->tags)
             ->setHeadline($this->headline)

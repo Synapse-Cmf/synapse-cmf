@@ -20,24 +20,23 @@ class UploadAction extends CreateAction
      */
     public function resolve()
     {
+        if ($this->sourceFile instanceof UploadedFile) {
+            $extension = $this->sourceFile->guessExtension();
+            $name = preg_filter('/^php(.+)/', '$1', $this->sourceFile->getBasename());
+            $this->originalName = $this->sourceFile->getClientOriginalName();
+        } else {
+            $extension = $this->sourceFile->getExtension();
+            $this->originalName = $name = $this->sourceFile->getBasename('.'.$extension);
+        }
+
         $this->setPhysicalFile(
             $this->sourceFile->move(
                 $this->storePath,
-                $this->sourceFile instanceof UploadedFile
-                    ? sprintf('%s.%s',
-                        $this->inflector->slugify(
-                            preg_replace('/(\.[^\.]+)$/', '', $this->sourceFile->getClientOriginalName()),
-                            '_'
-                        ),
-                        $this->sourceFile->guessExtension()
-                    )
-                    : sprintf('%s.%s',
-                        $this->inflector->slugify(
-                            $this->sourceFile->getBasename('.'.$this->sourceFile->getExtension()),
-                            '_'
-                        ),
-                        $this->sourceFile->getExtension()
-                    )
+                sprintf('%s%s.%s',
+                    strtolower($name),
+                    base_convert(microtime(), 10, 36),
+                    $extension
+                )
             )
         );
 

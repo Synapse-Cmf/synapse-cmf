@@ -23,16 +23,12 @@ class UploadAction extends CreateAction
      */
     public function resolve()
     {
-        if (!$this->name) {
-            $this->setName(
-                $this->sourceFile instanceof UploadedFile
-                    ? $this->sourceFile->getClientOriginalName()
-                    : $this->sourceFile->getFilename()
-            );
-        }
         $this->setFile($this->fileDomain->upload(
             $this->sourceFile
         ));
+        if (!$this->name) {
+            $this->setName($this->getFile()->getOriginalName());
+        }
 
         return parent::resolve();
     }

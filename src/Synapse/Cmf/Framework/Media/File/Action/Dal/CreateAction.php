@@ -18,33 +18,36 @@ class CreateAction extends AbstractDalAction
     protected $physicalFile;
 
     /**
+     * @var string
+     */
+    protected $originalName;
+
+    /**
      * File creation method.
      *
      * @return File
      */
     public function resolve()
     {
-        $fileStorePath = str_replace(// trim base path
-            realpath($this->storePath),
-            '',
-            str_replace(// trim filename
-                $this->physicalFile->getBasename(),
-                '',
-                $this->physicalFile->getRealpath()
+        $this->file = (new $this->fileClass())
+            ->setName(
+                $this->physicalFile->getBasename()
             )
-        );
-
-        // checks if file exists
-        // no error if try to create same file : this is just as if someone replace a file into a folder
-        $this->file = $this->fileLoader->retrieveOne(array(
-            'name' => $this->physicalFile->getBasename(),
-            'storePath' => $fileStorePath,
-        ));
-        if (!$this->file) {
-            $this->file = new $this->fileClass();
-            $this->file->setName($this->physicalFile->getBasename());
-            $this->file->setStorePath($fileStorePath);
-        }
+            // calculate original name (keep it for user data display)
+            ->setOriginalName($this->originalName
+                ?: $this->physicalFile->getBasename()
+            )
+            // calculate storage path (we only need path from config)
+            ->setStorePath(str_replace(// trim base path
+                realpath($this->storePath),
+                '',
+                str_replace(// trim filename
+                    $this->physicalFile->getBasename(),
+                    '',
+                    $this->physicalFile->getRealpath()
+                )
+            ))
+        ;
 
         $this->assertEntityIsValid($this->file, array('File', 'creation'));
 

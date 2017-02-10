@@ -14,6 +14,9 @@ Synapse\Cmf\Bundle\Entity\Orm\File:
             column: store_path
         name:
             type: string
+        originalName:
+            column: original_name
+            type: string
         createdAt:
             type: datetime
             column: created_at

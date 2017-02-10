@@ -34,6 +34,11 @@ class File implements FileInterface
     protected $name;
 
     /**
+     * @var string
+     */
+    protected $originalName;
+
+    /**
      * @see NormalizableInterface::getScopes()
      */
     public static function getScopes()
@@ -136,6 +141,30 @@ class File implements FileInterface
     public function setPhysicalFile(PhysicalFile $physicalFile)
     {
         $this->physicalFile = $physicalFile;
+
+        return $this;
+    }
+
+    /**
+     * Returns File original name.
+     *
+     * @return string
+     */
+    public function getOriginalName()
+    {
+        return $this->originalName;
+    }
+
+    /**
+     * Define File original name.
+     *
+     * @param string $originalName
+     *
+     * @return self
+     */
+    public function setOriginalName($originalName)
+    {
+        $this->originalName = $originalName;
 
         return $this;
     }
