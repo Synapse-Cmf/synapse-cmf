@@ -81,7 +81,7 @@ class PageAdminController extends Controller implements ParamConverterInterface
         if ($request->request->has('page')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $page = $form->getData();
+                $page = $form->getData()->resolve();
 
                 return $this->redirect(
                     $this->container->get('router')->generate('synapse_admin_page_edition', array(
@@ -123,6 +123,8 @@ class PageAdminController extends Controller implements ParamConverterInterface
         if ($request->request->has('page')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
+                $form->getData()->resolve();
+
                 return $this->redirect(// refresh to rebuild dynamic form
                     $this->container->get('router')->generate(
                         $request->attributes->get('_route'),

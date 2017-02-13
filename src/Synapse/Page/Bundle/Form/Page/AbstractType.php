@@ -32,9 +32,6 @@ abstract class AbstractType extends SymfonyAbstractType implements DataTransform
      */
     public function reverseTransform($data)
     {
-        return $data instanceof PageAction
-            ? $data->resolve()
-            : $data
-        ;
+        return $data;
     }
 }

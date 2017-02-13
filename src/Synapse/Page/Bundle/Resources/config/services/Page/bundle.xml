@@ -21,6 +21,14 @@
             <argument type="service" id="synapse.page.loader" />
         </service>
 
+        <!-- Page Path validator -->
+        <service id="synase.page.validator.unique_path"
+            class="Synapse\Page\Bundle\Validator\Constraints\UniquePagePathValidator"
+        >
+            <tag name="validator.constraint_validator" />
+            <argument type="service" id="synapse.page.loader" />
+        </service>
+
         <!-- Page edition type -->
         <service id="synapse.page.edition_form" class="Synapse\Page\Bundle\Form\Page\EditionType">
             <tag name="form.type" />

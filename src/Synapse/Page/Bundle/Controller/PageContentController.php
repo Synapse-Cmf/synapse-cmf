@@ -60,7 +60,7 @@ class PageContentController extends Controller
      */
     public function renderAction($path, Request $request)
     {
-        if (!$page = $this->get('synapse.page.loader')->retrieveByPath($path)) {
+        if (!$page = $this->get('synapse.page.loader')->retrieveByPath($path, true)) {
             throw new NotFoundHttpException(sprintf('No online page found at path "%s".',
                 $path
             ));

@@ -11,6 +11,7 @@ use Synapse\Page\Bundle\Action\Page\CreateAction;
 use Synapse\Page\Bundle\Domain\Page\Action\ActionDispatcherDomain as PageDomain;
 use Synapse\Page\Bundle\Entity\Page;
 use Synapse\Page\Bundle\Loader\Page\LoaderInterface as PageLoader;
+use Synapse\Page\Bundle\Validator\Constraints\UniquePagePath;
 
 /**
  * Page creation action related form type.
@@ -42,6 +43,9 @@ class CreationType extends AbstractType
         $resolver->setDefaults(array(
             'cascade_validation' => false,
             'data_class' => CreateAction::class,
+            'constraints' => array(
+                new UniquePagePath()
+            )
         ));
     }
 
@@ -74,7 +78,7 @@ class CreationType extends AbstractType
                 'required' => true,
                 'choices' => $this->pageLoader->retrieveAll(),
                 'choice_label' => function (Page $page) {
-                    return sprintf('%s (/%s)', $page->getTitle(), $page->getPath());
+                    return sprintf('%s (/%s)', $page->getName(), $page->getPath());
                 },
             ))
             ->add('submit', SubmitType::class)

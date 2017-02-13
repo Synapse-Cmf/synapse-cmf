@@ -28,11 +28,11 @@ class DoctrineLoader extends AbstractDoctrineLoader implements LoaderInterface
     /**
      * @see LoaderInterface::retrieveByPath()
      */
-    public function retrieveByPath($path, $online = true)
+    public function retrieveByPath($path, $online = null)
     {
-        return $this->retrieveOne($online
-            ? array('path' => $path, 'online' => true)
-            : array('path' => $path)
+        return $this->retrieveOne(is_null($online)
+            ? array('path' => $path)
+            : array('path' => $path, 'online' => !empty($online))
         );
     }
 

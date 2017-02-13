@@ -18,5 +18,5 @@ interface LoaderInterface extends MajoraLoaderInterface, SynapseLoaderInterface
      *
      * @return Page|null
      */
-    public function retrieveByPath($path, $online = true);
+    public function retrieveByPath($path, $online = null);
 }

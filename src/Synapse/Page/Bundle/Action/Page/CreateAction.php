@@ -23,6 +23,11 @@ class CreateAction extends AbstractAction
     protected $path;
 
     /**
+     * @var string
+     */
+    protected $fullPath;
+
+    /**
      * @var PathGeneratorInterface
      */
     protected $pathGenerator;
@@ -38,22 +43,30 @@ class CreateAction extends AbstractAction
     }
 
     /**
+     * Initialisation function.
+     *
+     * @param Page $page
+     */
+    public function init(Page $page = null)
+    {
+        $this->page = new Page();
+
+        return $this;
+    }
+
+    /**
      * Page creation method.
      *
      * @return Page
      */
     public function resolve()
     {
-        $this->page = new Page();
         $this->page
             ->setName($this->name)
-            ->setParent($this->parent)
             ->setOnline(!empty($this->online))
             ->setTitle($this->title)
             ->setMeta(array('title' => $this->title))
-            ->setPath($this->pathGenerator
-                ->generatePath($this->page, $this->path ?: '')
-            )
+            ->setPath($this->getFullPath())
         ;
 
         $this->assertEntityIsValid($this->page, array('Page', 'creation'));
@@ -85,7 +98,7 @@ class CreateAction extends AbstractAction
      */
     public function setParent(Page $parent = null)
     {
-        $this->parent = $parent;
+        $this->page->setParent($parent);
 
         return $this;
     }
@@ -110,7 +123,30 @@ class CreateAction extends AbstractAction
     public function setPath($path)
     {
         $this->path = $path;
+        $this->fullPath = null;
 
         return $this;
+    }
+
+    /**
+     * Generate page full path.
+     *
+     * @return string
+     */
+    protected function generateFullPath()
+    {
+        return $this->fullPath = $this->pathGenerator
+            ->generatePath($this->page, $this->path ?: '')
+        ;
+    }
+
+    /**
+     * Returns action full path.
+     *
+     * @return string
+     */
+    public function getFullPath()
+    {
+        return $this->fullPath ?: $this->generateFullPath();
     }
 }
