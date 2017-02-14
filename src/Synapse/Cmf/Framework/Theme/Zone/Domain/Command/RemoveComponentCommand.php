@@ -39,7 +39,7 @@ class RemoveComponentCommand extends UpdateCommand
             $this->component->getId()
         );
 
-        $this->componentDomain->delete($component);
+        $this->componentDomain->delete($this->component);
 
         return parent::resolve();
     }

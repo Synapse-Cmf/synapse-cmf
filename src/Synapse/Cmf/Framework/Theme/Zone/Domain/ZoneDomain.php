@@ -78,7 +78,7 @@ class ZoneDomain extends ActionDispatcherDomain implements DomainInterface
     public function removeComponent(ZoneInterface $zone, ComponentInterface $component)
     {
         return $this->commandFactory
-            ->createAction('delete_component')
+            ->createAction('remove_component')
                 ->init($zone)
                 ->setComponent($component)
             ->resolve()
