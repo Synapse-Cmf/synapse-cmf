@@ -19,6 +19,14 @@ class TextType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    public function getParent()
+    {
+        return ComponentDataType::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
