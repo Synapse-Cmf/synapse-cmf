@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Synapse\Cmf\Bundle\Form\Type\Media\ImageChoiceType;
+use Synapse\Cmf\Bundle\Form\Type\Theme\ComponentDataType;
 
 /**
  * Text component form type.
@@ -83,7 +84,7 @@ class TextType extends AbstractType
         }
 
         // "Read more" link (on demand)
-        if (!empty($options['read_more'])) {
+        if (!empty($options['read_more']['enabled'])) {
             $builder
                 ->add('link', SymfonyTextType::class, array(
                     'required' => false,

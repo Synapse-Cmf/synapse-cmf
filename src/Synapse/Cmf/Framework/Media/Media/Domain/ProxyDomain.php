@@ -56,7 +56,7 @@ class ProxyDomain implements DomainInterface
             throw new UnsupportedFileException(sprintf(
                 'Extension ".%s" isnt supported by Media component, only ["%s"] are.',
                 $extension,
-                array_keys($this->mediaDomainsMap)
+                implode('", "', array_keys($this->mediaDomainsMap))
             ));
         }
 

@@ -23,25 +23,28 @@
         {% for page in pages %}
           <tr>
             <td>
-                {% for i in range(0, page.lvl) if i > 0 %}|---{% endfor %}
-                {{ page.name }}
+              {% for i in range(0, page.lvl) if i > 0 %}&nbsp;|---{% endfor %}
+              {{ page.name }}
             </td>
             <td>
-                {% set url = url(page_rendering_route, { path: page.path }, 0) %}
-                <a href="{{ url }}" target="__blank">
-                    {{ url }}
-                </a>
+            {% if page.online %}
+              <a href="{{ url(page_rendering_route, { path: page.path }, 0) }}" target="__blank">
+                /{{ page.path }}
+              </a>
+            {% else %}
+              /{{ page.path }}
+            {% endif %}
             </td>
             <td>
-              {% if page.online %}
-                <span class="badge label-success">
-                  <i class="fa fa-check"></i>
-                </span>
-              {% else %}
-                <span class="badge label-danger">
-                  <i class="fa fa-times"></i>
-                </span>
-              {% endif %}
+            {% if page.online %}
+              <span class="badge label-success">
+                <i class="fa fa-check"></i>
+              </span>
+            {% else %}
+              <span class="badge label-danger">
+                <i class="fa fa-times"></i>
+              </span>
+            {% endif %}
             </td>
             <td class="text-right">
               <a class="btn btn-success btn-sm" href="{{ path('synapse_admin_page_edition', { id: page.id }) }}">
