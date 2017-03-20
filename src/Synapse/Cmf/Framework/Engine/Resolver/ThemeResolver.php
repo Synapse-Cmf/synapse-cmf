@@ -32,7 +32,7 @@ class ThemeResolver
      *
      * @throws InvalidThemeException If no theme found for given theme name
      */
-    public function resolve($themeName)
+    public function resolve($themeName = null)
     {
         switch (true) {
 

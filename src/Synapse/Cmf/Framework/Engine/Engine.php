@@ -8,6 +8,7 @@ use Synapse\Cmf\Framework\Engine\Decorator\Content\ImmutableDecorator;
 use Synapse\Cmf\Framework\Engine\Resolver\ThemeResolver;
 use Synapse\Cmf\Framework\Theme\Component\Model\ComponentInterface;
 use Synapse\Cmf\Framework\Theme\Content\Model\ContentInterface;
+use Synapse\Cmf\Framework\Theme\Theme\Entity\Theme;
 
 /**
  * Synapse engine main class, entry point of all other decorators.
@@ -33,6 +34,11 @@ class Engine
      * @var string
      */
     protected $currentThemeName;
+
+    /**
+     * @var Theme
+     */
+    protected $currentTheme;
 
     /**
      * Construct.
