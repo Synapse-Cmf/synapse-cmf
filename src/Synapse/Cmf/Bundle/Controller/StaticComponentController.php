@@ -3,6 +3,7 @@
 namespace Synapse\Cmf\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Synapse\Cmf\Framework\Theme\Component\Model\ComponentInterface;
 use Synapse\Cmf\Framework\Theme\Content\Model\ContentInterface;
 
